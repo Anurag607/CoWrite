@@ -1,5 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Run Command: npx prisma generate --schema=./src/app/prisma/schema.prisma
 
 generator client {
   provider = "prisma-client-js"
@@ -8,7 +9,7 @@ generator client {
 // Connection string for MongoDB database ----------------
 datasource db {
   provider = "mongodb"
-  url      = env("MongoDB_URI")
+  url      = env("NEXT_PUBLIC_MONGODB_URI")
 }
 
 model user {

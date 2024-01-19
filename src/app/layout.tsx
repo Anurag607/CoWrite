@@ -61,18 +61,18 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="description" content={`A Notion Like Block Editor.`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* <link
+        <link
           rel="icon"
-          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/icon.ico`}
+          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/logo.png`}
         />
         <link
           rel="shortcut icon"
-          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/icon.ico`}
+          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/logo.png`}
         />
         <link
           rel="apple-touch-icon"
-          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/apple-icon.png`}
-        /> */}
+          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/logo.png`}
+        />
         <title>{"CoWrite"}</title>
       </head>
       <body className={inter.className} suppressHydrationWarning={true}>
