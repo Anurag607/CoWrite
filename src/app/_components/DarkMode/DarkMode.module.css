@@ -1,0 +1,18 @@
+.darkMode {
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer !important;
+  transition: all 0.3s;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  translate: 0 0.25rem;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.darkMode:hover {
+  box-shadow: 0 0 0.5rem var(--box-shadow) !important;
+}

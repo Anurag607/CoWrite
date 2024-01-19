@@ -1,113 +1,96 @@
-import Image from 'next/image'
+import React, { useState } from "react";
+import HomePage from "./_pages/homePage";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {
+  AddFormPopup,
+  ColorPopup,
+  Pagination,
+  UpdateFormPopup,
+} from "./_components";
+import { Alert } from "./_components";
+import classNames from "classnames";
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const { isFormOpen, isUpdateFormOpen } = useAppSelector(
+    (state: any) => state.form
+  );
+  const { isColorFormOpen } = useAppSelector((state: any) => state.color);
+  const { isDeleteFormOpen } = useAppSelector((state: any) => state.alert);
+  const { isImgUploading, progress } = useAppSelector(
+    (state: any) => state.image
+  );
+  const { noteData } = useAppSelector((state: any) => state.notes);
+  const [isLoading, setIsLoading] = useState(true);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    // getNotes(dispatch).then(() => {
+    //   setIsLoading(false);
+    // });
+  }, []);
+
+  React.useEffect(() => {
+    setUploadProgress(progress);
+  }, [progress]);
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-4 items-center justify-center h-screen w-screen bg-[#fff7e9]">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#faaa87]" />
+        <h4 className="text-[#faaa87] font-bold text-2xl mb-[7.5rem]">
+          Getting Your Notes...
+        </h4>
+        <div className="flex justify-center items-center gap-4 absolute bottom-20">
+          <img src="/logo.png" width={42} height={42} alt="logo" />
+          <h3
+            className={classNames({
+              "font-bold text-2xl text-[#ff9b73] dark:text-white": true,
+              "flex justify-center items-center gap-4": true,
+            })}
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            NoteWave
+          </h3>
         </div>
       </div>
+    );
+  }
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+  const Illustration = () => {
+    return (
+      <div className="w-full h-full relative flex flex-col justify-center items-center gap-3">
+        <img src="/no_note_1.png" className="w-auto h-[20rem]" />
+        <div className="relative flex flex-col justify-center items-center gap-2 mobile:gap-1 mb-[2.5rem]">
+          <h4 className="text-[#faaa87] font-bold text-2xl dark:text-blue-400 text-center mobile:text-[1.25rem]">
+            Nothing here Yet!...
+          </h4>
+          <h4 className="text-[#faaa87] font-bold text-2xl dark:text-blue-400 text-center mobile:text-[1.25rem]">
+            Be the first to clip your note here!...
+          </h4>
+        </div>
       </div>
+    );
+  };
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+  return (
+    <>
+      {isFormOpen && <AddFormPopup />}
+      {isUpdateFormOpen && <UpdateFormPopup />}
+      {isColorFormOpen && <ColorPopup />}
+      {isDeleteFormOpen && <Alert />}
+      {isImgUploading && (
+        <div className="flex flex-col gap-4 items-center justify-center h-screen w-screen bg-[#fff7e9] bg-opacity-80 absolute top-0 left-0 z-[100000]">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#faaa87]" />
+          <h4 className="text-[#faaa87] font-bold text-2xl mb-[7.5rem] mobile:w-[15rem] text-center">{`Uploading ${Math.trunc(
+            uploadProgress
+          )}%...`}</h4>
+        </div>
+      )}
+      <HomePage>
+        {noteData.length > 0 && <Pagination data={noteData} itemsPerPage={6} />}
+        {noteData.length === 0 && <Illustration />}
+      </HomePage>
+    </>
+  );
 }

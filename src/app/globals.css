@@ -1,27 +1,177 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Rubik:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Kanit:wght@400;500;600;700&display=swap');
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+@layer utilities {
+  @variants responsive {
+    .masonry {
+      column-gap: 1.5em;
+      column-count: 1;
+    }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    .masonry-sm {
+      column-gap: 1.5em;
+      column-count: 2;
+    }
+
+    .masonry-md {
+      column-gap: 1.5em;
+      column-count: 3;
+    }
+
+    .break-inside {
+      break-inside: avoid;
+    }
+
   }
 }
 
+:root {
+  /* General */
+  --black: #141414;
+  --white: #f9f9f9;
+  --primary: #8266f6;
+  --secondary: #dafa72;
+  --box-shadow: #c5c5c5;
+  --text-shadow: #e8e8e8;
+
+  /* For cards */
+  --light-purple: #e3dbfa;
+  --light-blue: #b8e3fa;
+  --light-green: #d4f6ed;
+  --light-yellow: #fff3cc;
+  --light-orange: #ffe1cc;
+  --light-pink: #fbe2f4;
+  --light-red: #f9d6d6;
+
+  /* For notes */
+  --color-1: #faaa73;
+  --color-2: #fef595;
+  --color-3: #bbf7d0;
+  --color-4: #bae6fd;
+  --color-5: #fecaca;
+
+  /* For Gradient */
+  --gradient-1: #ffffff;
+  --gradient-2: #faaa73;
+  --gradient-3: #fef595;
+}
+
+[data-theme="dark"] {
+  --gradient-1: #111827;
+  --gradient-2: #2563eb;
+  --gradient-3: #a78bfa;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  cursor: default;
+  font-family: 'Kanit', sans-serif;
+  transition: all 0.3s ease-in-out !important;
+}
+
+html,
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  min-width: 100vw;
+  max-width: 100vw;
+  background-color: rgb(244 244 245);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer !important;
+}
+
+path,
+svg {
+  cursor: pointer !important;
+}
+
+input[type=text],
+input[type=number],
+input[type=passwords] {
+  cursor: text !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  border-radius: 0.5rem;
+  height: 0rem;
+  /* width of the horizontal  scrollbar */
+  width: 0.2rem;
+  /* width of the vertical scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 0.5rem;
+  background: var(--page-color);
+  /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0.5rem;
+  background-color: var(--color-1);
+  border: 2px solid var(--color-1);
+  /* creates padding around scroll thumb */
+}
+
+/* Ripple effect */
+.ripple {
+  background-position: center;
+  transition: all 0.8s;
+}
+
+.ripple:active {
+  background-size: 100%;
+  transition: all 0s;
+}
+
+/* Input Color */
+.color_input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 75px;
+  height: 75px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.color_input::-webkit-color-swatch {
+  border-radius: 0.5rem;
+  border: none;
+}
+
+.color_input::-moz-color-swatch {
+  border-radius: 0.5rem;
+  border: none;
+}
+
+.gradient-background {
+  background: linear-gradient(300deg, var(--gradient-1), var(--gradient-2), var(--gradient-2));
+  background-size: 150% 150%;
+  animation: gradient-animation 3s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
