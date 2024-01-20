@@ -37,6 +37,9 @@
   --secondary: #dafa72;
   --box-shadow: #c5c5c5;
   --text-shadow: #e8e8e8;
+  --main: #FFFFFF;
+  --sidebar: #F7F6F3;
+  --hover: #FFFFFF;
 
   /* For cards */
   --light-purple: #e3dbfa;
@@ -58,12 +61,62 @@
   --gradient-1: #ffffff;
   --gradient-2: #faaa73;
   --gradient-3: #fef595;
+
+  /* Notion Color Scheme */
+  --text-primary: #37352F;
+  --text-grey: #787774;
+  --text-brown: #9F6B53;
+  --text-orange: #D9730D;
+  --text-yellow: #CB912F;
+  --text-green: #448361;
+  --text-blue: #337EA9;
+  --text-purple: #9065B0;
+  --text-pink: #C14C8A;
+  --text-red: #D44C47;
+  --bg-grey: #F1F1EF;
+  --bg-brown: #F4EEEE;
+  --bg-orange: #FAEBDD;
+  --bg-yellow: #FBF3DB;
+  --bg-green: #EDF3EC;
+  --bg-blue: #E7F3F8;
+  --bg-purple: #F6F3F9;
+  --bg-pink: #FAF1F5;
+  --bg-red: #FDEBEC;
+  --bg-hover: #1b1b1b;
 }
 
 [data-theme="dark"] {
+  /* General */
+  --main: #2F3438;
+  --sidebar: #373C3F;
+  --hover: #3F4448;
+
+  /* For Gradient */
   --gradient-1: #111827;
   --gradient-2: #2563eb;
   --gradient-3: #a78bfa;
+
+  /* Notion Color Scheme */
+  --text-primary: #e8e8e8;
+  --text-grey: #979A9B;
+  --text-brown: #937264;
+  --text-orange: #FFA344;
+  --text-yellow: #FFDC49;
+  --text-green: #4DAB9A;
+  --text-blue: #529CCA;
+  --text-purple: #9A6DD7;
+  --text-pink: #E255A1;
+  --text-red: #FF7369;
+  --bg-grey: #454B4E;
+  --bg-brown: #594A3A;
+  --bg-orange: #594A3A;
+  --bg-yellow: #59563B;
+  --bg-green: #354C4B;
+  --bg-blue: #364954;
+  --bg-purple: #443F57;
+  --bg-pink: #533B4C;
+  --bg-red: #594141;
+  --bg-hover: #ffffff;
 }
 
 * {
@@ -72,7 +125,7 @@
   margin: 0;
   cursor: default;
   font-family: 'Kanit', sans-serif;
-  transition: all 0.3s ease-in-out !important;
+  transition: all 0.2s ease-in-out !important;
 }
 
 html,
@@ -123,17 +176,6 @@ input[type=passwords] {
   /* creates padding around scroll thumb */
 }
 
-/* Ripple effect */
-.ripple {
-  background-position: center;
-  transition: all 0.8s;
-}
-
-.ripple:active {
-  background-size: 100%;
-  transition: all 0s;
-}
-
 /* Input Color */
 .color_input {
   -webkit-appearance: none;
@@ -174,4 +216,25 @@ input[type=passwords] {
   100% {
     background-position: 0% 50%;
   }
+}
+
+/* Fonts */
+.rubik {
+  font-family: 'Rubik', sans-serif;
+}
+
+.comfortaa {
+  font-family: 'Comfortaa', cursive;
+}
+
+.kanit {
+  font-family: 'Kanit', sans-serif;
+}
+
+.poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.DMSerifDisplay {
+  font-family: 'DM Serif Display', serif;
 }

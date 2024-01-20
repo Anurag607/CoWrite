@@ -22,12 +22,13 @@ export default function Home() {
     (state: any) => state.image
   );
   const { noteData } = useAppSelector((state: any) => state.notes);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
+    // setIsLoading(true);
     // getNotes(dispatch).then(() => {
     //   setIsLoading(false);
     // });
@@ -40,15 +41,15 @@ export default function Home() {
   if (isLoading) {
     return (
       <div className="flex flex-col gap-4 items-center justify-center h-screen w-screen bg-[#fff7e9]">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#faaa87]" />
-        <h4 className="text-[#faaa87] font-bold text-2xl mb-[7.5rem]">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary" />
+        <h4 className="text-primary font-bold text-2xl mb-[7.5rem]">
           Getting Your Notes...
         </h4>
         <div className="flex justify-center items-center gap-4 absolute bottom-20">
           <img src="/logo.png" width={42} height={42} alt="logo" />
           <h3
             className={classNames({
-              "font-bold text-2xl text-[#ff9b73] dark:text-white": true,
+              "font-bold text-2xl text-primary dark:text-white": true,
               "flex justify-center items-center gap-4": true,
             })}
           >
@@ -59,16 +60,13 @@ export default function Home() {
     );
   }
 
-  const Illustration = () => {
+  const NotFound = () => {
     return (
       <div className="w-full h-full relative flex flex-col justify-center items-center gap-3">
         <img src="/no_note_1.png" className="w-auto h-[20rem]" />
         <div className="relative flex flex-col justify-center items-center gap-2 mobile:gap-1 mb-[2.5rem]">
-          <h4 className="text-[#faaa87] font-bold text-2xl dark:text-blue-400 text-center mobile:text-[1.25rem]">
+          <h4 className="text-primary font-bold text-2xl text-center mobile:text-[1.25rem]">
             Nothing here Yet!...
-          </h4>
-          <h4 className="text-[#faaa87] font-bold text-2xl dark:text-blue-400 text-center mobile:text-[1.25rem]">
-            Be the first to clip your note here!...
           </h4>
         </div>
       </div>
@@ -83,7 +81,7 @@ export default function Home() {
       {isDeleteFormOpen && <Alert />}
       {isImgUploading && (
         <div className="flex flex-col gap-4 items-center justify-center h-screen w-screen bg-[#fff7e9] bg-opacity-80 absolute top-0 left-0 z-[100000]">
-          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#faaa87]" />
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary" />
           <h4 className="text-[#faaa87] font-bold text-2xl mb-[7.5rem] mobile:w-[15rem] text-center">{`Uploading ${Math.trunc(
             uploadProgress
           )}%...`}</h4>
@@ -91,7 +89,7 @@ export default function Home() {
       )}
       <HomePage>
         {noteData.length > 0 && <Pagination data={noteData} itemsPerPage={6} />}
-        {noteData.length === 0 && <Illustration />}
+        {noteData.length === 0 && <NotFound />}
       </HomePage>
     </>
   );

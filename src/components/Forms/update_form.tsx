@@ -6,9 +6,11 @@ import { PushpinFilled, PushpinOutlined } from "@ant-design/icons";
 import { openColorForm, setNoteColor } from "@/redux/reducers/colorSlice";
 import { openDeleteForm } from "@/redux/reducers/alertSlice";
 import { LoadingSpinner } from "..";
+import { useRouter } from "next-nprogress-bar";
 
 const UpdateFormPopup = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const { noteColor } = useAppSelector((state: any) => state.color);
   const { focusedNote } = useAppSelector((state: any) => state.notes);
   const [file, setFile] = useState<File | null>(null);
@@ -54,12 +56,14 @@ const UpdateFormPopup = () => {
       //   getNotes(dispatch);
       //   setIsLoading(false);
       //   handleCloseForm();
+      //   router.push("");
       // });
     } else {
       // await uploadImage(formData, file, "update", formData.id, dispatch).then(
       //   () => {
       //     setIsLoading(false);
       //     handleCloseForm();
+      //   router.push("");
       //   }
       // );
     }
@@ -102,7 +106,7 @@ const UpdateFormPopup = () => {
         "bg-gray-800 bg-opacity-50": true,
       })}
     >
-      <div className="relative bg-white mobile:w-[95vw] rounded-lg p-4 shadow-lg w-fit dark:bg-gray-900">
+      <div className="relative bg-white mobile:w-[95vw] rounded-lg p-4 shadow-lg w-fit dark:bg-neutral-800">
         {/* Close Button... */}
         <button
           className={classNames({
@@ -213,7 +217,7 @@ const UpdateFormPopup = () => {
                       className={classNames({
                         "mobile:w-full anti-mobile:w-[19.5rem]": true,
                         "block px-2.5 pb-2.5 pt-4 w-[15rem]": true,
-                        "text-sm text-gray-900 bg-gray-100 dark:bg-gray-700":
+                        "text-sm text-gray-900 bg-gray-100 dark:bg-neutral-700":
                           true,
                         "rounded-lg border-1 border-gray-900": true,
                         "appearance-none dark:text-white": true,
@@ -257,7 +261,8 @@ const UpdateFormPopup = () => {
                     "mobile:w-full anti-mobile:w-[19.5rem] overflow-hidden":
                       true,
                     "block px-2 py-2 w-[15rem] resize-none": true,
-                    "text-sm text-gray-900 bg-gray-100 dark:bg-gray-700": true,
+                    "text-sm text-gray-900 bg-gray-100 dark:bg-neutral-700":
+                      true,
                     "rounded-lg border-1 border-gray-900": true,
                     "appearance-none dark:text-white": true,
                     "dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer":
@@ -303,7 +308,7 @@ const UpdateFormPopup = () => {
                     "text-sm text-gray-900": true,
                     "bg-gray-50 dark:text-gray-400": true,
                     "border border-gray-300 rounded-sm": true,
-                    "dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400":
+                    "dark:bg-neutral-700 dark:border-gray-600 dark:placeholder-gray-400":
                       true,
                   })}
                 />
@@ -317,7 +322,7 @@ const UpdateFormPopup = () => {
           <div className="mt-4 w-full flex items-center justify-end">
             <button
               type="submit"
-              className="bg-[#ff9b73] text-white px-4 py-2 rounded-md hover:bg-[#ffc972] focus:outline-none ripple dark:bg-blue-400 hover:dark:bg-blue-600"
+              className="bg-primary text-white px-4 py-2 rounded-md hover:bg-[#ffc972] focus:outline-none ripple dark:bg-blue-400 hover:dark:bg-blue-600"
             >
               {!isLoading ? "Update" : <LoadingSpinner />}
             </button>

@@ -223,8 +223,8 @@ const TextEditor = () => {
 
   return (
     <>
-      <div className={`Editor_class`}>
-        <div id={EDITTOR_HOLDER_ID}> </div>
+      <div className={`ps-4 pe-4 h-auto w-full bg-red-500 Editor_class`}>
+        <div id={EDITTOR_HOLDER_ID} />
       </div>
     </>
   );

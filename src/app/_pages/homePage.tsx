@@ -10,8 +10,7 @@ const HomePage = ({ children }: { children: React.ReactNode }) => {
         "flex flex-col items-start justify-start gap-8": true,
         "h-screen w-full": true,
         "overflow-x-hidden": true,
-        "dark:bg-gray-900": true,
-        "bg-[#fff7e9]": false,
+        "bg-primary": false,
       })}
     >
       <div

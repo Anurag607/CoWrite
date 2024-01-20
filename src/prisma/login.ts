@@ -14,7 +14,7 @@ const Login = async ({ req, res }: { req: Request; res: Response }) => {
 
     !user && res.status(404).json({ msg: "User not found" });
 
-    const validate = await bcrypt.compare(req.body.password, user.password);
+    const validate = await bcrypt.compare(req.body.password, user!.password);
     !validate && res.status(404).json({ msg: "Invalid Password" });
 
     res.status(201).json(user);

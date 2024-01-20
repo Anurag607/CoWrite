@@ -16,9 +16,7 @@ const FAB = () => {
       className={classnames({
         "fixed bottom-10 right-10 z-[10000]": true,
         "p-4 rounded-full shadow-lg": true,
-        "bg-[#ff9b73] text-white hover:bg-[#ffc972] dark:bg-blue-400 hover:dark:bg-blue-600":
-          true,
-        "transition duration-300 ease-in-out": true,
+        "bg-primary text-white hover:bg-hover dark:text-gray-700": true,
       })}
     >
       <svg

@@ -5,9 +5,11 @@ import classNames from "classnames";
 import { PushpinFilled, PushpinOutlined } from "@ant-design/icons";
 import { openColorForm } from "@/redux/reducers/colorSlice";
 import { LoadingSpinner } from "..";
+import { useRouter } from "next-nprogress-bar";
 
 const AddFormPopup = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const { noteColor } = useAppSelector((state: any) => state.color);
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,11 +49,13 @@ const AddFormPopup = () => {
       //   getNotes(dispatch);
       //   setIsLoading(false);
       //   handleCloseForm();
+      //   router.push("");
       // });
     } else {
       // await uploadImage(formData, file, "add", " ", dispatch).then(() => {
       //   setIsLoading(false);
       //   handleCloseForm();
+      //   router.push("");
       // });
     }
   };
@@ -90,7 +94,7 @@ const AddFormPopup = () => {
         "bg-gray-800 bg-opacity-50": true,
       })}
     >
-      <div className="relative bg-white mobile:w-[95vw] rounded-lg p-4 shadow-lg w-fit dark:bg-gray-900">
+      <div className="relative bg-white mobile:w-[95vw] rounded-lg p-4 shadow-lg w-fit dark:bg-neutral-800">
         {/* Close Button... */}
         <button
           className={classNames({
@@ -182,7 +186,7 @@ const AddFormPopup = () => {
                       className={classNames({
                         "mobile:w-full anti-mobile:w-[19.5rem]": true,
                         "block px-2.5 pb-2.5 pt-4 w-[15rem]": true,
-                        "text-sm text-gray-900 bg-gray-100 dark:bg-gray-700":
+                        "text-sm text-gray-900 bg-gray-100 dark:bg-neutral-700":
                           true,
                         "rounded-lg border-1 border-gray-900": true,
                         "appearance-none dark:text-white": true,
@@ -225,7 +229,8 @@ const AddFormPopup = () => {
                     "mobile:w-full anti-mobile:w-[19.5rem] overflow-hidden":
                       true,
                     "block px-2 py-2 w-[15rem] resize-none": true,
-                    "text-sm text-gray-900 bg-gray-100 dark:bg-gray-700": true,
+                    "text-sm text-gray-900 bg-gray-100 dark:bg-neutral-700":
+                      true,
                     "rounded-lg border-1 border-gray-900": true,
                     "appearance-none dark:text-white": true,
                     "dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer":
@@ -270,7 +275,7 @@ const AddFormPopup = () => {
                     "text-sm text-gray-900": true,
                     "bg-gray-50 dark:text-gray-400": true,
                     "border border-gray-300 rounded-sm": true,
-                    "dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400":
+                    "dark:bg-neutral-700 dark:border-gray-600 dark:placeholder-gray-400":
                       true,
                   })}
                 />
@@ -284,7 +289,12 @@ const AddFormPopup = () => {
           <div className="mt-4 w-full flex items-center justify-end">
             <button
               type="submit"
-              className="bg-[#ff9b73] text-white px-4 py-2 rounded-md hover:bg-[#ffc972] focus:outline-none ripple dark:bg-blue-400 hover:dark:bg-blue-600"
+              className={classNames({
+                "px-4 py-2 rounded-md focus:outline-none border": true,
+                "bg-gray-900 text-[#e8e8e8] dark:bg-[#e8e8e8] dark:text-gray-900":
+                  true,
+                "hover:!bg-transparent hover:dark:text-[#e8e8e8]": true,
+              })}
             >
               {!isLoading ? "Add" : <LoadingSpinner />}
             </button>

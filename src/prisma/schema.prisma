@@ -1,6 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-// Run Command: npx prisma generate --schema=./src/app/prisma/schema.prisma
+// Run Command: npx prisma generate --schema=./src/prisma/schema.prisma
 
 generator client {
   provider = "prisma-client-js"
@@ -20,4 +20,15 @@ model user {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model document {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  desc      String
+  descImg   String
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
 }

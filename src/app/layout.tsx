@@ -80,7 +80,7 @@ export default function RootLayout({
       <body className={inter.className} suppressHydrationWarning={true}>
         <ProgressBar
           height="4px"
-          color="#37474f"
+          color="#1b1b1b"
           options={{ showSpinner: true }}
           shallowRouting
         />
@@ -89,19 +89,19 @@ export default function RootLayout({
             <Suspense fallback={<LoaderSkeleton />}>
               <ErrorBoundaryWrapper>
                 <ScrollToTop _children={null} />
-                <div className="relative max-w-screen max-h-screen flex flex-row items-end justify-end bg-white dark:bg-gray-900">
+                <div className="relative max-w-screen max-h-screen flex flex-row items-end justify-end bg-main">
                   <Sidebar />
                   <div
                     className={classNames({
                       "relative h-screen w-[calc(100vw_-_35px)] flex flex-col items-center justify-between":
                         true,
-                      "bg-[url('/bg-3.png')] bg-cover bg-no-repeat": true,
+                      "bg-main": true,
                       "mobile:w-screen": true,
                     })}
                   >
                     <Navbar />
                     {children}
-                    <div className={"w-full h-[2rem] dark:bg-gray-900"} />
+                    <div className={"w-full h-[2rem] bg-transparent"} />
                   </div>
                 </div>
               </ErrorBoundaryWrapper>

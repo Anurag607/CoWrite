@@ -13,7 +13,7 @@ const Footer = () => {
         "w-screen mx-auto p-4 md:px-6 md:py-2": true,
         "h-[10vh] md:flex md:items-center md:justify-between": true,
         "max-md:flex-col max-md:items-center max-md:justify-center": true,
-        "text-zinc-500 dark:bg-gray-900": true,
+        "text-zinc-500 bg-primary": true,
         "shadow-[0px_-1px_2px_0_rgba(0,0,0,0.075)] dark:shadow-[0px_-1px_2px_0_rgba(255,255,255,0.1)]":
           true,
       })}

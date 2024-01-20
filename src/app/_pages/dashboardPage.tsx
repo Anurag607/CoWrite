@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { Search, Filter, FAB } from "../_components";
+import { Search, Filter, FAB } from "@/components";
 
 const DashboardPage = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,8 +10,7 @@ const DashboardPage = ({ children }: { children: React.ReactNode }) => {
         "flex flex-col items-start justify-start gap-8": true,
         "h-screen w-full": true,
         "overflow-x-hidden": true,
-        "dark:bg-gray-900": true,
-        "bg-[#fff7e9]": false,
+        "bg-primary": false,
       })}
     >
       <div

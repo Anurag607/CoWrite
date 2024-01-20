@@ -41,8 +41,7 @@ const DarkMode = () => {
         [styles.darkMode]: true,
         "p-1 rounded-lg": true,
         "mobile:mb-0 bg-white dark:bg-transparent": true,
-        "shadow-[0.5px_1.25px_4px_0_rgba(0,0,0,0.2)] dark:shadow-[0.5px_1.25px_4px_0_rgba(0,0,0,0.8)]":
-          true,
+        "shadow-md": true,
       })}
       data-theme={theme}
       onClick={(event) => {

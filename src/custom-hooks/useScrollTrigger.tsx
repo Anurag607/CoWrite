@@ -6,7 +6,7 @@ export default function useScrollTrigger({
   ref,
   threshold = 100,
 }: {
-  ref: any;
+  ref?: any;
   threshold: number;
 }) {
   const [trigger, setTrigger] = useState(false);

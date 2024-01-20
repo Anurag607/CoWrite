@@ -150,7 +150,7 @@ const Pagination = ({ data, itemsPerPage }: PaginationProps) => {
       <div className="w-full h-fit flex justify-center mt-4 pb-10">
         <button
           disabled={currentPage === 1}
-          className={`mx-1 px-2 py-1 rounded-full bg-[#ff9b73] dark:bg-blue-400 text-white ${
+          className={`mx-1 px-2 py-1 rounded-full bg-primary dark:bg-blue-400 text-white ${
             currentPage === 1 ? "opacity-50" : "opacity-100"
           }`}
           onClick={() => {
@@ -173,7 +173,7 @@ const Pagination = ({ data, itemsPerPage }: PaginationProps) => {
               key={index}
               className={`px-2 py-1 rounded-full transition ease-out duration-200 ${
                 currentPage === index + 1
-                  ? "bg-[#ff9b73] dark:bg-blue-400 text-white"
+                  ? "bg-primary dark:bg-blue-400 text-white"
                   : "bg-gray-300"
               }`}
               onClick={() => handlePageChange(index + 1)}
@@ -184,7 +184,7 @@ const Pagination = ({ data, itemsPerPage }: PaginationProps) => {
         </div>
         <button
           disabled={currentPage === totalPages}
-          className={`mx-1 px-2 py-1 rounded-full bg-[#ff9b73] dark:bg-blue-400 text-white ${
+          className={`mx-1 px-2 py-1 rounded-full bg-primary dark:bg-blue-400 text-white ${
             currentPage === totalPages ? "opacity-50" : "opacity-100"
           }`}
           onClick={() => {
