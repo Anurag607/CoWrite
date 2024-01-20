@@ -1,3 +1,5 @@
+"use client";
+
 import ErrorBoundaryWrapper from "./ErrorBoundary";
 import LoaderSkeleton from "./LoadingUI";
 import ScrollToTop from "./ScrollToTop";

@@ -1,3 +1,5 @@
+"use client";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReduxProviders } from "@/redux/provider";
@@ -8,7 +10,7 @@ import {
   Navbar,
   ScrollToTop,
   Sidebar,
-} from "./_components";
+} from "@/components";
 import { Suspense } from "react";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { ReactQueryDevtools } from "react-query/devtools";

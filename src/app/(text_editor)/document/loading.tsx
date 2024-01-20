@@ -1,6 +1,6 @@
 "use client";
 
-import { LoaderSkeleton } from "../../_components";
+import { LoaderSkeleton } from "@/components";
 
 export default function Loading() {
   return (

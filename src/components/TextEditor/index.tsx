@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "../styles/editor.module.scss";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import LinkTool from "@editorjs/link";
@@ -16,7 +15,7 @@ import Alert from "editorjs-alert";
 import Warning from "@editorjs/warning";
 import { StyleInlineTool } from "editorjs-style";
 import Tooltip from "editorjs-tooltip";
-import { CloudImage } from "../../../cloudinary/CloudImage";
+import { CloudImage } from "@/cloudinary/CloudImage";
 import _ from "lodash/debounce";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setDocContent } from "@/redux/reducers/docContentSlice";
@@ -224,7 +223,7 @@ const TextEditor = () => {
 
   return (
     <>
-      <div className={`${styles.editor} Editor_class`}>
+      <div className={`Editor_class`}>
         <div id={EDITTOR_HOLDER_ID}> </div>
       </div>
     </>

@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { Search, Filter, FAB } from "../_components";
+import { Search, Filter, FAB } from "@/components";
 
 const HomePage = ({ children }: { children: React.ReactNode }) => {
   return (

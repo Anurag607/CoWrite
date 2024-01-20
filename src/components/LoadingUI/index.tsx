@@ -1,7 +1,7 @@
 "use client";
 
 import Lottie from "react-lottie-player";
-import Loader from "../../../../public/lotties/Loader.json";
+import Loader from "../../../public/lotties/Loader.json";
 
 const LoaderSkeleton = () => {
   return (

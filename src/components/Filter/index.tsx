@@ -4,7 +4,7 @@ import { openFilter, closeFilter } from "@/redux/reducers/filterSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useOnClickOutside } from "usehooks-ts";
 import { setNoteData } from "@/redux/reducers/noteSlice";
-import { filterDatabyCategory } from "../../../scipts/filterScript";
+import { filterDatabyCategory } from "@/scipts/filterScript";
 import { FilterOutlined } from "@ant-design/icons";
 
 const colors = ["#faaa73", "#fef595", "#bbf7d0", "#bae6fd", "#fecaca"];

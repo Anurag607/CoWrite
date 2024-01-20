@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 
 export default function useOnClickOutside(ref: any, handler: any) {

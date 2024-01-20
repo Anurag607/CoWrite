@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import HomePage from "./_pages/homePage";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -6,8 +8,8 @@ import {
   ColorPopup,
   Pagination,
   UpdateFormPopup,
-} from "./_components";
-import { Alert } from "./_components";
+} from "@/components";
+import { Alert } from "@/components";
 import classNames from "classnames";
 
 export default function Home() {

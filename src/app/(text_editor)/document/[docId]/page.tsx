@@ -1,11 +1,13 @@
+"use client";
+
 import React from "react";
 import dynamic from "next/dynamic";
 import Cookie from "js-cookie";
 import { createDoc } from "@/queries/documentQueries";
 import { toast } from "react-toastify";
-import { LoaderSkeleton } from "@/app/_components";
+import { LoaderSkeleton } from "@/components";
 
-const CustomEditor = dynamic(() => import("@/app/_components/TextEditor"), {
+const CustomEditor = dynamic(() => import("@/components/TextEditor"), {
   ssr: false,
 });
 
