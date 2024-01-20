@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setNoteData } from "@/redux/reducers/noteSlice";
-import { filterDatabySearchParams } from "../../_scipts/filterScript";
+import { filterDatabySearchParams } from "../../../scipts/filterScript";
 
 const Search = () => {
   const { backupData } = useAppSelector((state: any) => state.notes);

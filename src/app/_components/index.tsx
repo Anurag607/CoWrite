@@ -13,6 +13,8 @@ import FAB from "./FAB";
 import Pagination from "./Pagination";
 import ColorPopup from "./ColorPopup";
 import Alert from "./Alert";
+import LoadingSpinner from "./LoadingSpinner";
+import TextEditor from "./TextEditor";
 
 export {
   ErrorBoundaryWrapper,
@@ -30,4 +32,6 @@ export {
   Pagination,
   ColorPopup,
   Alert,
+  LoadingSpinner,
+  TextEditor,
 };

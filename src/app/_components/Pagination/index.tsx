@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { PaginationProps } from "@/app/_utils/types";
+import { PaginationProps } from "@/utils/types";
 import moment from "moment";
 import classNames from "classnames";
 import { useAppDispatch } from "@/redux/hooks";
@@ -83,7 +83,7 @@ const Pagination = ({ data, itemsPerPage }: PaginationProps) => {
                 <h4 className="text-sm text-gray-900 font-medium my-3">
                   {item.email}
                 </h4>
-                <p className="text-gray-900 text-sm">{item.note}</p>
+                <p className="text-gray-900 text-sm">{item.desc}</p>
               </div>
               {/* Image... */}
               <div
