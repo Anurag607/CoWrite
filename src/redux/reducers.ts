@@ -8,6 +8,7 @@ import formSlice from "./reducers/formSlice";
 import colorSlice from "./reducers/colorSlice";
 import alertSlice from "./reducers/alertSlice";
 import imgUploadSlice from "./reducers/imgUploadSlice";
+import docContentSlice from "./reducers/docContentSlice";
 
 export default combineReducers({
   menu: menuSlice,
@@ -19,4 +20,5 @@ export default combineReducers({
   color: colorSlice,
   alert: alertSlice,
   image: imgUploadSlice,
+  docContent: docContentSlice,
 });

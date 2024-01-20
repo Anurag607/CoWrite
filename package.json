@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clear-dependencies": "rm -rf node_modules package-lock.json && npm install --legacy-peer-deps",
+    "clear": "rm -rf build .next && npm run clear-dependencies",
+    "prod": "rm -rf build .next && npm run build && npm run start"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",

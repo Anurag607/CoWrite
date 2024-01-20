@@ -18,11 +18,8 @@ import { StyleInlineTool } from "editorjs-style";
 import Tooltip from "editorjs-tooltip";
 import { CloudImage } from "../../../cloudinary/CloudImage";
 import _ from "lodash/debounce";
-
-type propType = {
-  setContent: React.Dispatch<React.SetStateAction<string>>;
-  content: string;
-};
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setDocContent } from "@/redux/reducers/docContentSlice";
 
 const DEFAULT_INITIAL_DATA = () => {
   return {
@@ -41,8 +38,9 @@ const DEFAULT_INITIAL_DATA = () => {
 
 const EDITTOR_HOLDER_ID = "editorjs";
 
-const TextEditor = (props: propType) => {
-  const { setContent, content } = props;
+const TextEditor = () => {
+  const dispatch = useAppDispatch();
+  const docContent = useAppSelector((state) => state.docContent.docContent);
 
   const isInstance = React.useRef<EditorJS | null>(null);
 
@@ -76,17 +74,12 @@ const TextEditor = (props: propType) => {
   };
 
   const initEditor = () => {
-    let localContent = localStorage.getItem("content");
     const editor = new EditorJS({
       holder: EDITTOR_HOLDER_ID,
       data:
-        localContent === undefined || localContent === null
-          ? content !== undefined && content !== null && content.length > 0
-            ? JSON.parse(content)
-            : DEFAULT_INITIAL_DATA()
-          : localContent.length === 0
-          ? DEFAULT_INITIAL_DATA()
-          : JSON.parse(localContent),
+        docContent !== undefined && docContent !== null && docContent.length > 0
+          ? JSON.parse(docContent)
+          : DEFAULT_INITIAL_DATA(),
       onReady: () => {
         isInstance.current = editor;
       },
@@ -225,8 +218,7 @@ const TextEditor = (props: propType) => {
     async function contents() {
       const output = await editor.save();
       const outputString = JSON.stringify(output);
-      localStorage.setItem("content", outputString);
-      setContent(outputString);
+      dispatch(setDocContent(outputString));
     }
   };
 

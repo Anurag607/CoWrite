@@ -1,5 +1,4 @@
 import React from "react";
-import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import Cookie from "js-cookie";
 import { createDoc } from "@/queries/documentQueries";
@@ -11,11 +10,8 @@ const CustomEditor = dynamic(() => import("@/app/_components/TextEditor"), {
 });
 
 const DocumentEditor = () => {
-  const [content, Setcontent] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(null);
   const auth = Cookie.get("userDetails");
-
-  const router = useRouter();
 
   return (
     <>
@@ -25,7 +21,7 @@ const DocumentEditor = () => {
         <main className={``}>
           <div className={``}>
             <div className={``}>
-              {/* <CustomEditor setContent={Setcontent} content={content} /> */}
+              <CustomEditor />
             </div>
             <button
               className={``}
