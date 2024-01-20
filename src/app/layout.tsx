@@ -65,15 +65,15 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
           rel="icon"
-          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/logo.png`}
+          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/logo.ico`}
         />
         <link
           rel="shortcut icon"
-          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/logo.png`}
+          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/logo.ico`}
         />
         <link
           rel="apple-touch-icon"
-          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/logo.png`}
+          href={`${process.env.NEXT_PUBLIC_BASE_PATH}/logo.ico`}
         />
         <title>{"CoWrite"}</title>
       </head>
@@ -89,11 +89,11 @@ export default function RootLayout({
             <Suspense fallback={<LoaderSkeleton />}>
               <ErrorBoundaryWrapper>
                 <ScrollToTop _children={null} />
-                <div className="relative max-w-screen max-h-screen flex flex-row items-end justify-end bg-main">
+                <div className="relative max-w-screen max-h-screen flex flex-row items-end justify-end bg-main gap-x-3">
                   <Sidebar />
                   <div
                     className={classNames({
-                      "relative h-screen w-[calc(100vw_-_35px)] flex flex-col items-center justify-between":
+                      [`relative h-screen w-[calc(100vw_-_0px)] flex flex-col items-center justify-between`]:
                         true,
                       "bg-main": true,
                       "mobile:w-screen": true,

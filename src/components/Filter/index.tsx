@@ -37,7 +37,7 @@ const Filter = () => {
         className={classNames({
           "cursor-pointer": true,
           "bg-white": true,
-          "p-[0.15rem] rounded-md": true,
+          "py-[0.1rem] px-[0.15rem] rounded-md": true,
           "border-2 border-zinc-200": true,
           "mt-1": true,
         })}
@@ -53,7 +53,7 @@ const Filter = () => {
         className={classNames({
           "flex flex-col justify-start items-start pr-2.5 overflow-hidden":
             true,
-          "z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700":
+          "z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-neutral-800":
             true,
           "absolute top-[2.75rem] right-2": true,
           "transition-transform .3s ease-in-out md:-translate-x-0": true, //animations

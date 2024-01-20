@@ -21,7 +21,7 @@ const Search = () => {
     <div
       className={classNames({
         "relative flex items-center justify-center": true,
-        "lg:w-fit": true,
+        "lg:w-fit mr-1": true,
       })}
     >
       <label htmlFor="table-search" className="sr-only">
@@ -48,11 +48,11 @@ const Search = () => {
           id="table-search"
           className={classNames({
             "block p-2 pl-10 w-[105%] bg-white": true, //display, padding, width and bg styling
-            "text-sm text-gray-900": true, //text styling
+            "text-sm text-neutral-800": true, //text styling
             "border border-gray-300 rounded-lg": true, //border styling
             "focus:ring-blue-500 focus:border-blue-500": true, //on focus styling
             "dark:focus:ring-blue-500 dark:focus:border-blue-500": true, //on focus (dark) styling
-            "dark:bg-gray-700 dark:border-gray-600": true, // bg and border (dark) stylings
+            "dark:bg-neutral-800 dark:border-neutral-600": true, // bg and border (dark) stylings
             "dark:placeholder-gray-400 dark:text-white": true, //text (dark) styling
             "cursor-text": true,
           })}

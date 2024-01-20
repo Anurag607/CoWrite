@@ -59,8 +59,8 @@
 
   /* For Gradient */
   --gradient-1: #ffffff;
-  --gradient-2: #faaa73;
-  --gradient-3: #fef595;
+  --gradient-2: #37352F;
+  --gradient-3: #787774;
 
   /* Notion Color Scheme */
   --text-primary: #37352F;
@@ -124,7 +124,7 @@
   padding: 0;
   margin: 0;
   cursor: default;
-  font-family: 'Kanit', sans-serif;
+  font-family: 'Rubik', sans-serif;
   transition: all 0.2s ease-in-out !important;
 }
 
@@ -165,14 +165,14 @@ input[type=passwords] {
 
 ::-webkit-scrollbar-track {
   border-radius: 0.5rem;
-  background: var(--page-color);
+  background: var(--main);
   /* color of the tracking area */
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 0.5rem;
-  background-color: var(--color-1);
-  border: 2px solid var(--color-1);
+  background-color: var(--text-primary);
+  border: 2px solid var(--text-primary);
   /* creates padding around scroll thumb */
 }
 

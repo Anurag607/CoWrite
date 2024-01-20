@@ -11,6 +11,7 @@ import {
 } from "@/components";
 import { Alert } from "@/components";
 import classNames from "classnames";
+import Image from "next/image";
 
 export default function Home() {
   const { isFormOpen, isUpdateFormOpen } = useAppSelector(
@@ -62,10 +63,19 @@ export default function Home() {
 
   const NotFound = () => {
     return (
-      <div className="w-full h-full relative flex flex-col justify-center items-center gap-3">
-        <img src="/no_note_1.png" className="w-auto h-[20rem]" />
+      <div className="w-full h-full relative flex flex-col justify-center items-center gap-3 pr-[0rem] sm:pr-[4rem] md:pr-[6rem] mx-auto">
+        <Image
+          height={400}
+          width={400}
+          alt={"NotFound"}
+          src="/bw-nf.png"
+          className={classNames({
+            "brightness-[40%] dark:brightness-100 w-[17.5rem] xl:w-[20rem]":
+              true,
+          })}
+        />
         <div className="relative flex flex-col justify-center items-center gap-2 mobile:gap-1 mb-[2.5rem]">
-          <h4 className="text-primary font-bold text-2xl text-center mobile:text-[1.25rem]">
+          <h4 className="rubik text-primary font-bold text-2xl text-center mobile:text-[1.25rem]">
             Nothing here Yet!...
           </h4>
         </div>

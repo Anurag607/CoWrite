@@ -156,11 +156,12 @@ const AddFormPopup = () => {
                 setFormData({ ...formData, pinned: !formData.pinned })
               }
               className={classNames({
-                "px-2 flex gap-2 justify-center items-center mr-4 sm:mr-6 rounded-lg cursor-pointer":
+                "px-2 flex gap-2 justify-center items-center mr-4 sm:mr-6 rounded-lg cursor-pointer border":
                   true,
                 "bg-gray-900 text-[#e8e8e8] dark:bg-[#e8e8e8] dark:text-gray-900":
                   !formData.pinned,
-                "bg-transparent border dark:text-[#e8e8e8]": formData.pinned,
+                "bg-transparent dark:text-[#e8e8e8] border-primary":
+                  formData.pinned,
                 ripple: true,
               })}
             >
@@ -293,7 +294,8 @@ const AddFormPopup = () => {
                 "px-4 py-2 rounded-md focus:outline-none border": true,
                 "bg-gray-900 text-[#e8e8e8] dark:bg-[#e8e8e8] dark:text-gray-900":
                   true,
-                "hover:!bg-transparent hover:dark:text-[#e8e8e8]": true,
+                "hover:!bg-transparent hover:text-primary hover:border-primary hover:dark:text-[#e8e8e8]":
+                  true,
               })}
             >
               {!isLoading ? "Add" : <LoadingSpinner />}

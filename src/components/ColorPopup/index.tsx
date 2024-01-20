@@ -28,7 +28,7 @@ const ColorPopup = () => {
         "bg-gray-800 bg-opacity-50": true,
       })}
     >
-      <div className="relative bg-white mobile:w-[95vw] rounded-lg p-4 shadow-lg w-fit dark:bg-gray-900">
+      <div className="relative bg-white mobile:w-[95vw] rounded-lg p-4 shadow-lg w-fit dark:bg-neutral-800">
         {/* Close Button... */}
         <button
           className={classNames({
@@ -77,7 +77,8 @@ const ColorPopup = () => {
                 className={classNames({
                   "w-12 h-12": true,
                   "rounded-lg p-4 cursor-pointer": true,
-                  "border-2 border-[#f97316]": el === color,
+                  "border-[3px] border-[#37474f] dark:border-[#e8e8e8]":
+                    el === color,
                 })}
                 style={{ backgroundColor: el }}
               />
@@ -88,7 +89,13 @@ const ColorPopup = () => {
         <div className="mt-4 w-full flex items-center justify-end">
           <button
             onClick={handleSubmit}
-            className="bg-[#ff9b73] text-white px-4 py-2 rounded-md hover:bg-[#ffc972] focus:outline-none ripple dark:bg-blue-400 hover:dark:bg-blue-600"
+            className={classNames({
+              "px-4 py-2 rounded-md focus:outline-none border": true,
+              "bg-gray-900 text-[#e8e8e8] dark:bg-[#e8e8e8] dark:text-gray-900":
+                true,
+              "hover:!bg-transparent hover:text-primary hover:border-primary hover:dark:text-[#e8e8e8]":
+                true,
+            })}
           >
             Select
           </button>

@@ -15,14 +15,15 @@ const DashboardPage = ({ children }: { children: React.ReactNode }) => {
     >
       <div
         className={classNames({
-          "h-[8vh] w-full ml-10 z-[10000]": true,
-          "flex items-center justify-start gap-4": true,
+          "h-[8vh] w-full ml-10 z-[10000] relative": true,
+          "flex items-center justify-start": true,
           "filter-search-bar:justify-start": true,
           "filter-search-bar:ml-14": true,
           "mobile:-translate-x-5": true,
         })}
       >
         <Search />
+        <div className="h-full w-[0.5rem] bg-emerald-500" />
         <Filter />
       </div>
       {children}
