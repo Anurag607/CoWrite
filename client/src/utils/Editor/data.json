@@ -1,0 +1,114 @@
+{
+  "EDITTOR_HOLDER_ID": "editorjs",
+  "INITIAL_DATA": {
+    "time": 1587670998983,
+    "title": "Initial Doc",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "data": {
+          "placeholder": "Start Writing Here...",
+          "text": ""
+        }
+      }
+    ]
+  },
+  "SAMPLE_DATA": {
+    "time": 1587670998983,
+    "blocks": [
+      {
+        "type": "header",
+        "data": {
+          "text": "A heading"
+        }
+      },
+      {
+        "type": "paragraph",
+        "data": {
+          "text": "Paragraph with some <b>bold</b>&nbsp;text. And <a href=\"https://google.com\">some</a> <i>italic</i>&nbsp;text."
+        }
+      },
+      {
+        "type": "paragraph",
+        "data": {
+          "text": "A lovely editor I must say."
+        }
+      },
+      {
+        "type": "paragraph",
+        "data": {
+          "text": "Save new data."
+        }
+      },
+      {
+        "type": "table",
+        "data": {
+          "content": [
+            [
+              "Col 1",
+              "Col 2"
+            ],
+            [
+              "Cell 1",
+              "Cell 2"
+            ],
+            [
+              "Cell 3",
+              "Cell 4"
+            ]
+          ]
+        }
+      },
+      {
+        "type": "quote",
+        "data": {
+          "text": "A quote",
+          "caption": "With a caption",
+          "alignment": "left"
+        }
+      },
+      {
+        "type": "checklist",
+        "data": {
+          "items": [
+            {
+              "text": "Check 1",
+              "checked": false
+            },
+            {
+              "text": "Check 2",
+              "checked": true
+            },
+            {
+              "text": "Check 3",
+              "checked": false
+            }
+          ]
+        }
+      },
+      {
+        "type" : "image",
+        "data" : {
+          "file": {
+            "url" : "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg"
+          },
+          "caption" : "Roadster // tesla.com",
+          "withBorder" : false,
+          "withBackground" : false,
+          "stretched" : false
+        }
+      }
+    ],
+    "version": "2.17.0"
+  },
+  "SAMPLE_DOC": {
+    "title": "Lorem Ipsum",
+    "emailID": "anurag79002@gmail.com",
+    "descImg": "https://res.cloudinary.com/dotwawzhk/image/upload/v1699018938/os3x6edd7gsdgk1hj9ue.avif",
+    "color": "#E5E4E2",
+    "pinned": true,
+    "content": "{'time':1587670998983,'blocks':[{'type':'header','data':{'text':'A heading'}},{'type':'paragraph','data':{'text':'Paragraph with some <b>bold</b>&nbsp;text. And <a href=\\'https://google.com\\'>some</a> <i>italic</i>&nbsp;text.'}},{'type':'paragraph','data':{'text':'A lovely editor I must say.'}},{'type':'paragraph','data':{'text':'Save new data.'}},{'type':'table','data':{'content':[['Col 1','Col 2'],['Cell 1','Cell 2'],['Cell 3','Cell 4']]}},{'type':'quote','data':{'text':'A quote','caption':'With a caption','alignment':'left'}},{'type':'checklist','data':{'items':[{'text':'Check 1','checked':false},{'text':'Check 2','checked':true},{'text':'Check 3','checked':false}]}},{'type':'image','data':{'file':{'url':'https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg'},'caption':'Roadster // tesla.com','withBorder':false,'withBackground':false,'stretched':false}}]}",
+    "createdAt": "2024-01-23T16:09:44.557Z",
+    "updatedAt": "2024-01-23T16:09:44.557Z"
+  }
+}

@@ -1,0 +1,160 @@
+"use client";
+
+import React from "react";
+import { toast } from "react-toastify";
+import { Editor, LoadingSpinner } from "@/components";
+import { useLoadData, useSetData, dataKey } from "@/custom-hooks/editorHooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import axios from "axios";
+import { clearCurrentDoc } from "@/redux/reducers/docSlice";
+import { useRouter } from "next-nprogress-bar";
+import { useSearchParams } from "next/navigation";
+import { CloudImage } from "@/cloudinary/CloudImage";
+import {
+  openImageUploadIndicator,
+  closeImageUploadIndicator,
+  updateProgress,
+  clearProgress,
+} from "@/redux/reducers/imgUploadSlice";
+import { ToastConfig } from "@/utils/config";
+import io from "socket.io-client";
+
+let socket: any;
+
+const Page = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const editor = React.useRef(null);
+  const { data, loading } = useLoadData();
+  const disabled = editor === null || loading;
+  const { currentDoc, docAPI } = useAppSelector((state: any) => state.docs);
+  const { editorImages } = useAppSelector((state: any) => state.editorImage);
+
+  async function socketInitializer() {
+    await fetch("/api/socket");
+
+    socket = io();
+
+    socket.on("receive-message", (data: any) => {
+      // editor.current.data = data;
+    });
+  }
+
+  React.useEffect(() => {
+    searchParams.forEach((key, value) => {
+      if (value === "docId") {
+        localStorage.setItem("shouldReload", "true");
+      }
+    });
+    setIsLoading(loading);
+
+    socketInitializer();
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  useSetData(editor.current, data);
+
+  const createDoc = async () => {
+    setIsSubmitting(true);
+    let body = currentDoc;
+
+    // Gettting Editor Content from local Storage
+    let editorContent = localStorage.getItem(dataKey);
+
+    // Uploading Editor Image(s)...
+    editorImages.forEach(async (image: string, index: number) => {
+      if (image.includes("https://res.cloudinary.com/")) return;
+      dispatch(openImageUploadIndicator());
+      const editor_img_response = await fetch(image);
+      const editor_img_blob = await editor_img_response.blob();
+      const editor_img__file = new File([editor_img_blob], "image.png", {
+        type: "image/*",
+      });
+      const editor_img_form_data = new FormData();
+      editor_img_form_data.append("upload_preset", "nextbit");
+      editor_img_form_data.append(
+        "cloud_name",
+        process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME
+      );
+      editor_img_form_data.append(
+        "api_key",
+        process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY
+      );
+      editor_img_form_data.append(
+        "api_secret",
+        process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET
+      );
+      editor_img_form_data.append("file", editor_img__file);
+      const imageURL = await CloudImage(
+        editor_img_form_data,
+        dispatch,
+        updateProgress
+      );
+      editorContent.replace(
+        image,
+        imageURL
+          ? imageURL
+          : "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png"
+      );
+      dispatch(closeImageUploadIndicator());
+      dispatch(clearProgress());
+    });
+
+    // Updating the body and sending request...
+    body = {
+      ...body,
+      content: editorContent,
+      updatedAt: new Date().toISOString(),
+    };
+    const res = await axios.post(
+      docAPI === "create"
+        ? "/api/document/create"
+        : `/api/document/update/${currentDoc.id}`,
+      body
+    );
+    if (res.status === 200) {
+      toast.success("Document Saved", ToastConfig);
+      setIsSubmitting(false);
+      dispatch(clearCurrentDoc());
+      router.push("/");
+    } else {
+      toast.error("Failed to Save Document, Please try again!", ToastConfig);
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <main
+          className={`flex flex-col items-start gap-y-3 justify-start w-[96.5%] h-full overflow-hidden flex-[1]`}
+        >
+          <Editor editorRef={editor} data={data} />
+          <button
+            disabled={disabled || isLoading || isSubmitting}
+            className={`${
+              (isLoading || isSubmitting) &&
+              "cursor-default pointer-events-none"
+            } bg-primary text-main py-2 px-8 rounded-full mx-auto`}
+            onClick={(e) => {
+              e.preventDefault();
+              createDoc();
+            }}
+          >
+            {!isSubmitting ? "Save Document" : <LoadingSpinner />}
+          </button>
+        </main>
+      )}
+    </>
+  );
+};
+
+export default Page;

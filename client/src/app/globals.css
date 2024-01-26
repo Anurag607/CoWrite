@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Rubik:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Kanit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .masonry {
+    column-gap: 1.5em;
+    column-count: 1;
+  }
+
+  .masonry-sm {
+    column-gap: 1.5em;
+    column-count: 2;
+  }
+
+  .masonry-md {
+    column-gap: 1.5em;
+    column-count: 3;
+  }
+
+  .break-inside {
+    break-inside: avoid;
+  }
+}
+
+:root {
+  /* General */
+  --black: #141414;
+  --white: #f9f9f9;
+  --primary: #8266f6;
+  --secondary: #dafa72;
+  --box-shadow: #c5c5c5;
+  --text-shadow: #e8e8e8;
+  --main: #FFFFFF;
+  --sidebar: #F7F6F3;
+  --hover: #FFFFFF;
+  --selected: #F7F6F3;
+
+  /* For cards */
+  --light-purple: #e3dbfa;
+  --light-blue: #b8e3fa;
+  --light-green: #d4f6ed;
+  --light-yellow: #fff3cc;
+  --light-orange: #ffe1cc;
+  --light-pink: #fbe2f4;
+  --light-red: #f9d6d6;
+
+  /* For docs */
+  --color-1: #faaa73;
+  --color-2: #fef595;
+  --color-3: #bbf7d0;
+  --color-4: #bae6fd;
+  --color-5: #fecaca;
+
+  /* For Gradient */
+  --gradient-1: #ffffff;
+  --gradient-2: #37352F;
+  --gradient-3: #787774;
+
+  /* Notion Color Scheme */
+  --text-primary: #37352F;
+  --text-grey: #787774;
+  --text-brown: #9F6B53;
+  --text-orange: #D9730D;
+  --text-yellow: #CB912F;
+  --text-green: #448361;
+  --text-blue: #337EA9;
+  --text-purple: #9065B0;
+  --text-pink: #C14C8A;
+  --text-red: #D44C47;
+  --bg-grey: #F1F1EF;
+  --bg-brown: #F4EEEE;
+  --bg-orange: #FAEBDD;
+  --bg-yellow: #FBF3DB;
+  --bg-green: #EDF3EC;
+  --bg-blue: #E7F3F8;
+  --bg-purple: #F6F3F9;
+  --bg-pink: #FAF1F5;
+  --bg-red: #FDEBEC;
+  --bg-hover: #1b1b1b;
+}
+
+[data-theme="dark"] {
+  /* General */
+  --main: #202020;
+  --sidebar: #373C3F;
+  --hover: #3F4448;
+  --selected: #525252;
+
+  /* For Gradient */
+  --gradient-1: #111827;
+  --gradient-2: #2563eb;
+  --gradient-3: #a78bfa;
+
+  /* Notion Color Scheme */
+  --text-primary: #e8e8e8;
+  --text-grey: #979A9B;
+  --text-brown: #937264;
+  --text-orange: #FFA344;
+  --text-yellow: #FFDC49;
+  --text-green: #4DAB9A;
+  --text-blue: #529CCA;
+  --text-purple: #9A6DD7;
+  --text-pink: #E255A1;
+  --text-red: #FF7369;
+  --bg-grey: #454B4E;
+  --bg-brown: #594A3A;
+  --bg-orange: #594A3A;
+  --bg-yellow: #59563B;
+  --bg-green: #354C4B;
+  --bg-blue: #364954;
+  --bg-purple: #443F57;
+  --bg-pink: #533B4C;
+  --bg-red: #594141;
+  --bg-hover: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  cursor: default;
+  font-family: 'Rubik', sans-serif;
+  transition: all 0.2s ease-in-out !important;
+}
+
+html,
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow-x: hidden !important;
+  background-color: var(--main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer !important;
+}
+
+path,
+svg {
+  cursor: pointer !important;
+}
+
+input[type=text],
+input[type=number],
+input[type=passwords] {
+  cursor: text !important;
+}
+
+.shadow-top {
+  box-shadow: 0px -1px 2px 0 rgba(0, 0, 0, 0.075);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  border-radius: 0.5rem;
+  height: 0rem;
+  /* width of the horizontal  scrollbar */
+  width: 0.2rem;
+  /* width of the vertical scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 0.5rem;
+  background: var(--main);
+  /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0.5rem;
+  background-color: var(--text-primary);
+  border: 2px solid var(--text-primary);
+  /* creates padding around scroll thumb */
+}
+
+/* Input Color */
+.color_input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 75px;
+  height: 75px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.color_input::-webkit-color-swatch {
+  border-radius: 0.5rem;
+  border: none;
+}
+
+.color_input::-moz-color-swatch {
+  border-radius: 0.5rem;
+  border: none;
+}
+
+.gradient-background {
+  background: linear-gradient(300deg, var(--gradient-1), var(--gradient-2), var(--gradient-2));
+  background-size: 150% 150%;
+  animation: gradient-animation 3s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Fonts */
+.rubik {
+  font-family: 'Rubik', sans-serif;
+}
+
+.comfort {
+  font-family: 'Comfortaa', cursive;
+}
+
+.kanit {
+  font-family: 'Kanit', sans-serif;
+}
+
+.poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.DMSerifDisplay {
+  font-family: 'DM Serif Display', serif;
+}
+
+.mento {
+  font-family: 'Sacramento', cursive;
+}
+
+.bound {
+  font-family: 'Unbounded', cursive;
+}
+
+/* EditorJS */
+.codex-editor__redactor {
+  padding-bottom: 0rem !important;
+}
+
+.ce-toolbar__plus,
+.ce-toolbar__settings-btn {
+  color: var(--text-primary) !important;
+  transition: none !important;
+}
+
+.ce-toolbar__plus:hover,
+.ce-toolbar__settings-btn:hover {
+  color: #37352F !important;
+}
+
+.ce-block--selected {
+  border-radius: 0.5rem !important;
+  padding: 0.5rem !important;
+  background-color: var(--selected) !important;
+}
+
+.ce-block__content {
+  background-color: transparent !important;
+}
+
+::-moz-selection {
+  background-color: var(--selected) !important;
+}
+
+::selection {
+  background-color: var(--selected) !important;
+}

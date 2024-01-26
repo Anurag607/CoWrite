@@ -1,0 +1,13 @@
+.darkMode {
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer !important;
+  transition: all 0.3s;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
