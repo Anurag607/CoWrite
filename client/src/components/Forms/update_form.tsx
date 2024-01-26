@@ -38,6 +38,7 @@ const UpdateFormPopup = () => {
     title: focusedDoc.title,
     emailID: focusedDoc.owner,
     access: "",
+    revokeAccess: "",
     color: focusedDoc.color,
     pinned: focusedDoc.pinned,
     descImg: focusedDoc.descImg,
@@ -100,8 +101,12 @@ const UpdateFormPopup = () => {
       ...formData,
       access:
         formData.access.length > 0
-          ? [formData.access, ...focusedDoc.access]
-          : focusedDoc.access,
+          ? [formData.access, ...focusedDoc.access].filter(
+              (val: string) => val !== formData.revokeAccess
+            )
+          : focusedDoc.access.filter(
+              (val: string) => val !== formData.revokeAccess
+            ),
       descImg: imageURL,
     });
     if (res.status === 200) {
@@ -122,6 +127,7 @@ const UpdateFormPopup = () => {
       name: "Title",
       placeholder: "Title",
       type: "text",
+      isRequired: true,
       function: (e: React.ChangeEvent<HTMLInputElement>) =>
         setFormData({ ...formData, title: e.target.value }),
       value: formData.title,
@@ -131,6 +137,7 @@ const UpdateFormPopup = () => {
           name: "Give Access",
           placeholder: "Update Access",
           type: "email",
+          isRequired: false,
           function: (e: React.ChangeEvent<HTMLInputElement>) => {
             setFormData({
               ...formData,
@@ -277,7 +284,7 @@ const UpdateFormPopup = () => {
                       onChange={el.function}
                       value={el.value}
                       placeholder=" "
-                      required
+                      required={el.isRequired}
                     />
                     <label
                       htmlFor={el.name}
@@ -300,6 +307,67 @@ const UpdateFormPopup = () => {
                   </div>
                 );
               })}
+              {/* Access List */}
+              {focusedDoc.owner === authInstance.email ? (
+                <div className="relative mb-4 mt-2 w-full">
+                  <select
+                    id={"access_list"}
+                    className={classNames({
+                      "block px-2.5 pb-2.5 pt-4 w-full": true,
+                      "text-sm text-gray-900 bg-gray-100 dark:bg-neutral-700":
+                        true,
+                      "rounded-lg border-1 border-gray-900": true,
+                      "appearance-none dark:text-white cursor-text": true,
+                      "dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer":
+                        true,
+                    })}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setFormData({
+                        ...formData,
+                        revokeAccess: e.target.value,
+                      });
+                    }}
+                    value={formData.revokeAccess}
+                  >
+                    {["", ...focusedDoc.access].map((el: string, i: number) => {
+                      return (
+                        <option
+                          key={i}
+                          value={el}
+                          className={classNames({
+                            "text-sm text-primary bg-main kanit": true,
+                            "border-none outline-none": true,
+                          })}
+                        >
+                          {el}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <label
+                    htmlFor={"access_list"}
+                    className={classNames({
+                      "absolute top-2 left-1": true,
+                      "z-10 origin-[0] px-2": true,
+                      "peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500":
+                        true,
+                      "peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2":
+                        true,
+                      "peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4":
+                        true,
+                      "bg-transparent": true,
+                      "text-sm text-gray-500 dark:text-gray-400": true,
+                      "duration-300 transform -translate-y-4 scale-75": true,
+                    })}
+                  >
+                    {"Access List (Revoke Access)"}
+                  </label>
+                </div>
+              ) : (
+                <></>
+              )}
+              {/* Desc Image */}
               <div>
                 <input
                   type="file"
