@@ -29,6 +29,7 @@ const showError = (msg: string) => toast.error(msg, ToastConfig);
 const UpdateFormPopup = () => {
   const dispatch = useAppDispatch();
   const { docColor } = useAppSelector((state: any) => state.color);
+  const { authInstance } = useAppSelector((state: any) => state.auth);
   const { currentDoc, focusedDoc } = useAppSelector((state: any) => state.docs);
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +47,7 @@ const UpdateFormPopup = () => {
   });
 
   React.useEffect(() => {
-    // console.log(focusedDoc);
+    console.log(focusedDoc.owner, authInstance.email);
     localStorage.setItem(dataKey, JSON.stringify(focusedDoc.content));
     dispatch(setDocColor(focusedDoc.color));
   }, [focusedDoc]);
@@ -125,18 +126,20 @@ const UpdateFormPopup = () => {
         setFormData({ ...formData, title: e.target.value }),
       value: formData.title,
     },
-    {
-      name: "Give Access",
-      placeholder: "Update Access",
-      type: "email",
-      function: (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({
-          ...formData,
-          access: e.target.value,
-        });
-      },
-      value: formData.access,
-    },
+    focusedDoc.owner === authInstance.email
+      ? {
+          name: "Give Access",
+          placeholder: "Update Access",
+          type: "email",
+          function: (e: React.ChangeEvent<HTMLInputElement>) => {
+            setFormData({
+              ...formData,
+              access: e.target.value,
+            });
+          },
+          value: formData.access,
+        }
+      : null,
   ];
 
   const Pin = () => {
@@ -256,6 +259,7 @@ const UpdateFormPopup = () => {
           <div className="relative flex sm:flex-row h-fit overflow-scroll sm:overflow-hidden sm:h-fit flex-col items-start justify-start sm:justify-center w-full sm:gap-4">
             <div className={"relative w-full"}>
               {inputFields.map((el: (typeof inputFields)[0], i: number) => {
+                if (!el) return <></>;
                 return (
                   <div className="relative mb-4 mt-2 w-full" key={i}>
                     <input
