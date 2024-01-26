@@ -331,6 +331,7 @@ const UpdateFormPopup = () => {
                     value={formData.revokeAccess}
                   >
                     {["", ...focusedDoc.access].map((el: string, i: number) => {
+                      if (el === authInstance.email) return <></>;
                       return (
                         <option
                           key={i}
