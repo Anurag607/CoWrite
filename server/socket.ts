@@ -18,7 +18,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const server = http.createServer();
+const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -42,6 +42,10 @@ io.on("connection", (socket: any) => {
   });
 });
 
-app.listen(PORT, () => {
+app.get("/", (req: Request, res: Response) => {
+  res.send("<h3>Welcome To CoWrite Server!</h3>");
+});
+
+server.listen(PORT, () => {
   console.log(`Server running on http://${HOST}:${PORT}`);
 });
