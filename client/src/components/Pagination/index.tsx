@@ -87,6 +87,9 @@ const Pagination = ({ data, itemsPerPage }: PaginationProps) => {
                 <p className="text-gray-900 font-bold text-ellipsis overflow-hidden w-[85%] kanit">
                   {capitalize(item.title)}
                 </p>
+                <p className="text-neutral-900 opacity-75 text-xs text-ellipsis overflow-hidden w-[85%] kanit">
+                  {item.owner}
+                </p>
               </div>
               {/* Image... */}
               {item.descImg && !item.descImg.includes("blob:") ? (

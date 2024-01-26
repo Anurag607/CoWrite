@@ -47,7 +47,7 @@ const UpdateFormPopup = () => {
   });
 
   React.useEffect(() => {
-    console.log(focusedDoc.owner, authInstance.email);
+    // console.log(focusedDoc.owner, authInstance.email);
     localStorage.setItem(dataKey, JSON.stringify(focusedDoc.content));
     dispatch(setDocColor(focusedDoc.color));
   }, [focusedDoc]);
