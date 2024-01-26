@@ -10,7 +10,7 @@ export async function POST(request: Request, context: any) {
   const data = {
     title: body.title,
     owner: body.emailID,
-    access: [body.emailID],
+    access: body.access,
     descImg: body.descImg,
     color: body.color,
     pinned: body.pinned,

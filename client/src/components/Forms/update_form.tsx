@@ -22,20 +22,21 @@ import { CloudImage } from "@/cloudinary/CloudImage";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@/utils/config";
+import { format } from "path/posix";
 
 const showError = (msg: string) => toast.error(msg, ToastConfig);
 
 const UpdateFormPopup = () => {
   const dispatch = useAppDispatch();
-  const { currentDoc } = useAppSelector((state: any) => state.docs);
   const { docColor } = useAppSelector((state: any) => state.color);
-  const { focusedDoc } = useAppSelector((state: any) => state.docs);
+  const { currentDoc, focusedDoc } = useAppSelector((state: any) => state.docs);
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     id: focusedDoc._id,
     title: focusedDoc.title,
     emailID: focusedDoc.owner,
+    access: "",
     color: focusedDoc.color,
     pinned: focusedDoc.pinned,
     descImg: focusedDoc.descImg,
@@ -96,6 +97,10 @@ const UpdateFormPopup = () => {
 
     const res = await axios.post(`/api/document/update/${formData.id}`, {
       ...formData,
+      access:
+        formData.access.length > 0
+          ? [formData.access, ...focusedDoc.access]
+          : focusedDoc.access,
       descImg: imageURL,
     });
     if (res.status === 200) {
@@ -114,9 +119,23 @@ const UpdateFormPopup = () => {
   const inputFields = [
     {
       name: "Title",
+      placeholder: "Title",
+      type: "text",
       function: (e: React.ChangeEvent<HTMLInputElement>) =>
         setFormData({ ...formData, title: e.target.value }),
       value: formData.title,
+    },
+    {
+      name: "Give Access",
+      placeholder: "Update Access",
+      type: "email",
+      function: (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({
+          ...formData,
+          access: e.target.value,
+        });
+      },
+      value: formData.access,
     },
   ];
 
@@ -240,14 +259,14 @@ const UpdateFormPopup = () => {
                 return (
                   <div className="relative mb-4 mt-2 w-full" key={i}>
                     <input
-                      type="text"
+                      type={el.type}
                       id={el.name}
                       className={classNames({
                         "block px-2.5 pb-2.5 pt-4 w-full": true,
                         "text-sm text-gray-900 bg-gray-100 dark:bg-neutral-700":
                           true,
                         "rounded-lg border-1 border-gray-900": true,
-                        "appearance-none dark:text-white": true,
+                        "appearance-none dark:text-white cursor-text": true,
                         "dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer":
                           true,
                       })}
