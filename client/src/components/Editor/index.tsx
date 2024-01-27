@@ -83,6 +83,7 @@ const useEditor = (
       if (newUser.currentDocument === docId) dispatch(setClient(newUser.name));
     });
     socket.on("remove-clients", (newUser: any) => {
+      console.log("Removed Client", newUser);
       if (newUser.currentDocument === docId)
         dispatch(removeClient(newUser.name));
     });

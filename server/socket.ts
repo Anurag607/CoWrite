@@ -23,7 +23,7 @@ io.on("connection", (socket: any) => {
   socket.on(
     "updating-document",
     async ({ documentId, user }: { documentId: string; user: string }) => {
-      socket.join(documentId);
+      socket.join(documentId, { custom_id: user });
       console.log(
         `Socket connected: ${socket.id} in rooms:`,
         socket.rooms.keys()
