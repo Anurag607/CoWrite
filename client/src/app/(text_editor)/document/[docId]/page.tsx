@@ -30,6 +30,9 @@ const Page = () => {
   const { currentDoc, focusedDoc, docAPI } = useAppSelector(
     (state: any) => state.docs
   );
+  const { isImgUploading, progress } = useAppSelector(
+    (state: any) => state.image
+  );
   const { editorImages } = useAppSelector((state: any) => state.editorImage);
 
   React.useEffect(() => {
@@ -49,6 +52,36 @@ const Page = () => {
   const createDoc = async () => {
     setIsSubmitting(true);
     let body = currentDoc;
+    let imageURL = null;
+
+    // Uploading Description Image...
+    if (body.descImg.includes("blob:")) {
+      const response = await fetch(body.descImg);
+      const blob = await response.blob();
+      const new_file = new File([blob], "image.png", { type: "image/*" });
+      const form_data = new FormData();
+      form_data.append("upload_preset", "nextbit");
+      form_data.append(
+        "cloud_name",
+        process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME
+      );
+      form_data.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      form_data.append(
+        "api_secret",
+        process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET
+      );
+      form_data.append("file", new_file);
+      imageURL = await CloudImage(form_data, dispatch, updateProgress);
+      dispatch(closeImageUploadIndicator());
+      dispatch(clearProgress());
+    }
+
+    if (imageURL) {
+      body = {
+        ...body,
+        descImg: imageURL,
+      };
+    }
 
     // Gettting Editor Content from local Storage
     let editorContent = localStorage.getItem(dataKey);
@@ -92,13 +125,20 @@ const Page = () => {
       dispatch(clearProgress());
     });
 
+    if (editorContent.slice(0, 2) === '"{') {
+      editorContent = editorContent.slice(1, -1);
+    }
     // Updating the body and sending request...
     body = {
       ...body,
-      access: focusedDoc.access,
+      access:
+        focusedDoc.access === undefined
+          ? [focusedDoc.emailID]
+          : focusedDoc.access,
       content: editorContent,
       updatedAt: new Date().toISOString(),
     };
+    console.log(body);
     const res = await axios.post(
       docAPI === "create"
         ? "/api/document/create"
@@ -109,7 +149,7 @@ const Page = () => {
       toast.success("Document Saved", ToastConfig);
       setIsSubmitting(false);
       dispatch(clearCurrentDoc());
-      router.push("/");
+      router.push(`/dashboard/${authInstance._id}`);
     } else {
       toast.error("Failed to Save Document, Please try again!", ToastConfig);
       setIsSubmitting(false);
@@ -143,6 +183,14 @@ const Page = () => {
             {!isSubmitting ? "Save Document" : <LoadingSpinner />}
           </button>
         </main>
+      )}
+      {isImgUploading && (
+        <div className="fixed top-0 left-0 flex flex-col gap-4 items-center justify-center h-screen w-screen bg-zinc-800 bg-opacity-80 z-[100000] overflow-hidden">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-main" />
+          <h4 className="text-main font-bold text-2xl mobile:w-[15rem] text-center">{`Uploading Image ${Math.trunc(
+            progress
+          )}%...`}</h4>
+        </div>
       )}
     </>
   );

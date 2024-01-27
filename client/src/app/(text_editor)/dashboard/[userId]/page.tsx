@@ -74,37 +74,37 @@ export default function Page() {
     console.clear();
   };
 
+  const getData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `/api/document/read/${authInstance.email}`,
+        {
+          onUploadProgress: function (progressEvent: any) {
+            let percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            docProgress.current = percentCompleted;
+            console.log(percentCompleted);
+          },
+        }
+      );
+
+      if (typeof response.data.data !== "undefined") {
+        dispatch(setDocData(response.data.data));
+        dispatch(setBackupData(response.data.data));
+      }
+    } catch (error) {
+      console.log({ status: error.response.status, msg: error.message });
+    }
+    setIsLoading(false);
+  };
+
   React.useEffect(() => {
     if (!authInstance) {
       return;
     }
     cleanup();
-
-    const getData = async (user_email: string) => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(
-          `/api/document/read/${authInstance.email}`,
-          {
-            onUploadProgress: function (progressEvent: any) {
-              let percentCompleted = Math.round(
-                (progressEvent.loaded * 100) / progressEvent.total
-              );
-              docProgress.current = percentCompleted;
-              console.log(percentCompleted);
-            },
-          }
-        );
-
-        if (typeof response.data.data !== "undefined") {
-          dispatch(setDocData(response.data.data));
-          dispatch(setBackupData(response.data.data));
-        }
-      } catch (error) {
-        console.log({ status: error.response.status, msg: error.message });
-      }
-      setIsLoading(false);
-    };
 
     if (docData === undefined) {
       dispatch(clearDocData());
@@ -118,7 +118,7 @@ export default function Page() {
       location.reload();
       return;
     } else {
-      getData(authInstance.email);
+      getData();
       docProgress.current = 0;
     }
   }, []);
