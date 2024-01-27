@@ -139,21 +139,21 @@ const Page = () => {
       updatedAt: new Date().toISOString(),
     };
     console.log(body);
-    const res = await axios.post(
-      docAPI === "create"
-        ? "/api/document/create"
-        : `/api/document/update/${currentDoc.id}`,
-      body
-    );
-    if (res.status === 200) {
-      toast.success("Document Saved", ToastConfig);
-      setIsSubmitting(false);
-      dispatch(clearCurrentDoc());
-      router.push(`/dashboard/${authInstance._id}`);
-    } else {
-      toast.error("Failed to Save Document, Please try again!", ToastConfig);
-      setIsSubmitting(false);
-    }
+    // const res = await axios.post(
+    //   docAPI === "create"
+    //     ? "/api/document/create"
+    //     : `/api/document/update/${currentDoc.id}`,
+    //   body
+    // );
+    // if (res.status === 200) {
+    //   toast.success("Document Saved", ToastConfig);
+    //   setIsSubmitting(false);
+    //   dispatch(clearCurrentDoc());
+    //   router.push(`/dashboard/${authInstance._id}`);
+    // } else {
+    //   toast.error("Failed to Save Document, Please try again!", ToastConfig);
+    //   setIsSubmitting(false);
+    // }
   };
 
   return (
