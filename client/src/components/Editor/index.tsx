@@ -61,7 +61,7 @@ const useEditor = (
         if (typeof delta === "string") data = JSON.parse(delta);
         if (!data.hasOwnProperty("blocks")) data = JSON.parse(data);
         editorInstance.current.render(data);
-        editorRef.current.render(data);
+        // editorRef.current.render(data);
         console.log(data);
         console.log(JSON.stringify(data));
         console.log(delta);
