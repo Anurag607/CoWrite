@@ -35,11 +35,11 @@ io.on("connection", (socket: any) => {
         currentDocument: documentId,
       };
 
-      socket.broadcast.to(documentId).emit("update-clients", userData);
+      socket.broadcast.emit("update-clients", userData);
 
       socket.on("disconnect", () => {
         console.log(`Socket disconnected: ${socket.id}`);
-        socket.broadcast.to(documentId).emit("remove-clients", userData);
+        socket.broadcast.emit("remove-clients", userData);
       });
 
       socket.on("send-changes", (delta: any) => {
