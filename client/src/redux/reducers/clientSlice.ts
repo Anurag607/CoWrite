@@ -7,7 +7,14 @@ const clientSlice = createSlice({
   },
   reducers: {
     setClient: (state: any, action: PayloadAction<any>) => {
-      state.clients = [action.payload, ...state.clients];
+      let flag = false;
+      state.clients.map((client: any) => {
+        if (client.id === action.payload.id) {
+          flag = true;
+          return;
+        }
+      });
+      if (flag) state.clients = [...state.clients, action.payload];
       console.log(state.clients);
     },
     removeClient: (state: any, action: PayloadAction<any>) => {

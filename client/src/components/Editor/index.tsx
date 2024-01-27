@@ -103,6 +103,12 @@ const useEditor = (
       setSocket(socket);
     }
 
+    window.addEventListener("beforeunload", () => {
+      socket.disconnect();
+      dispatch(removeClient(userData.email));
+      setSocket(null);
+    });
+
     return () => {
       socket.disconnect();
       dispatch(removeClient(userData.email));
