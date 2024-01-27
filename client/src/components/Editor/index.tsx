@@ -10,16 +10,19 @@ import EditorJS, { ToolConstructable, ToolSettings } from "@editorjs/editorjs";
 import EDITOR_TOOLS from "@/utils/Editor/editorTools";
 import EditorData from "@/utils/Editor/data.json";
 import { dataKey } from "@/custom-hooks/editorHooks";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ImageTool from "@editorjs/image";
 import { updateEditorImages } from "@/redux/reducers/editorImgSlice";
 import io from "socket.io-client";
 import React from "react";
+import { setClient } from "@/redux/reducers/clientSlice";
 
 const useEditor = (
   toolsList: { [toolName: string]: ToolConstructable | ToolSettings<any> },
   { data, docId, editorRef }: any,
-  { setSocket, socket }: any
+  { setSocket, socket }: any,
+  userData: any,
+  dispatch: any
 ) => {
   let editorInstance = useRef<EditorJS | null>(null);
 
@@ -61,9 +64,6 @@ const useEditor = (
         if (typeof delta === "string") data = JSON.parse(delta);
         if (!data.hasOwnProperty("blocks")) data = JSON.parse(data);
         editorInstance.current.render(data);
-        console.log(data);
-        console.log(JSON.stringify(data));
-        console.log(delta);
         localStorage.setItem(dataKey, delta);
       })
       .catch((e: any) => console.error("ERROR editor render/cleanup", e));
@@ -73,7 +73,10 @@ const useEditor = (
   useEffect(() => {
     if (!socket || !editorInstance) return;
 
-    socket.emit("updating-document", docId);
+    socket.emit("updating-document", { docId: docId, user: userData.email });
+    socket.on("update-clients", (delta: any) => {
+      if (delta.room === docId) dispatch(setClient(delta.user));
+    });
     socket.on("receive-changes", handler);
     return () => socket.off("receive-changes", handler);
   }, [socket, editorInstance, docId]);
@@ -120,6 +123,7 @@ const useEditor = (
 
 const EditorContainer = ({ editorRef, children, docId, data }: any) => {
   const dispatch = useAppDispatch();
+  const { authInstance } = useAppSelector((state: any) => state.auth);
   const [socket, setSocket] = React.useState<any>(null);
 
   const TOOLS_LIST = {
@@ -146,7 +150,9 @@ const EditorContainer = ({ editorRef, children, docId, data }: any) => {
   useEditor(
     TOOLS_LIST as any,
     { data, docId, editorRef },
-    { setSocket, socket }
+    { setSocket, socket },
+    authInstance,
+    dispatch
   );
 
   return (

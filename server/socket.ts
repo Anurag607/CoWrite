@@ -20,18 +20,23 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket: any) => {
-  socket.on("updating-document", async (documentId: string) => {
-    socket.join(documentId);
-    console.log(
-      `Socket connected: ${socket.id} in rooms:`,
-      socket.rooms.keys()
-    );
+  socket.on(
+    "updating-document",
+    async ({ documentId, user }: { documentId: string; user: string }) => {
+      socket.join(documentId);
+      console.log(
+        `Socket connected: ${socket.id} in rooms:`,
+        socket.rooms.keys()
+      );
 
-    socket.on("send-changes", (delta: any) => {
-      // console.log(`Changes from ${socket.id} : `, delta);
-      socket.broadcast.emit("receive-changes", delta);
-    });
-  });
+      socket.broadcast.emit("update-clients", { user: user, room: documentId });
+
+      socket.on("send-changes", (delta: any) => {
+        // console.log(`Changes from ${socket.id} : `, delta);
+        socket.broadcast.emit("receive-changes", delta);
+      });
+    }
+  );
 });
 
 server.listen(PORT, () => {

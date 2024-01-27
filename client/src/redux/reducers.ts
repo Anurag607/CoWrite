@@ -14,6 +14,7 @@ import darkModeSlice from "./reducers/darkModeSlice";
 import editorImgSlice from "./reducers/editorImgSlice";
 import editorSlice from "./reducers/editorSlice";
 import authSlice from "./reducers/authSlice";
+import clientSlice from "./reducers/clientSlice";
 
 export default combineReducers({
   menu: menuSlice,
@@ -31,4 +32,5 @@ export default combineReducers({
   editorImage: editorImgSlice,
   editor: editorSlice,
   auth: authSlice,
+  client: clientSlice,
 });
