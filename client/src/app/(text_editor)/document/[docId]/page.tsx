@@ -143,16 +143,27 @@ const Page = () => {
       updatedAt: new Date().toISOString(),
     };
     // console.log(body);
-    const res = await axios.post(
+    const res = await fetch(
       docAPI === "create"
         ? "/api/document/create"
         : `/api/document/update/${currentDoc.id}`,
-      body
+      {
+        method: docAPI === "create" ? "POST" : "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
     );
-    if (res.status === 200) {
+    const data = await res.json();
+    if (data.status === 202) {
       toast.success("Document Saved", ToastConfig);
       setIsSubmitting(false);
       dispatch(clearCurrentDoc());
+      router.push(`/dashboard/${authInstance._id}`);
+    } else if (data.status === 404 || data.status === 401) {
+      toast.error(data.message, ToastConfig);
+      setIsSubmitting(false);
       router.push(`/dashboard/${authInstance._id}`);
     } else {
       toast.error("Failed to Save Document, Please try again!", ToastConfig);

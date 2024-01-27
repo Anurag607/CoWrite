@@ -19,10 +19,8 @@ import {
   updateProgress,
 } from "@/redux/reducers/imgUploadSlice";
 import { CloudImage } from "@/cloudinary/CloudImage";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@/utils/config";
-import { format } from "path/posix";
 
 const showError = (msg: string) => toast.error(msg, ToastConfig);
 
