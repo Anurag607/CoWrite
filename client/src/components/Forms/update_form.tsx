@@ -114,7 +114,7 @@ const UpdateFormPopup = () => {
       }),
     });
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     if (data.status === 202) {
       toast.success("Document Saved", ToastConfig);
       dispatch(clearCurrentDoc());
