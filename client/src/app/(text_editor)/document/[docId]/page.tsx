@@ -125,6 +125,8 @@ const Page = () => {
       dispatch(clearProgress());
     });
 
+    localStorage.setItem(dataKey, editorContent);
+
     // Updating the body and sending request...
     body = {
       ...body,
@@ -132,25 +134,25 @@ const Page = () => {
         focusedDoc.access === undefined
           ? [focusedDoc.emailID]
           : focusedDoc.access,
-      content: editorContent,
+      content: localStorage.getItem(dataKey),
       updatedAt: new Date().toISOString(),
     };
-    console.log(body);
-    // const res = await axios.post(
-    //   docAPI === "create"
-    //     ? "/api/document/create"
-    //     : `/api/document/update/${currentDoc.id}`,
-    //   body
-    // );
-    // if (res.status === 200) {
-    //   toast.success("Document Saved", ToastConfig);
-    //   setIsSubmitting(false);
-    //   dispatch(clearCurrentDoc());
-    //   router.push(`/dashboard/${authInstance._id}`);
-    // } else {
-    //   toast.error("Failed to Save Document, Please try again!", ToastConfig);
-    //   setIsSubmitting(false);
-    // }
+    // console.log(body);
+    const res = await axios.post(
+      docAPI === "create"
+        ? "/api/document/create"
+        : `/api/document/update/${currentDoc.id}`,
+      body
+    );
+    if (res.status === 200) {
+      toast.success("Document Saved", ToastConfig);
+      setIsSubmitting(false);
+      dispatch(clearCurrentDoc());
+      router.push(`/dashboard/${authInstance._id}`);
+    } else {
+      toast.error("Failed to Save Document, Please try again!", ToastConfig);
+      setIsSubmitting(false);
+    }
   };
 
   return (
