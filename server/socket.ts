@@ -32,7 +32,7 @@ io.on("connection", (socket: any) => {
       const userData = {
         id: socket.id,
         name: user,
-        room: documentId,
+        currentDocument: documentId,
       };
 
       socket.broadcast.emit("update-clients", userData);
