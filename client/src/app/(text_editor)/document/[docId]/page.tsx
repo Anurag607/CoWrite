@@ -59,6 +59,7 @@ const Page = () => {
 
     // Uploading Description Image...
     if (body.descImg.includes("blob:")) {
+      dispatch(openImageUploadIndicator());
       const response = await fetch(body.descImg);
       const blob = await response.blob();
       const new_file = new File([blob], "image.png", { type: "image/*" });
