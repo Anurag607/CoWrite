@@ -81,7 +81,6 @@ const useEditor = (
       user: userData.email,
     });
     socket.on("update-clients", (newUser: any) => {
-      alert(`Adding: ${newUser.name}`);
       if (newUser.currentDocument === docId) dispatch(setClient(newUser.name));
     });
     socket.on("disconnect", (newUser: any) => {
@@ -94,7 +93,6 @@ const useEditor = (
       });
     });
     socket.on("remove-clients", (newUser: any) => {
-      alert(`Removing: ${newUser.name}`);
       if (newUser.currentDocument === docId)
         dispatch(removeClient(newUser.name));
     });
