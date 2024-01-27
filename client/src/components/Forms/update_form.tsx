@@ -115,6 +115,7 @@ const UpdateFormPopup = () => {
       }),
     });
     const data = await res.json();
+    console.log(data);
     if (data.status === 202) {
       toast.success("Document Saved", ToastConfig);
       dispatch(clearCurrentDoc());
@@ -346,7 +347,7 @@ const UpdateFormPopup = () => {
                     value={formData.revokeAccess}
                   >
                     {["", ...focusedDoc.access].map((el: string, i: number) => {
-                      if (el === authInstance.email) return <></>;
+                      if (el === authInstance.email) return null;
                       return (
                         <option
                           key={i}
