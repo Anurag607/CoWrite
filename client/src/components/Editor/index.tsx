@@ -73,7 +73,10 @@ const useEditor = (
   useEffect(() => {
     if (!socket || !editorInstance) return;
 
-    socket.emit("updating-document", { docId: docId, user: userData.email });
+    socket.emit("updating-document", {
+      documentId: docId,
+      user: userData.email,
+    });
     socket.on("update-clients", (newUser: any) => {
       console.log("UpdateClients: ", newUser);
       // if (delta.room === docId) dispatch(setClient(delta.user));
