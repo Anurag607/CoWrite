@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { Editor, LoadingSpinner } from "@/components";
 import { useLoadData, useSetData, dataKey } from "@/custom-hooks/editorHooks";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import axios from "axios";
 import { clearCurrentDoc } from "@/redux/reducers/docSlice";
 import { useRouter } from "next-nprogress-bar";
 import { useSearchParams } from "next/navigation";
