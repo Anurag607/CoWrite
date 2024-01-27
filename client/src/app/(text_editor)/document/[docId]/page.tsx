@@ -132,7 +132,7 @@ const Page = () => {
         focusedDoc.access === undefined
           ? [focusedDoc.emailID]
           : focusedDoc.access,
-      content: editorContent,
+      content: localStorage.getItem(dataKey),
       updatedAt: new Date().toISOString(),
     };
     console.log(body);
