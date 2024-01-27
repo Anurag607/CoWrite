@@ -88,12 +88,6 @@ const useEditor = (
   useEffect(() => {
     if (!socket) {
       socket = io(process.env.NEXT_PUBLIC_RENDER_SERVER);
-      socket.on("connect", () => {
-        console.log(`Socket connected: ${socket.id} in room: ${docId}`);
-      });
-      socket.on("disconnect", () => {
-        console.log(`Socket: ${socket.id} room ${docId}`);
-      });
       setSocket(socket);
     }
 
