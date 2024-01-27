@@ -79,7 +79,7 @@ const useEditor = (
     });
     socket.on("update-clients", (newUser: any) => {
       console.log("UpdateClients: ", newUser);
-      // if (delta.room === docId) dispatch(setClient(delta.user));
+      if (newUser.currentDocument === docId) dispatch(setClient(newUser.name));
     });
     socket.on("receive-changes", handler);
     return () => socket.off("receive-changes", handler);
