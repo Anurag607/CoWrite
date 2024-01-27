@@ -76,7 +76,6 @@ export default function Page() {
 
   React.useEffect(() => {
     if (!authInstance) {
-      router.push("/");
       return;
     }
     cleanup();

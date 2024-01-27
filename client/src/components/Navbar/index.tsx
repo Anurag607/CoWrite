@@ -20,7 +20,7 @@ const Navbar = () => {
 
   React.useEffect(() => {
     if (!authInstance) {
-      router.push(`/login`);
+      router.push(`/`);
     }
   }, [authInstance]);
 

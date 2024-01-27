@@ -22,6 +22,7 @@ const Page = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
+  const { authInstance } = useAppSelector((state: any) => state.auth);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [editor, setEditor] = React.useState<any>(null);
@@ -31,6 +32,9 @@ const Page = () => {
   const { editorImages } = useAppSelector((state: any) => state.editorImage);
 
   React.useEffect(() => {
+    if (!authInstance) {
+      return;
+    }
     searchParams.forEach((key, value) => {
       if (value === "docId") {
         localStorage.setItem("shouldReload", "true");
