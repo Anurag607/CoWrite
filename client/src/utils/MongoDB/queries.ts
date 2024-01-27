@@ -42,10 +42,19 @@ export const insertEntry = async (collectionName: string, data: any) => {
 export const updateEntry = async (
   collectionName: string,
   docID: string,
-  updatedData: any
+  updatedData: any,
+  user_emailId: any
 ) => {
   const db = client.db(database);
   const collection = db.collection(collectionName);
+  const document = await collection.findOne({
+    _id: new ObjectId(docID),
+  });
+  if (!document) return { status: 404, message: "Not Found" };
+  if (document.hasOwnProperty("access")) {
+    if (!document.access.includes(user_emailId))
+      return { status: 401, message: "Unauthorized" };
+  }
   const result = await collection.updateOne(
     {
       _id: new ObjectId(docID),

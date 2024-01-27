@@ -20,14 +20,31 @@ export async function POST(request: Request, context: any) {
   };
   try {
     console.log("params", params);
-    const document = await updateEntry("documents", params.docID, data);
+    const response: any = await updateEntry(
+      "documents",
+      params.docID,
+      data,
+      body.user
+    );
+    if (document.hasOwnProperty("status")) {
+      if (response.status === 404)
+        return NextResponse.json({
+          status: 404,
+          message: "Document not Found!",
+        });
+      if (response.status === 401)
+        return NextResponse.json({
+          status: 401,
+          message: "You are not allowed to access this document.",
+        });
+    }
     // const document = await prisma.documents.update({
     //   where: {
     //     id: params.id,
     //   },
     //   data: body,
     // });
-    return NextResponse.json({ data: document });
+    return NextResponse.json({ status: 202, data: response });
   } catch (err: any) {
     return NextResponse.json({ msg: err.message });
   }

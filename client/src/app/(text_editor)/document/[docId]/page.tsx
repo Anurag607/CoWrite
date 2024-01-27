@@ -134,6 +134,7 @@ const Page = () => {
     // Updating the body and sending request...
     body = {
       ...body,
+      user: authInstance.email,
       access:
         focusedDoc.access === undefined
           ? [focusedDoc.emailID]

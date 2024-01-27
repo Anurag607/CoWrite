@@ -97,21 +97,34 @@ const UpdateFormPopup = () => {
 
     dispatch(setCurrentDoc(formData));
 
-    const res = await axios.post(`/api/document/update/${formData.id}`, {
-      ...formData,
-      access:
-        formData.access.length > 0
-          ? [formData.access, ...focusedDoc.access].filter(
-              (val: string) => val !== formData.revokeAccess
-            )
-          : focusedDoc.access.filter(
-              (val: string) => val !== formData.revokeAccess
-            ),
-      descImg: imageURL,
+    const res = await fetch(`/api/document/update/${formData.id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...formData,
+        user: authInstance.email,
+        access:
+          formData.access.length > 0
+            ? [formData.access, ...focusedDoc.access].filter(
+                (val: string) => val !== formData.revokeAccess
+              )
+            : focusedDoc.access.filter(
+                (val: string) => val !== formData.revokeAccess
+              ),
+        descImg: imageURL,
+      }),
     });
-    if (res.status === 200) {
+    const data = await res.json();
+    if (data.status === 202) {
       toast.success("Document Saved", ToastConfig);
       dispatch(clearCurrentDoc());
+      setIsLoading(false);
+      handleCloseForm();
+      location.reload();
+    } else if (data.status === 404 || data.status === 401) {
+      showError(data.message);
       setIsLoading(false);
       handleCloseForm();
       location.reload();
