@@ -53,7 +53,7 @@ const Page = () => {
   useSetData(editor.current, data);
 
   const createDoc = async () => {
-    // setIsSubmitting(true);
+    setIsSubmitting(true);
     let body = currentDoc;
     let imageURL = null;
 
