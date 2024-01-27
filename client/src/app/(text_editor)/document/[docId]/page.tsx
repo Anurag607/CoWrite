@@ -147,7 +147,7 @@ const Page = () => {
         ? "/api/document/create"
         : `/api/document/update/${currentDoc.id}`,
       {
-        method: docAPI === "create" ? "POST" : "PUT",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
