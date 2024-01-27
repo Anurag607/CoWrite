@@ -53,6 +53,7 @@ const useEditor = (
 
   // Socket Event Handler...
   const handler = (delta: any) => {
+    if (editorInstance.current === null) return;
     editorInstance.current.isReady
       .then(() => {
         editorInstance.current.render(delta);

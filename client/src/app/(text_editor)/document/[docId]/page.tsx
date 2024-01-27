@@ -27,8 +27,9 @@ const Page = () => {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [editor, setEditor] = React.useState<any>(null);
   const { data, loading } = useLoadData();
-  const disabled = editor === null || loading;
-  const { currentDoc, docAPI } = useAppSelector((state: any) => state.docs);
+  const { currentDoc, focusedDoc, docAPI } = useAppSelector(
+    (state: any) => state.docs
+  );
   const { editorImages } = useAppSelector((state: any) => state.editorImage);
 
   React.useEffect(() => {
@@ -94,6 +95,7 @@ const Page = () => {
     // Updating the body and sending request...
     body = {
       ...body,
+      access: focusedDoc.access,
       content: editorContent,
       updatedAt: new Date().toISOString(),
     };
@@ -124,7 +126,7 @@ const Page = () => {
         >
           <Editor editorRef={setEditor} docId={currentDoc.id} data={data} />
           <button
-            disabled={disabled || isLoading || isSubmitting}
+            disabled={isLoading || isSubmitting}
             className={`${
               (isLoading || isSubmitting) &&
               "cursor-default pointer-events-none"
