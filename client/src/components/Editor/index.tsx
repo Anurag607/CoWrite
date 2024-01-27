@@ -105,11 +105,6 @@ const useEditor = (
       setSocket(socket);
     }
 
-    window.addEventListener("beforeunload", () => {
-      socket.disconnect();
-      setSocket(null);
-    });
-
     return () => {
       socket.disconnect();
       setSocket(null);
