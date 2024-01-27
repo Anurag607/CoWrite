@@ -139,6 +139,7 @@ const Page = () => {
       updatedAt: new Date().toISOString(),
     };
     console.log(body);
+    console.log(localStorage.getItem(dataKey));
     // const res = await axios.post(
     //   docAPI === "create"
     //     ? "/api/document/create"
