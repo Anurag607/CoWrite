@@ -34,8 +34,10 @@ import {
 } from "@/redux/reducers/imgUploadSlice";
 import { dataKey } from "@/custom-hooks/editorHooks";
 import { destroyEditorInstance } from "@/redux/reducers/editorSlice";
+import { useRouter } from "next-nprogress-bar";
 
 export default function Page() {
+  const router = useRouter();
   const { isFormOpen, isUpdateFormOpen } = useAppSelector(
     (state: any) => state.form
   );
@@ -73,6 +75,10 @@ export default function Page() {
   };
 
   React.useEffect(() => {
+    if (!authInstance) {
+      router.push("/");
+      return;
+    }
     cleanup();
 
     const getData = async (user_email: string) => {

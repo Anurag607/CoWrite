@@ -22,6 +22,7 @@ import OffCanvasPopup from "./OffCanvasPopup";
 const Editor = dynamic<{
   editorRef: any;
   children?: any;
+  docId: string;
   data: any;
 }>(() => import("./Editor") as any, {
   ssr: false,

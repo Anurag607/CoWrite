@@ -1,3 +1,10 @@
+/**
+ *
+ * @param {EditorJS.Tool[]} toolsList
+ * @param {*} param1
+ * @param {EditorJS.EditorConfig} options
+ */
+
 import { useEffect, useRef } from "react";
 import EditorJS, { ToolConstructable, ToolSettings } from "@editorjs/editorjs";
 import EDITOR_TOOLS from "@/utils/Editor/editorTools";
@@ -6,23 +13,19 @@ import { dataKey } from "@/custom-hooks/editorHooks";
 import { useAppDispatch } from "@/redux/hooks";
 import ImageTool from "@editorjs/image";
 import { updateEditorImages } from "@/redux/reducers/editorImgSlice";
-
-/**
- *
- * @param {EditorJS.Tool[]} toolsList
- * @param {*} param1
- * @param {EditorJS.EditorConfig} options
- */
+import io from "socket.io-client";
+import React from "react";
 
 const useEditor = (
   toolsList: { [toolName: string]: ToolConstructable | ToolSettings<any> },
-  { data, editorRef }: any,
-  dispatch: any
+  { data, docId, editorRef }: any,
+  { setSocket, socket }: any
 ) => {
+  let editor: any = null;
   const editorInstance = useRef<EditorJS | null>(null);
-
+  // Function for Initializing Editor...
   const initEditor = () => {
-    const editor = new EditorJS({
+    editor = new EditorJS({
       holder: EditorData.EDITTOR_HOLDER_ID,
       tools: toolsList,
       data: data || {},
@@ -30,7 +33,6 @@ const useEditor = (
       defaultBlock: "paragraph",
       autofocus: false,
       onReady: () => {
-        // editorInstance.current = editor;
         console.count("READY callback");
       },
       onChange: () => {
@@ -38,14 +40,64 @@ const useEditor = (
         contents();
       },
     });
-
-    const contents = async () => {
-      const output = await editor.save();
-      const outputString = JSON.stringify(output);
-      localStorage.setItem(dataKey, outputString);
-    };
   };
 
+  // Funcion for saving Editor Contents...
+  const contents = async () => {
+    if (!editor) return;
+    const output = await editor.save();
+    const outputString = JSON.stringify(output);
+    localStorage.setItem(dataKey, outputString);
+    socket.emit("send-changes", outputString);
+  };
+
+  // Socket Event Handler...
+  const handler = (delta: any) => {
+    editorInstance.current.isReady
+      .then(() => {
+        editorInstance.current.render(delta);
+      })
+      .catch((e: any) => console.error("ERROR editor render/cleanup", e));
+  };
+
+  // Socket Connections...
+  useEffect(() => {
+    if (!socket || !editorInstance) return;
+
+    socket.emit("updating-document", docId);
+    socket.on("receive-changes", handler);
+    return () => socket.off("receive-changes", handler);
+  }, [socket, editorInstance, docId]);
+
+  // Setting up Editor Instance...
+  useEffect(() => {
+    if (!editorInstance.current) return;
+    if (editorRef) {
+      editorRef(editorInstance.current);
+      socket.emit("updating-document", docId);
+    }
+  }, [editorInstance, editorRef]);
+
+  // Initializing Socket and Cleanup...
+  useEffect(() => {
+    if (!socket) {
+      socket = io("http://localhost:8000");
+      socket.on("connect", () => {
+        console.log(socket.id);
+      });
+      socket.on("disconnect", () => {
+        console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+      });
+      setSocket(socket);
+    }
+
+    return () => {
+      socket.disconnect();
+      setSocket(null);
+    };
+  }, []);
+
+  // Initializing Editor & Cleanup...
   useEffect(() => {
     if (!editorInstance.current) initEditor();
 
@@ -55,23 +107,18 @@ const useEditor = (
         .then(() => {
           editorInstance.current.destroy();
           editorInstance.current = null;
+          editorRef(null);
         })
         .catch((e: any) => console.error("ERROR editor cleanup", e));
     };
   }, [toolsList]);
 
-  useEffect(() => {
-    if (!editorInstance.current) return;
-    if (editorRef.current) {
-      editorRef.current = editorInstance.current;
-    }
-  }, [editorInstance, editorRef]);
-
   return { editor: editorInstance.current };
 };
 
-const EditorContainer = ({ editorRef, children, data }: any) => {
+const EditorContainer = ({ editorRef, children, docId, data }: any) => {
   const dispatch = useAppDispatch();
+  const [socket, setSocket] = React.useState<any>(null);
 
   const TOOLS_LIST = {
     ...EDITOR_TOOLS,
@@ -94,7 +141,11 @@ const EditorContainer = ({ editorRef, children, data }: any) => {
     },
   };
 
-  useEditor(TOOLS_LIST as any, { data, editorRef }, dispatch);
+  useEditor(
+    TOOLS_LIST as any,
+    { data, docId, editorRef },
+    { setSocket, socket }
+  );
 
   return (
     <>

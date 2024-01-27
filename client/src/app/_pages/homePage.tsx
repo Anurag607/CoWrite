@@ -15,7 +15,7 @@ const HomePage = ({ children }: { children: React.ReactNode }) => {
     >
       <div
         className={classNames({
-          "h-[8vh] mobile:w-screen w-full z-[10000]": true,
+          "h-[8vh] mobile:w-screen w-full": true,
           "flex items-start justify-start gap-4": true,
           "mobile:justify-center": true,
         })}

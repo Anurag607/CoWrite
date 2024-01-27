@@ -17,9 +17,6 @@ import {
   clearProgress,
 } from "@/redux/reducers/imgUploadSlice";
 import { ToastConfig } from "@/utils/config";
-import io from "socket.io-client";
-
-let socket: any;
 
 const Page = () => {
   const router = useRouter();
@@ -27,21 +24,11 @@ const Page = () => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const editor = React.useRef(null);
+  const [editor, setEditor] = React.useState<any>(null);
   const { data, loading } = useLoadData();
   const disabled = editor === null || loading;
   const { currentDoc, docAPI } = useAppSelector((state: any) => state.docs);
   const { editorImages } = useAppSelector((state: any) => state.editorImage);
-
-  async function socketInitializer() {
-    await fetch("/api/socket");
-
-    socket = io();
-
-    socket.on("receive-message", (data: any) => {
-      // editor.current.data = data;
-    });
-  }
 
   React.useEffect(() => {
     searchParams.forEach((key, value) => {
@@ -50,15 +37,9 @@ const Page = () => {
       }
     });
     setIsLoading(loading);
-
-    socketInitializer();
-
-    return () => {
-      socket.disconnect();
-    };
   }, []);
 
-  useSetData(editor.current, data);
+  useSetData(editor, data);
 
   const createDoc = async () => {
     setIsSubmitting(true);
@@ -137,7 +118,7 @@ const Page = () => {
         <main
           className={`flex flex-col items-start gap-y-3 justify-start w-[96.5%] h-full overflow-hidden flex-[1]`}
         >
-          <Editor editorRef={editor} data={data} />
+          <Editor editorRef={setEditor} docId={currentDoc.id} data={data} />
           <button
             disabled={disabled || isLoading || isSubmitting}
             className={`${

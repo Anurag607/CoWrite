@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "clear-dependencies": "rm -rf node_modules package-lock.json && npm install",
-    "clear": "rm -rf build .next prisma && npm run clear-dependencies && clear",
+    "clear": "rm -rf build .next && npm run clear-dependencies && clear",
     "prod": "rm -rf build .next && npm run build && npm run start",
     "init-prisma": "npx prisma init --datasource-provider mongodb",
     "update-prisma": "npx prisma generate",
