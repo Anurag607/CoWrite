@@ -35,7 +35,8 @@ io.on("connection", (socket: any) => {
         currentDocument: documentId,
       };
 
-      socket.broadcast.emit("update-clients", userData);
+      console.log(userData);
+      socket.broadcast.to(documentId).emit("update-clients", userData);
 
       socket.on("send-changes", (delta: any) => {
         // console.log(`Changes from ${socket.id} : `, delta);
