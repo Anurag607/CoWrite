@@ -16,6 +16,8 @@ import { updateEditorImages } from "@/redux/reducers/editorImgSlice";
 import io from "socket.io-client";
 import React from "react";
 import { removeClient, setClient } from "@/redux/reducers/clientSlice";
+import { CloudImage } from "@/cloudinary/CloudImage";
+import { updateProgress } from "@/redux/reducers/imgUploadSlice";
 
 const useEditor = (
   toolsList: { [toolName: string]: ToolConstructable | ToolSettings<any> },
@@ -146,15 +148,36 @@ const EditorContainer = ({ editorRef, children, docId, data }: any) => {
       class: ImageTool,
       config: {
         uploader: {
-          uploadByFile(file: File) {
-            const blobUrl = URL.createObjectURL(file);
-            dispatch(updateEditorImages(blobUrl));
-            return Promise.resolve({
-              success: 1,
-              file: {
-                url: blobUrl,
-              },
-            });
+          async uploadByFile(file: File) {
+            const formData = new FormData();
+            formData.append("upload_preset", "nextbit");
+            formData.append(
+              "cloud_name",
+              process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME
+            );
+            formData.append(
+              "api_key",
+              process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY
+            );
+            formData.append(
+              "api_secret",
+              process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET
+            );
+            formData.append("file", file);
+
+            return CloudImage(formData, dispatch, updateProgress).then(
+              (imageURL) => {
+                dispatch(updateEditorImages(imageURL));
+                return {
+                  success: 1,
+                  file: {
+                    url: imageURL
+                      ? imageURL
+                      : "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png",
+                  },
+                };
+              }
+            );
           },
         },
       },

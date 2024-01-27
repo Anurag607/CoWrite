@@ -6,8 +6,8 @@ const editorImgSlice = createSlice({
     editorImages: [],
   },
   reducers: {
-    updateEditorImages: (state, action: PayloadAction<string>) => {
-      state.editorImages = [...state.editorImages, action.payload];
+    updateEditorImages: (state, action: PayloadAction<string[]>) => {
+      state.editorImages = [...state.editorImages, ...action.payload];
     },
     clearEditorImages: (state) => {
       state.editorImages = [];
