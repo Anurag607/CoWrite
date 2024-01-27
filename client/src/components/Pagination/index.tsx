@@ -12,6 +12,7 @@ import {
 import { FileTextFilled } from "@ant-design/icons";
 import { useRouter } from "next-nprogress-bar";
 import { dataKey } from "@/custom-hooks/editorHooks";
+import { setClient } from "@/redux/reducers/clientSlice";
 
 const monthAbreviations = {
   January: "Jan",
@@ -144,6 +145,7 @@ const Pagination = ({ data, itemsPerPage }: PaginationProps) => {
                       updatedAt: item.updatedAt,
                     };
                     dispatch(setCurrentDoc(data));
+                    dispatch(setClient(data.emailID));
                     router.push(
                       `/document/${authInstance._id}?docId=${item._id}`
                     );

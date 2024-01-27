@@ -27,6 +27,7 @@ const Page = () => {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   let editor = React.useRef<any>(null);
   const { data, loading } = useLoadData();
+  const { clients } = useAppSelector((state: any) => state.client);
   const { currentDoc, focusedDoc, docAPI } = useAppSelector(
     (state: any) => state.docs
   );
@@ -163,6 +164,27 @@ const Page = () => {
         <main
           className={`flex flex-col items-start gap-y-3 justify-start w-[96.5%] h-full overflow-hidden flex-[1]`}
         >
+          <div className={"w-full h-fit flex items-center justify-end gap-x-2"}>
+            {clients.map((el: string, index: number) => {
+              return (
+                <div
+                  key={index}
+                  className={`bg-primary rounded-full p-2 px-4 border-4 border-main group`}
+                >
+                  <h4 className={`text-main text-lg font-bold`}>
+                    {el[0].toUpperCase()}
+                  </h4>
+                  <span
+                    className={
+                      "absolute break-before-avoid bottom-[-130%] opacity-75 w-fit h-fit px-2 py-1 text-xs rounded-md bg-primary text-main scale-0 group-hover:scale-100"
+                    }
+                  >
+                    {el}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
           <Editor
             editorRef={editor.current}
             docId={currentDoc.id}
