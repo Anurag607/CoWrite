@@ -35,6 +35,7 @@ import {
 import { dataKey } from "@/custom-hooks/editorHooks";
 import { destroyEditorInstance } from "@/redux/reducers/editorSlice";
 import { useRouter } from "next-nprogress-bar";
+import { clearClients } from "@/redux/reducers/clientSlice";
 
 export default function Page() {
   const router = useRouter();
@@ -71,6 +72,7 @@ export default function Page() {
     dispatch(setShowSidebar([false, ""]));
     dispatch(setShowBottomBar([false, ""]));
     dispatch(destroyEditorInstance());
+    dispatch(clearClients());
     console.clear();
   };
 

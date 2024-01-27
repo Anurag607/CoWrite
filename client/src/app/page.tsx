@@ -6,11 +6,7 @@ import Image from "next/image";
 import { useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next-nprogress-bar";
 import Link from "next/link";
-import {
-  ArrowLeftOutlined,
-  CaretRightFilled,
-  LoginOutlined,
-} from "@ant-design/icons";
+import { CaretRightFilled, LoginOutlined } from "@ant-design/icons";
 
 const Navbar = () => {
   const router = useRouter();

@@ -37,6 +37,11 @@ io.on("connection", (socket: any) => {
 
       socket.broadcast.to(documentId).emit("update-clients", userData);
 
+      socket.on("disconnect", () => {
+        console.log(`Socket disconnected: ${socket.id}`);
+        socket.broadcast.to(documentId).emit("remove-clients", userData);
+      });
+
       socket.on("send-changes", (delta: any) => {
         // console.log(`Changes from ${socket.id} : `, delta);
         socket.broadcast.emit("receive-changes", delta);

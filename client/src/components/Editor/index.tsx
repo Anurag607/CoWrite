@@ -15,7 +15,7 @@ import ImageTool from "@editorjs/image";
 import { updateEditorImages } from "@/redux/reducers/editorImgSlice";
 import io from "socket.io-client";
 import React from "react";
-import { setClient } from "@/redux/reducers/clientSlice";
+import { removeClient, setClient } from "@/redux/reducers/clientSlice";
 
 const useEditor = (
   toolsList: { [toolName: string]: ToolConstructable | ToolSettings<any> },
@@ -78,8 +78,11 @@ const useEditor = (
       user: userData.email,
     });
     socket.on("update-clients", (newUser: any) => {
-      console.log("UpdateClients: ", newUser);
       if (newUser.currentDocument === docId) dispatch(setClient(newUser.name));
+    });
+    socket.on("remove-clients", (newUser: any) => {
+      if (newUser.currentDocument === docId)
+        dispatch(removeClient(newUser.name));
     });
     socket.on("receive-changes", handler);
     return () => socket.off("receive-changes", handler);
@@ -102,6 +105,7 @@ const useEditor = (
 
     return () => {
       socket.disconnect();
+      dispatch(removeClient(userData.email));
       setSocket(null);
     };
   }, []);

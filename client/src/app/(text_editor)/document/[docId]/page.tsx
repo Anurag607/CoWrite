@@ -169,14 +169,14 @@ const Page = () => {
               return (
                 <div
                   key={index}
-                  className={`bg-primary rounded-full p-2 px-4 border-4 border-main group`}
+                  className={`bg-primary rounded-full p-2 px-4 border-4 border-sidebar shadow-lg group relative`}
                 >
                   <h4 className={`text-main text-lg font-bold`}>
                     {el[0].toUpperCase()}
                   </h4>
                   <span
                     className={
-                      "absolute break-before-avoid bottom-[-130%] opacity-75 w-fit h-fit px-2 py-1 text-xs rounded-md bg-primary text-main scale-0 group-hover:scale-100"
+                      "absolute break-before-avoid bottom-[-60%] right-0 opacity-75 w-fit h-fit px-2 py-1 text-xs rounded-md bg-primary text-main scale-0 group-hover:scale-100"
                     }
                   >
                     {el}
