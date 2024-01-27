@@ -145,9 +145,7 @@ const Pagination = ({ data, itemsPerPage }: PaginationProps) => {
                     };
                     dispatch(setCurrentDoc(data));
                     router.push(
-                      `/document/${authInstance._id}?docId=${+new Date(
-                        item.updatedAt
-                      )}`
+                      `/document/${authInstance._id}?docId=${item._id}`
                     );
                   }}
                   aria-label="edit doc"

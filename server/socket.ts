@@ -18,9 +18,12 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket: any) => {
-  console.log(socket.id);
   socket.on("updating-document", async (documentId: string) => {
     socket.join(documentId);
+    console.log(
+      `Socket connected: ${socket.id} in rooms:`,
+      socket.rooms.keys()
+    );
 
     socket.on("send-changes", (delta: any) => {
       socket.broadcast.to(documentId).emit("receive-changes", delta);

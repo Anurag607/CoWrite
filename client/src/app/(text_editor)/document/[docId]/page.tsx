@@ -25,7 +25,7 @@ const Page = () => {
   const { authInstance } = useAppSelector((state: any) => state.auth);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [editor, setEditor] = React.useState<any>(null);
+  let editor = React.useRef<any>(null);
   const { data, loading } = useLoadData();
   const { currentDoc, focusedDoc, docAPI } = useAppSelector(
     (state: any) => state.docs
@@ -44,7 +44,7 @@ const Page = () => {
     setIsLoading(loading);
   }, []);
 
-  useSetData(editor, data);
+  useSetData(editor.current, data);
 
   const createDoc = async () => {
     setIsSubmitting(true);
@@ -124,7 +124,11 @@ const Page = () => {
         <main
           className={`flex flex-col items-start gap-y-3 justify-start w-[96.5%] h-full overflow-hidden flex-[1]`}
         >
-          <Editor editorRef={setEditor} docId={currentDoc.id} data={data} />
+          <Editor
+            editorRef={editor.current}
+            docId={currentDoc.id}
+            data={data}
+          />
           <button
             disabled={isLoading || isSubmitting}
             className={`${

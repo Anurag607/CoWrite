@@ -21,19 +21,20 @@ const useEditor = (
   { data, docId, editorRef }: any,
   { setSocket, socket }: any
 ) => {
-  let editor: any = null;
-  const editorInstance = useRef<EditorJS | null>(null);
+  let editorInstance = useRef<EditorJS | null>(null);
+
   // Function for Initializing Editor...
   const initEditor = () => {
-    editor = new EditorJS({
+    const editor = new EditorJS({
       holder: EditorData.EDITTOR_HOLDER_ID,
       tools: toolsList,
+      placeholder: "Start Writing here...",
       data: data || {},
-      placeholder: "Start Writing Here...",
       defaultBlock: "paragraph",
       autofocus: false,
       onReady: () => {
         console.count("READY callback");
+        editorInstance.current = editor;
       },
       onChange: () => {
         console.count("CHANGE callback");
@@ -44,8 +45,8 @@ const useEditor = (
 
   // Funcion for saving Editor Contents...
   const contents = async () => {
-    if (!editor) return;
-    const output = await editor.save();
+    if (!editorInstance.current) return;
+    const output = await editorInstance.current.save();
     const outputString = JSON.stringify(output);
     localStorage.setItem(dataKey, outputString);
     socket.emit("send-changes", outputString);
@@ -73,9 +74,8 @@ const useEditor = (
   // Setting up Editor Instance...
   useEffect(() => {
     if (!editorInstance.current) return;
-    if (editorRef) {
-      editorRef(editorInstance.current);
-      socket.emit("updating-document", docId);
+    if (editorRef && !editorInstance.current.isReady) {
+      editorRef.current = editorInstance.current;
     }
   }, [editorInstance, editorRef]);
 
@@ -87,7 +87,7 @@ const useEditor = (
         console.log(socket.id);
       });
       socket.on("disconnect", () => {
-        console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+        console.log(socket.id);
       });
       setSocket(socket);
     }
@@ -107,12 +107,12 @@ const useEditor = (
       editorInstance.current.isReady
         .then(() => {
           editorInstance.current.destroy();
-          editorInstance.current = null;
-          editorRef(null);
+          editorInstance = null;
+          editorRef = null;
         })
         .catch((e: any) => console.error("ERROR editor cleanup", e));
     };
-  }, [toolsList]);
+  }, []);
 
   return { editor: editorInstance.current };
 };

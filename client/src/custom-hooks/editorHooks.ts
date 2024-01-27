@@ -67,7 +67,8 @@ export const useLoadData = () => {
         let parsed = JSON.parse(saved);
         if (typeof parsed === "string") parsed = JSON.parse(parsed);
         console.log(parsed);
-        setData(parsed);
+        if (parsed.blocks.length > 0) setData(parsed);
+        else setData(EditorData[toggle ? "INITIAL_DATA" : "SAMPLE_DATA"]);
       } else {
         console.info("No saved data, using initial");
         console.log(EditorData[toggle ? "INITIAL_DATA" : "SAMPLE_DATA"]);
