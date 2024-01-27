@@ -111,7 +111,7 @@ const useEditor = (
   // Initializing Socket and Cleanup...
   useEffect(() => {
     if (!socket) {
-      socket = io(process.env.NEXT_PUBLIC_LOCAL_SERVER);
+      socket = io(process.env.NEXT_PUBLIC_RENDER_SERVER);
       setSocket(socket);
     }
 
