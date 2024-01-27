@@ -6,7 +6,6 @@ import { useOnClickOutside } from "usehooks-ts";
 import { setDocData } from "@/redux/reducers/docSlice";
 import { filterDatabyCategory } from "@/scipts/filterScript";
 import { FilterOutlined } from "@ant-design/icons";
-import { setShowBottomBar, setShowSidebar } from "@/redux/reducers/drawerSlice";
 
 const colors = [
   "#e8e8e8",
@@ -20,10 +19,6 @@ const colors = [
 const Filter = () => {
   const ref = React.useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-  const showSidebar = useAppSelector((state: any) => state.drawer.showSidebar);
-  const showBottomSidebar = useAppSelector(
-    (state: any) => state.drawer.showBottomBar
-  );
   const { isFilterOpen } = useAppSelector((state: any) => state.filter);
   const { backupData } = useAppSelector((state: any) => state.docs);
 
@@ -57,8 +52,6 @@ const Filter = () => {
         <FilterOutlined
           className="h-6 w-6 cursor-pointer z-[1000]"
           onClick={() => {
-            dispatch(setShowBottomBar([true, ""]));
-            dispatch(setShowSidebar([true, ""]));
             !isFilterOpen ? dispatch(openFilter()) : dispatch(closeFilter());
           }}
         />

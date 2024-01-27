@@ -36,6 +36,11 @@ import { dataKey } from "@/custom-hooks/editorHooks";
 import { destroyEditorInstance } from "@/redux/reducers/editorSlice";
 import { useRouter } from "next-nprogress-bar";
 import { clearClients } from "@/redux/reducers/clientSlice";
+import {
+  CaretLeftOutlined,
+  CaretRightOutlined,
+  CaretUpOutlined,
+} from "@ant-design/icons";
 
 export default function Page() {
   const router = useRouter();
@@ -179,6 +184,36 @@ export default function Page() {
           )}%...`}</h4>
         </div>
       )}
+      <div
+        onClick={() => {
+          dispatch(setShowBottomBar([true, ""]));
+          dispatch(setShowSidebar([true, ""]));
+        }}
+        className={classNames({
+          "w-[42px] h-[42px] mobile:hidden flex items-center justify-center":
+            true,
+          [`bg-primary text-main text-3xl rounded-l-lg`]: true,
+          "z-[100001] transition-all": true,
+          "fixed right-0 top-[20%]": true,
+        })}
+      >
+        <CaretLeftOutlined />
+      </div>
+      <div
+        onClick={() => {
+          dispatch(setShowBottomBar([true, ""]));
+          dispatch(setShowSidebar([true, ""]));
+        }}
+        className={classNames({
+          "w-[36px] h-[36px] hidden mobile:flex items-center justify-center":
+            true,
+          [`bg-primary text-main text-xl rounded-t-lg`]: true,
+          "z-[100001] transition-all": true,
+          "fixed bottom-0 right-[30%]": true,
+        })}
+      >
+        <CaretUpOutlined />
+      </div>
     </>
   );
 }
