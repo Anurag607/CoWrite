@@ -19,7 +19,7 @@ const clientSlice = createSlice({
     },
     removeClient: (state: any, action: PayloadAction<any>) => {
       state.clients = state.clients.filter(
-        (client: any) => client.id !== action.payload
+        (client: any) => client !== action.payload
       );
     },
     clearClients: (state: any) => {
