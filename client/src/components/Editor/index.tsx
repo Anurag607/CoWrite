@@ -74,9 +74,9 @@ const useEditor = (
     if (!socket || !editorInstance) return;
 
     socket.emit("updating-document", { docId: docId, user: userData.email });
-    socket.on("update-clients", (delta: any) => {
-      console.log("UpdateClients: ", delta.user, ", ", delta.room);
-      if (delta.room === docId) dispatch(setClient(delta.user));
+    socket.on("update-clients", (newUser: any) => {
+      console.log("UpdateClients: ", newUser);
+      // if (delta.room === docId) dispatch(setClient(delta.user));
     });
     socket.on("receive-changes", handler);
     return () => socket.off("receive-changes", handler);

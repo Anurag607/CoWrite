@@ -29,7 +29,13 @@ io.on("connection", (socket: any) => {
         socket.rooms.keys()
       );
 
-      socket.broadcast.emit("update-clients", { user: user, room: documentId });
+      const userData = {
+        id: socket.id,
+        name: user,
+        room: documentId,
+      };
+
+      socket.broadcast.emit("update-clients", userData);
 
       socket.on("send-changes", (delta: any) => {
         // console.log(`Changes from ${socket.id} : `, delta);
