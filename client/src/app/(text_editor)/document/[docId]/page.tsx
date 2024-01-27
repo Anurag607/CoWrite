@@ -86,48 +86,45 @@ const Page = () => {
     // Gettting Editor Content from local Storage
     let editorContent = localStorage.getItem(dataKey);
 
-    // Uploading Editor Image(s)...
-    editorImages.forEach(async (image: string, index: number) => {
-      if (image.includes("https://res.cloudinary.com/")) return;
-      dispatch(openImageUploadIndicator());
-      const editor_img_response = await fetch(image);
-      const editor_img_blob = await editor_img_response.blob();
-      const editor_img__file = new File([editor_img_blob], "image.png", {
-        type: "image/*",
-      });
-      const editor_img_form_data = new FormData();
-      editor_img_form_data.append("upload_preset", "nextbit");
-      editor_img_form_data.append(
-        "cloud_name",
-        process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME
-      );
-      editor_img_form_data.append(
-        "api_key",
-        process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY
-      );
-      editor_img_form_data.append(
-        "api_secret",
-        process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET
-      );
-      editor_img_form_data.append("file", editor_img__file);
-      const imageURL = await CloudImage(
-        editor_img_form_data,
-        dispatch,
-        updateProgress
-      );
-      editorContent.replace(
-        image,
-        imageURL
-          ? imageURL
-          : "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png"
-      );
-      dispatch(closeImageUploadIndicator());
-      dispatch(clearProgress());
-    });
+    // // Uploading Editor Image(s)...
+    // editorImages.forEach(async (image: string, index: number) => {
+    //   if (image.includes("https://res.cloudinary.com/")) return;
+    //   dispatch(openImageUploadIndicator());
+    //   const editor_img_response = await fetch(image);
+    //   const editor_img_blob = await editor_img_response.blob();
+    //   const editor_img__file = new File([editor_img_blob], "image.png", {
+    //     type: "image/*",
+    //   });
+    //   const editor_img_form_data = new FormData();
+    //   editor_img_form_data.append("upload_preset", "nextbit");
+    //   editor_img_form_data.append(
+    //     "cloud_name",
+    //     process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME
+    //   );
+    //   editor_img_form_data.append(
+    //     "api_key",
+    //     process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY
+    //   );
+    //   editor_img_form_data.append(
+    //     "api_secret",
+    //     process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET
+    //   );
+    //   editor_img_form_data.append("file", editor_img__file);
+    //   const imageURL = await CloudImage(
+    //     editor_img_form_data,
+    //     dispatch,
+    //     updateProgress
+    //   );
+    //   editorContent.replace(
+    //     image,
+    //     imageURL
+    //       ? imageURL
+    //       : "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png"
+    //   );
+    //   dispatch(closeImageUploadIndicator());
+    //   dispatch(clearProgress());
+    // });
 
-    if (editorContent.slice(0, 2) === '"{') {
-      editorContent = editorContent.slice(1, -1);
-    }
     // Updating the body and sending request...
     body = {
       ...body,
@@ -139,7 +136,6 @@ const Page = () => {
       updatedAt: new Date().toISOString(),
     };
     console.log(body);
-    console.log(localStorage.getItem(dataKey));
     // const res = await axios.post(
     //   docAPI === "create"
     //     ? "/api/document/create"
