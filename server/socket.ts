@@ -7,6 +7,8 @@ dotenv.config({ path: "./.env" });
 
 const PORT = process.env.PORT;
 const HOST = process.env.HOST;
+const LOCAL = `http://${HOST}:${PORT}`;
+const RENDER = process.env.RENDER;
 
 const app: Express = express();
 const server = http.createServer(app);
@@ -26,11 +28,12 @@ io.on("connection", (socket: any) => {
     );
 
     socket.on("send-changes", (delta: any) => {
-      socket.broadcast.to(documentId).emit("receive-changes", delta);
+      // console.log(`Changes from ${socket.id} : `, delta);
+      socket.broadcast.emit("receive-changes", delta);
     });
   });
 });
 
 server.listen(PORT, () => {
-  console.log(`Server running on http://${HOST}:${PORT}`);
+  console.log(`Server running on ${RENDER}`);
 });

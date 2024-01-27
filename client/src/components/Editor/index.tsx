@@ -57,7 +57,12 @@ const useEditor = (
     if (editorInstance.current === null) return;
     editorInstance.current.isReady
       .then(() => {
-        editorInstance.current.render(delta);
+        let data = null;
+        if (typeof delta === "string") data = JSON.parse(delta);
+        if (!data.hasOwnProperty("blocks")) data = JSON.parse(data);
+        editorInstance.current.render(data);
+        editorRef.current.render(data);
+        localStorage.setItem(dataKey, delta);
       })
       .catch((e: any) => console.error("ERROR editor render/cleanup", e));
   };
@@ -82,12 +87,12 @@ const useEditor = (
   // Initializing Socket and Cleanup...
   useEffect(() => {
     if (!socket) {
-      socket = io("http://localhost:8000");
+      socket = io(process.env.NEXT_PUBLIC_RENDER_SERVER);
       socket.on("connect", () => {
-        console.log(socket.id);
+        console.log(`Socket connected: ${socket.id} in room: ${docId}`);
       });
       socket.on("disconnect", () => {
-        console.log(socket.id);
+        console.log(`Socket: ${socket.id} room ${docId}`);
       });
       setSocket(socket);
     }
