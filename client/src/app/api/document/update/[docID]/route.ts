@@ -19,14 +19,13 @@ export async function POST(request: Request, context: any) {
     updatedAt: body.updatedAt,
   };
   try {
-    console.log("params", params);
     const response: any = await updateEntry(
       "documents",
       params.docID,
       data,
       body.user
     );
-    if (document.hasOwnProperty("status")) {
+    if (response.hasOwnProperty("status")) {
       if (response.status === 404)
         return NextResponse.json({
           status: 404,

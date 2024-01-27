@@ -94,7 +94,6 @@ const UpdateFormPopup = () => {
     }
 
     dispatch(setCurrentDoc(formData));
-
     const res = await fetch(`/api/document/update/${formData.id}`, {
       method: "POST",
       headers: {
