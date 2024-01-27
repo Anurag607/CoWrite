@@ -62,6 +62,9 @@ const useEditor = (
         if (!data.hasOwnProperty("blocks")) data = JSON.parse(data);
         editorInstance.current.render(data);
         editorRef.current.render(data);
+        console.log(data);
+        console.log(JSON.stringify(data));
+        console.log(delta);
         localStorage.setItem(dataKey, delta);
       })
       .catch((e: any) => console.error("ERROR editor render/cleanup", e));
