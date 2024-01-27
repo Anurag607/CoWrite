@@ -145,7 +145,7 @@ const Pagination = ({ data, itemsPerPage }: PaginationProps) => {
                       updatedAt: item.updatedAt,
                     };
                     dispatch(setCurrentDoc(data));
-                    dispatch(setClient(data.emailID));
+                    dispatch(setClient(authInstance.email));
                     router.push(
                       `/document/${authInstance._id}?docId=${item._id}`
                     );

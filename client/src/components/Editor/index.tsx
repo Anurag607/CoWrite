@@ -76,14 +76,25 @@ const useEditor = (
     if (!socket || !editorInstance) return;
 
     socket.emit("updating-document", {
+      id: socket.id,
       documentId: docId,
       user: userData.email,
     });
     socket.on("update-clients", (newUser: any) => {
+      alert(`Adding: ${newUser.name}`);
       if (newUser.currentDocument === docId) dispatch(setClient(newUser.name));
     });
+    socket.on("disconnect", (newUser: any) => {
+      if (newUser.currentDocument === docId)
+        dispatch(removeClient(newUser.name));
+      socket.emit("disconnecting-document", {
+        id: socket.id,
+        currentDocument: docId,
+        name: userData.email,
+      });
+    });
     socket.on("remove-clients", (newUser: any) => {
-      console.log("Removed Client", newUser);
+      alert(`Removing: ${newUser.name}`);
       if (newUser.currentDocument === docId)
         dispatch(removeClient(newUser.name));
     });
@@ -102,7 +113,7 @@ const useEditor = (
   // Initializing Socket and Cleanup...
   useEffect(() => {
     if (!socket) {
-      socket = io(process.env.NEXT_PUBLIC_RENDER_SERVER);
+      socket = io(process.env.NEXT_PUBLIC_LOCAL_SERVER);
       setSocket(socket);
     }
 

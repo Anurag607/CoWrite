@@ -23,7 +23,7 @@ io.on("connection", (socket: any) => {
   socket.on(
     "updating-document",
     async ({ documentId, user }: { documentId: string; user: string }) => {
-      socket.join(documentId, { custom_id: user });
+      socket.join(documentId);
       console.log(
         `Socket connected: ${socket.id} in rooms:`,
         socket.rooms.keys()
@@ -42,8 +42,13 @@ io.on("connection", (socket: any) => {
         socket.broadcast.emit("remove-clients", userData);
       });
 
+      socket.on("disconnecting-document", (leavingUser: any) => {
+        console.log("DISCONNECTING");
+        console.log(`Socket disconnected: ${leavingUser.id}`);
+        socket.broadcast.emit("remove-clients", leavingUser);
+      });
+
       socket.on("send-changes", (delta: any) => {
-        // console.log(`Changes from ${socket.id} : `, delta);
         socket.broadcast.emit("receive-changes", delta);
       });
     }
