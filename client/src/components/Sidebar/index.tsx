@@ -23,14 +23,15 @@ const Sidebar = () => {
   return (
     <div
       className={classNames({
-        "mobile:hidden flex flex-col justify-between z-[1001] relative flex-[1]":
-          true, // layout
-        "bg-primary text-zinc-50": true, // colors
-        "fixed left-0 top-0": true, // positioning
-        [`h-screen w-[5rem] mobile:w-[0px]`]: true, // for height and width
-        "transition-all ease-in-out": true, //animations
+        "mobile:hidden flex flex-col justify-between z-[100001]": true,
+        "bg-[#37352F] text-zinc-50": true,
+        "fixed left-0 top-0": true,
+        [`h-screen mobile:w-0 ${
+          toggleEditor === "text" ? "w-[5rem]" : "w-screen"
+        }`]: true,
+        "transition-all ease-in-out": true,
         "bg-center bg-cover bg-no-repeat": true,
-        [`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`]: true, //hide sidebar to the left when closed
+        [`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`]: true,
       })}
       ref={ref}
     >
@@ -39,9 +40,8 @@ const Sidebar = () => {
         className={classNames({
           "w-[42px] h-[42px] mobile:!hidden flex items-center justify-center":
             true,
-          "bg-[#e8e8e8] dark:bg-neutral-700 text-neutral-700 dark:text-[#e8e8e8] rounded-lg left-3":
-            isSidebarOpen,
-          "bg-primary text-main rounded-r-lg left-0": !isSidebarOpen,
+          "bg-[#e8e8e8] text-neutral-700 rounded-lg left-3": isSidebarOpen,
+          "bg-[#37352F] text-[#F7F6F3] rounded-r-lg left-0": !isSidebarOpen,
           "text-3xl rounded-r-lg cursor-pointer": true,
           "fixed top-3 z-[100001] transition-all": true,
         })}
@@ -65,9 +65,10 @@ const Sidebar = () => {
             dispatch(switchEditor(toggleEditor === "code" ? "text" : "code"));
           }}
           className={classNames({
-            "w-[42px] h-[42px] mobile:!hidden flex items-center justify-center mt-1":
-              true,
-            "bg-transparent border font-bold border-[#e8e8e8] dark:border-neutral-700 dark:text-neutral-700 text-[#e8e8e8] rounded-lg left-3":
+            [`w-[42px] h-[42px] mobile:!hidden flex items-center justify-center ${
+              toggleEditor === "text" && "mt-2.5"
+            }`]: true,
+            "bg-transparent border font-bold border-[#F7F6F3] text-[#F7F6F3] rounded-lg left-3":
               true,
             [`text-3xl rounded-r-lg cursor-pointer ${
               toggleEditor === "text" ? "rotate-90" : "-rotate-90"
@@ -79,7 +80,7 @@ const Sidebar = () => {
         </div>
         <h1
           className={classNames({
-            "bound text-[3rem] tracking-tighter font-bold text-sidebar": true,
+            "bound text-[3rem] tracking-tighter font-bold text-[#F7F6F3]": true,
           })}
         >
           {toggleEditor === "text" ? "CodeForge" : "CoWrite"}

@@ -108,15 +108,16 @@ export default function RootLayout({ children }: { children: any }) {
                 <ScrollToTop _children={null} />
                 <div
                   className={classNames({
-                    "relative max-w-screen max-h-screen gap-x-3": true,
-                    "flex flex-row items-start justify-start": true,
+                    "relative max-w-screen max-h-screen gap-x-0": true,
+                    "flex flex-row items-start justify-end": true,
                   })}
                 >
-                  {!isAuthPage() && !isHomePage() && <Sidebar />}
                   <div
                     className={classNames({
                       [`relative h-screen ${
-                        isAuthPage() ? "w-screen" : "w-[calc(100vw_-_5rem)]"
+                        isAuthPage() || isHomePage()
+                          ? "w-screen"
+                          : "w-[calc(100vw_-_5.5rem)]"
                       } flex flex-col items-start justify-between`]: true,
                       "mobile:w-screen": true,
                     })}
@@ -130,11 +131,12 @@ export default function RootLayout({ children }: { children: any }) {
                 </div>
               </ErrorBoundaryWrapper>
               <ScrollTop>
-                <div className="z-[100000001] w-10 aspect-square rounded-full bg-primary text-white grid place-items-center cursor-pointer shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
+                <div className="z-[100000001] w-10 h-10 aspect-square rounded-full bg-primary text-white grid place-items-center cursor-pointer">
                   <CaretUpOutlined />
                 </div>
               </ScrollTop>
-              <OffCanvasPopup />
+              {!isAuthPage() && !isHomePage() && <OffCanvasPopup />}
+              {!isAuthPage() && !isHomePage() && <Sidebar />}
               <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
             <ToastContainer autoClose={1000} hideProgressBar />

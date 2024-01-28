@@ -211,11 +211,11 @@ export default function Page() {
       >
         <CaretUpOutlined />
       </div>
-      <div
-        className={`transition-all ease-in-out z-[1000000001] bg-primary flex top-0 left-0 ${
-          toggleEditor === "text" ? "w-0" : "w-screen"
+      {/* <div
+        className={`transition-all ease-in-out z-[1000001] bg-primary fixed top-0 left-0 ${
+          toggleEditor !== "text" ? "w-0" : "w-screen"
         } h-screen`}
-      />
+      /> */}
     </>
   );
 }

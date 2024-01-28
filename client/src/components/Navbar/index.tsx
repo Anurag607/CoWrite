@@ -29,7 +29,7 @@ const Navbar = () => {
       className={classNames({
         "bg-transparent z-[1000]": true, // colors
         "flex items-center justify-between mobile:px-4 pr-10": true, // layout
-        "bg-transparent w-full relative py-3 h-fit": true, //positioning & styling
+        "w-full relative py-3 h-fit": true, //positioning & styling
         "dark:shadow-[0px_1px_2px_0_rgba(255,255,255,0.1)] shadow": false, //dark-mode and shadow
       })}
     >
