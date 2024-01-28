@@ -12,7 +12,7 @@ const LoadingSkeleton = () => {
   );
 };
 
-const Popup = ({ content }: { content: string }) => {
+const Popup = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [prompt, setPrompt] = React.useState<string>("");
   const [response, setResponse] = React.useState<any>(null);
@@ -28,11 +28,16 @@ const Popup = ({ content }: { content: string }) => {
       body: JSON.stringify({ prompt }),
     });
     const data = await res.json();
-    if (data.hasOwnProperty("msg") && data.msg.hasOwnProperty("id")) {
-      setResponse(data.msg.choices[0].message.content);
+    if (data.status === 202) {
+      setResponse(data.msg);
     } else {
       toast.error("Something went wrong!", ToastConfig);
     }
+    // if (data.hasOwnProperty("msg") && data.msg.hasOwnProperty("id")) {
+    //   setResponse(data);
+    // } else {
+    //   toast.error("Something went wrong!", ToastConfig);
+    // }
     setIsLoading(false);
   };
 
