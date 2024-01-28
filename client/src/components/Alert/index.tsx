@@ -10,10 +10,10 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { ToastConfig } from "@/utils/config";
+import { removeDoc } from "@/redux/reducers/docSlice";
 
 const Alert = () => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { focusedDoc } = useAppSelector((state: any) => state.docs);
 
@@ -68,6 +68,7 @@ const Alert = () => {
             onClick={async () => {
               setIsLoading(true);
               try {
+                dispatch(removeDoc(focusedDoc._id));
                 await axios.delete(`/api/document/delete/${focusedDoc._id}`);
                 dispatch(closeDeleteForm());
                 dispatch(closeUpdateForm());

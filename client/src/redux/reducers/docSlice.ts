@@ -41,6 +41,12 @@ const DocSlice = createSlice({
     clearBackupData: (state) => {
       state.backupData = [];
     },
+    removeDoc: (state, action: PayloadAction<string>) => {
+      state.docData = state.docData.filter((doc) => doc._id !== action.payload);
+      state.backupData = state.backupData.filter(
+        (doc) => doc._id !== action.payload
+      );
+    },
     setFocusedDoc: (state, action: PayloadAction<docType | documentType>) => {
       state.focusedDoc = action.payload;
     },
@@ -60,6 +66,7 @@ export const {
   clearDocData,
   setBackupData,
   clearBackupData,
+  removeDoc,
   setFocusedDoc,
   clearFocusedDoc,
   alterDocAPI,
