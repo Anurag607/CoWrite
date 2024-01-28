@@ -77,7 +77,7 @@ const Pagination = ({ data, itemsPerPage }: PaginationProps) => {
             <div
               key={index}
               className={classNames({
-                "relative mobile-sm:w-[85vw] w-[15rem] h-[17.5rem]": true,
+                "relative mobile-sm:w-[82.5vw] w-[15rem] h-[17.5rem]": true,
                 "flex flex-col justify-start items-start gap-4": true,
                 "rounded-lg shadow-md p-4": true,
               })}
