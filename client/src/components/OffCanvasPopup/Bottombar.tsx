@@ -26,7 +26,7 @@ const Bottombar = () => {
           >
             <CaretDownOutlined className="m-0 p-0" />
           </button>
-          <Popup content={showBottomSidebar[1]} />
+          <Popup />
         </div>
       </div>
     </>

@@ -24,7 +24,7 @@ const Sidebar = () => {
           >
             <CaretRightOutlined className="m-0 p-0" />
           </button>
-          <Popup content={showSidebar[1]} />
+          <Popup />
         </div>
       </div>
     </>

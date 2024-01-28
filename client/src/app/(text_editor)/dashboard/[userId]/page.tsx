@@ -36,17 +36,14 @@ import { dataKey } from "@/custom-hooks/editorHooks";
 import { destroyEditorInstance } from "@/redux/reducers/editorSlice";
 import { useRouter } from "next-nprogress-bar";
 import { clearClients } from "@/redux/reducers/clientSlice";
-import {
-  CaretLeftOutlined,
-  CaretRightOutlined,
-  CaretUpOutlined,
-} from "@ant-design/icons";
+import { CaretLeftOutlined, CaretUpOutlined } from "@ant-design/icons";
 
 export default function Page() {
   const router = useRouter();
   const { isFormOpen, isUpdateFormOpen } = useAppSelector(
     (state: any) => state.form
   );
+  const { toggleEditor } = useAppSelector((state: any) => state.toggleEditor);
   const { authInstance } = useAppSelector((state: any) => state.auth);
   const { isColorFormOpen } = useAppSelector((state: any) => state.color);
   const { isDeleteFormOpen } = useAppSelector((state: any) => state.alert);
@@ -214,6 +211,11 @@ export default function Page() {
       >
         <CaretUpOutlined />
       </div>
+      <div
+        className={`transition-all ease-in-out z-[1000000001] bg-primary flex top-0 left-0 ${
+          toggleEditor === "text" ? "w-0" : "w-screen"
+        } h-screen`}
+      />
     </>
   );
 }
