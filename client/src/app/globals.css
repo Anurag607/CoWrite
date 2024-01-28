@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Kanit:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500&display=swap');
+@import url('./loader.css');
 
 @tailwind base;
 @tailwind components;

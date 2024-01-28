@@ -9,21 +9,39 @@ import {
   DoubleRightOutlined,
 } from "@ant-design/icons";
 import { switchEditor } from "@/redux/reducers/toggleEditor";
+import { useRouter } from "next-nprogress-bar";
 
 const Sidebar = () => {
-  const ref = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const ref = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
   const { toggleEditor } = useAppSelector((state: any) => state.toggleEditor);
   const { isSidebarOpen } = useAppSelector((state: any) => state.sidebar);
 
-  // useOnClickOutside(ref, () => {
-  //   dispatch(closeSidebar());
-  // });
+  useOnClickOutside(ref, () => {
+    dispatch(closeSidebar());
+  });
+
+  React.useEffect(() => {
+    if (toggleEditor === "text") return;
+    const loading = setTimeout(() => {
+      setIsLoading(true);
+    }, 1000);
+    const loaded = setTimeout(() => {
+      setIsLoading(false);
+      router.push("/code_editor");
+    }, 3000);
+    return () => {
+      clearTimeout(loading);
+      clearTimeout(loaded);
+    };
+  }, [toggleEditor]);
 
   return (
     <div
       className={classNames({
-        "mobile:hidden flex flex-col justify-between z-[100001]": true,
+        "mobile:hidden flex items-center justify-center z-[100001]": true,
         "bg-[#37352F] text-zinc-50": true,
         "fixed left-0 top-0": true,
         [`h-screen mobile:w-0 ${
@@ -31,10 +49,17 @@ const Sidebar = () => {
         }`]: true,
         "transition-all ease-in-out": true,
         "bg-center bg-cover bg-no-repeat": true,
-        [`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`]: true,
+        [`${
+          isSidebarOpen
+            ? "translate-x-0"
+            : toggleEditor === "text"
+            ? "-translate-x-full"
+            : "translate-x-0"
+        }`]: true,
       })}
       ref={ref}
     >
+      {/* Back Button */}
       <div
         onClick={() => dispatch(isSidebarOpen ? closeSidebar() : openSidebar())}
         className={classNames({
@@ -44,10 +69,12 @@ const Sidebar = () => {
           "bg-[#37352F] text-[#F7F6F3] rounded-r-lg left-0": !isSidebarOpen,
           "text-3xl rounded-r-lg cursor-pointer": true,
           "fixed top-3 z-[100001] transition-all": true,
+          [`${toggleEditor === "code" && "hidden"}`]: true,
         })}
       >
         {isSidebarOpen ? <CaretLeftOutlined /> : <CaretRightOutlined />}
       </div>
+      {/* Editor Switch */}
       <div
         className={classNames({
           "flex items-center justify-center gap-x-4 flex-row-reverse": true,
@@ -85,6 +112,29 @@ const Sidebar = () => {
         >
           {toggleEditor === "text" ? "CodeForge" : "CoWrite"}
         </h1>
+      </div>
+      {/* Loader */}
+      <div
+        className={classNames({
+          [`${toggleEditor === "code" ? "flex" : "hidden"}`]: true,
+          [`loadingContainer opacity-0 cursor-default transition-all ease-in-out pointer-event-none`]:
+            true,
+          [`${isLoading ? "opacity-100" : "opacity-0"}`]: true,
+        })}
+      >
+        <div className="row">
+          <div className="col dark">
+            <div className="loader">
+              <span
+                data-flicker-0="LOAD"
+                data-flicker-1="ING"
+                className="loader-text font-bold ml-1"
+              >
+                LOADING
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

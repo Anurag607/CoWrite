@@ -67,6 +67,10 @@ export default function RootLayout({ children }: { children: any }) {
     return pathname === "/login" || pathname === "/register";
   };
 
+  const isCodeEditor = () => {
+    return pathname === "/code_editor";
+  };
+
   return (
     <html lang="en">
       <head>
@@ -115,16 +119,18 @@ export default function RootLayout({ children }: { children: any }) {
                   <div
                     className={classNames({
                       [`relative h-screen ${
-                        isAuthPage() || isHomePage()
+                        isAuthPage() || isHomePage() || isCodeEditor()
                           ? "w-screen"
                           : "w-[calc(100vw_-_5.5rem)]"
                       } flex flex-col items-start justify-between`]: true,
                       "mobile:w-screen": true,
                     })}
                   >
-                    {!isAuthPage() && !isHomePage() && <Navbar />}
+                    {!isAuthPage() && !isHomePage() && !isCodeEditor() && (
+                      <Navbar />
+                    )}
                     {children}
-                    {!isAuthPage() && !isHomePage() && (
+                    {!isAuthPage() && !isHomePage() && !isCodeEditor() && (
                       <div className={"w-full h-[2rem] bg-transparent"} />
                     )}
                   </div>
@@ -136,7 +142,7 @@ export default function RootLayout({ children }: { children: any }) {
                 </div>
               </ScrollTop>
               {!isAuthPage() && !isHomePage() && <OffCanvasPopup />}
-              {!isAuthPage() && !isHomePage() && <Sidebar />}
+              {!isAuthPage() && !isHomePage() && !isCodeEditor() && <Sidebar />}
               <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
             <ToastContainer autoClose={1000} hideProgressBar />
