@@ -25,8 +25,8 @@ io.on("connection", (socket: any) => {
     async ({ documentId, user }: { documentId: string; user: string }) => {
       socket.join(documentId);
       console.log(
-        `Socket connected: ${socket.id} in rooms:`,
-        socket.rooms.keys()
+        `Socket connected: ${socket.id}: ${user} in rooms:`,
+        Array.from(socket.rooms.keys())[1]
       );
 
       const userData = {
@@ -39,22 +39,21 @@ io.on("connection", (socket: any) => {
 
       socket.on("disconnect", () => {
         console.log(`Socket disconnected: ${socket.id}`);
-        socket.broadcast.emit("remove-clients", userData);
+        socket.broadcast.to(documentId).emit("remove-clients", userData);
       });
 
       socket.on("disconnecting-document", (leavingUser: any) => {
-        console.log("DISCONNECTING");
         console.log(`Socket disconnected: ${leavingUser.id}`);
-        socket.broadcast.emit("remove-clients", leavingUser);
+        socket.broadcast.to(documentId).emit("remove-clients", leavingUser);
       });
 
       socket.on("send-changes", (delta: any) => {
-        socket.broadcast.emit("receive-changes", delta);
+        socket.broadcast.to(documentId).emit("receive-changes", delta);
       });
     }
   );
 });
 
 server.listen(PORT, () => {
-  console.log(`Server running on ${RENDER}`);
+  console.log(`Server running on ${LOCAL}`);
 });
