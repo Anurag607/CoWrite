@@ -12,7 +12,7 @@ const LoadingSkeleton = () => {
   );
 };
 
-const Popup = () => {
+const Popup = ({ content }: { content: string }) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [prompt, setPrompt] = React.useState<string>("");
   const [response, setResponse] = React.useState<any>(null);
