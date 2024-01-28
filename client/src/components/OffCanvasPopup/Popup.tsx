@@ -41,7 +41,7 @@ const Popup = ({ content }: { content: string }) => {
       <textarea
         disabled={true}
         value={response ? response : ""}
-        className={`h-[15.5rem] w-full resize-none bg-gray-200 dark:bg-neutral-400 rounded-md mb-2.5 p-3 ${
+        className={`h-[15rem] w-full resize-none bg-gray-200 dark:bg-neutral-400 rounded-md mb-2 p-3 ${
           isLoading && " animate-pulse cursor-default"
         }`}
       />
