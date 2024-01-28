@@ -47,6 +47,6 @@ export async function POST(request: Request, context: any) {
     // });
     return NextResponse.json({ status: 202, data: response });
   } catch (err: any) {
-    return NextResponse.json({ msg: err.message });
+    return NextResponse.json({ status: 400, msg: err.message });
   }
 }

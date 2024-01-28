@@ -110,6 +110,7 @@ const Page = () => {
         body: JSON.stringify(body),
       }
     );
+    console.log(res);
     const data = await res.json();
     if (data.status === 202) {
       toast.success("Document Saved", ToastConfig);

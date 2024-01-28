@@ -22,8 +22,8 @@ export async function POST(request: Request) {
     // const document = await prisma.documents.create({
     //   data: body,
     // });
-    return NextResponse.json({ data: document });
+    return NextResponse.json({ status: 202, data: document });
   } catch (err: any) {
-    return NextResponse.json({ msg: err.message });
+    return NextResponse.json({ status: 400, msg: err.message });
   }
 }
