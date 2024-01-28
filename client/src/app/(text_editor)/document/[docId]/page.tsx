@@ -58,7 +58,7 @@ const Page = () => {
     let imageURL = null;
 
     // Uploading Description Image...
-    if (body.descImg.includes("blob:")) {
+    if (body.descImg && body.descImg.includes("blob:")) {
       dispatch(openImageUploadIndicator());
       const response = await fetch(body.descImg);
       const blob = await response.blob();
