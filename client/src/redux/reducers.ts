@@ -15,6 +15,7 @@ import editorImgSlice from "./reducers/editorImgSlice";
 import editorSlice from "./reducers/editorSlice";
 import authSlice from "./reducers/authSlice";
 import clientSlice from "./reducers/clientSlice";
+import toggleEditor from "./reducers/toggleEditor";
 
 export default combineReducers({
   menu: menuSlice,
@@ -33,4 +34,5 @@ export default combineReducers({
   editor: editorSlice,
   auth: authSlice,
   client: clientSlice,
+  toggleEditor: toggleEditor,
 });

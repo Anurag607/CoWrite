@@ -287,3 +287,9 @@ input[type=passwords] {
 ::selection {
   background-color: var(--selected) !important;
 }
+
+.left-arrow {
+  background-color: red;
+  -webkit-mask: url('../../public/left_arrow.svg') no-repeat center;
+  mask: url('../../public/left_arrow.svg') no-repeat center;
+}

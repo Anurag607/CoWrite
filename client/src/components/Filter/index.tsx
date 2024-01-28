@@ -60,7 +60,7 @@ const Filter = () => {
         className={classNames({
           "flex flex-col justify-start items-start pr-2.5 overflow-hidden":
             true,
-          "z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-neutral-800":
+          "z-[1000001] bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-neutral-800":
             true,
           "absolute top-[2.75rem] right-2": true,
           "transition-transform .3s ease-in-out md:-translate-x-0": true, //animations
