@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 import { languageOptions } from "@/utils/CodeEditor/languageOptions";
-
+import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,36 +22,6 @@ import { ToastConfig } from "@/utils/config";
 import { useRouter } from "next-nprogress-bar";
 import { useAppSelector } from "@/redux/hooks";
 
-const javascriptDefault = `/**
-* Problem: Binary Search: Search a sorted array for a target value.
-*/
-
-// Time: O(log n)
-const binarySearch = (arr, target) => {
- return binarySearchHelper(arr, target, 0, arr.length - 1);
-};
-
-const binarySearchHelper = (arr, target, start, end) => {
- if (start > end) {
-   return false;
- }
- let mid = Math.floor((start + end) / 2);
- if (arr[mid] === target) {
-   return mid;
- }
- if (arr[mid] < target) {
-   return binarySearchHelper(arr, target, mid + 1, end);
- }
- if (arr[mid] > target) {
-   return binarySearchHelper(arr, target, start, mid - 1);
- }
-};
-
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const target = 5;
-console.log(binarySearch(arr, target));
-`;
-
 const cppDefault = `
 #include <bits/stdc++.h>
 using namespace std;
@@ -63,6 +33,7 @@ int main() {
 
 const Page = () => {
   const router = useRouter();
+  const params = useParams();
   const { authInstance } = useAppSelector((state: any) => state.auth);
   const [code, setCode] = useState(localStorage.getItem("code"));
   const [customInput, setCustomInput] = useState("");
