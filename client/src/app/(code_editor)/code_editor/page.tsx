@@ -5,7 +5,7 @@ import axios from "axios";
 import classNames from "classnames";
 import { languageOptions } from "@/utils/CodeEditor/languageOptions";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { defineTheme } from "@/utils/CodeEditor/defineTheme";
@@ -168,59 +168,20 @@ const Page = () => {
   };
 
   return (
-    <>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-
-      <a
-        href="https://github.com/manuarora700/react-code-editor"
-        title="Fork me on GitHub"
-        className="github-corner"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <svg
-          width="50"
-          height="50"
-          viewBox="0 0 250 250"
-          className="relative z-20 h-20 w-20"
-        >
-          <title>Fork me on GitHub</title>
-          <path d="M0 0h250v250"></path>
-          <path
-            d="M127.4 110c-14.6-9.2-9.4-19.5-9.4-19.5 3-7 1.5-11 1.5-11-1-6.2 3-2 3-2 4 4.7 2 11 2 11-2.2 10.4 5 14.8 9 16.2"
-            fill="currentColor"
-            style={{ transformOrigin: "130px 110px" }}
-            className="octo-arm"
-          ></path>
-          <path
-            d="M113.2 114.3s3.6 1.6 4.7.6l15-13.7c3-2.4 6-3 8.2-2.7-8-11.2-14-25 3-41 4.7-4.4 10.6-6.4 16.2-6.4.6-1.6 3.6-7.3 11.8-10.7 0 0 4.5 2.7 6.8 16.5 4.3 2.7 8.3 6 12 9.8 3.3 3.5 6.7 8 8.6 12.3 14 3 16.8 8 16.8 8-3.4 8-9.4 11-11.4 11 0 5.8-2.3 11-7.5 15.5-16.4 16-30 9-40 .2 0 3-1 7-5.2 11l-13.3 11c-1 1 .5 5.3.8 5z"
-            fill="currentColor"
-            className="octo-body"
-          ></path>
-        </svg>
-      </a>
-
-      <div className="h-4 w-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div>
-      <div className="flex flex-row">
-        <div className="px-4 py-2">
-          <LanguagesDropdown onSelectChange={onSelectChange} />
-        </div>
-        <div className="px-4 py-2">
-          <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
-        </div>
+    <div
+      className={classNames({
+        "bg-[#37352F] kanit w-screen h-fit p-4 relative": true,
+        "flex flex-col items-start justify-start gap-y-4": true,
+      })}
+    >
+      {/* Header... */}
+      <div className="flex flex-wrap items-start justify-start gap-4 w-full h-fit relative">
+        <LanguagesDropdown onSelectChange={onSelectChange} />
+        <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
       </div>
-      <div className="flex flex-row space-x-4 items-start px-4 py-4">
-        <div className="flex flex-col w-full h-full justify-start items-end">
+      {/* Layout... */}
+      <div className="flex flex-col md:flex-row items-start justify-start gap-4 w-full h-fit relative">
+        <div className="relative h-fit w-full md:w-2/3">
           <CodeEditorWindow
             code={code}
             onChange={onChange}
@@ -228,10 +189,9 @@ const Page = () => {
             theme={theme.value}
           />
         </div>
-
-        <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
+        <div className="flex flex-col items-start justify-center gap-y-4  w-full md:w-auto flex-[1] h-fit relative">
           <OutputWindow outputDetails={outputDetails} />
-          <div className="flex flex-col items-end">
+          <div className="flex flex-col items-end w-full h-full relative">
             <CustomInput
               customInput={customInput}
               setCustomInput={setCustomInput}
@@ -240,11 +200,12 @@ const Page = () => {
               onClick={handleCompile}
               disabled={!code}
               className={classNames({
-                "mt-4 px-4 py-2 bg-white flex-shrink-0": true,
-                "border-2 border-black z-10 rounded-md": true,
-                [!code ? "opacity-50" : ""]: true,
-                "shadow-[5px_5px_0px_0px_rgba(0,0,0)] hover:shadow transition duration-200":
+                "block rounded-xl w-full hover:bg-[#000000]": true,
+                "mt-4 py-2 mb-2": true,
+                "font-semibold mento text-[#F7F6F3] tracking-wider text-2xl":
                   true,
+                "border-2 border-[#F7F6F3]": true,
+                "hover:scale-[1.05] transition-all ease-in-out": true,
               })}
             >
               {processing ? "Processing..." : "Compile and Execute"}
@@ -253,7 +214,7 @@ const Page = () => {
           {outputDetails && <OutputDetails outputDetails={outputDetails} />}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default Page;

@@ -8,12 +8,11 @@ const CustomInput = ({ customInput, setCustomInput }) => {
         rows={5}
         value={customInput}
         onChange={(e) => setCustomInput(e.target.value)}
-        placeholder={`Custom input`}
+        placeholder={`Custom input ...`}
         className={classNames({
-          "focus:outline-none w-full  px-4 py-2 bg-white mt-2": true,
-          "border-2 border-black z-10 rounded-md": true,
-          "shadow-[5px_5px_0px_0px_rgba(0,0,0)] hover:shadow transition duration-200":
-            true,
+          "h-full w-full px-4 py-2 bg-neutral-600 mt-2": true,
+          "bound z-10 text-[#ffffff] rounded-md resize-none": true,
+          "shadow-md shadow-neutral-800 transition duration-200": true,
         })}
       />
     </>

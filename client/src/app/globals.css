@@ -154,8 +154,22 @@ svg {
 
 input[type=text],
 input[type=number],
-input[type=passwords] {
+input[type=passwords],
+input[type=search],
+input[type=email],
+input[type=tel],
+input[type=url] {
   cursor: text !important;
+}
+
+input[type=checkbox],
+input[type=radio],
+input[type=submit],
+input[type=button],
+input[type=reset],
+input[type=file],
+select {
+  cursor: pointer !important;
 }
 
 .shadow-top {

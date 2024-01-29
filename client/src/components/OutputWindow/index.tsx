@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 
 const OutputWindow = ({ outputDetails }) => {
@@ -35,10 +36,14 @@ const OutputWindow = ({ outputDetails }) => {
   };
   return (
     <>
-      <h1 className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 mb-2">
-        Output
-      </h1>
-      <div className="w-full h-56 bg-[#1e293b] rounded-md text-white font-normal text-sm overflow-y-auto">
+      <h1 className="bound font-bold text-xl text-[#F7F6F3]">Output</h1>
+      <div
+        className={classNames({
+          "w-full h-56 bg-neutral-600 rounded-md overflow-y-auto": true,
+          "kanit text-[#F7F6F3] font-normal text-sm": true,
+          "shadow-md shadow-neutral-800 transition duration-200": true,
+        })}
+      >
         {outputDetails ? <>{getOutput()}</> : null}
       </div>
     </>
