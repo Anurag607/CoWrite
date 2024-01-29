@@ -67,11 +67,7 @@ export default function RootLayout({ children }: { children: any }) {
   };
 
   const isCodeEditor = () => {
-    return pathname.includes("/code_editor");
-  };
-
-  const isCodeForge = () => {
-    return pathname === "/codeForge";
+    return pathname.includes("/codeForge/editor");
   };
 
   return (

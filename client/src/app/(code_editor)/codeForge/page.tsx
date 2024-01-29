@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { ToastConfig } from "@/utils/config";
 import { switchEditor } from "@/redux/reducers/toggleEditor";
 import { useRouter } from "next-nprogress-bar";
+import { uuidv7 } from "uuidv7";
 
 const showError = (msg: string) => toast.error(msg, ToastConfig);
 
@@ -35,6 +36,7 @@ const Page = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    router.push(`/codeForge/editor/${formData.roomId}`);
     setIsLoading(false);
   };
 
@@ -129,7 +131,23 @@ const Page = () => {
             </div>
           </div>
           {/* Submit... */}
-          <div className="mt-4 w-full flex items-center justify-center">
+          <div className="mt-4 w-full flex flex-wrapj items-center justify-center gap-4">
+            <button
+              onClick={(e: any) => {
+                e.preventDefault();
+                setFormData({ ...formData, roomId: uuidv7() });
+              }}
+              className={classNames({
+                "cursor-default pointer-events-none": isLoading,
+                "px-4 py-2 rounded-md focus:outline-none border": true,
+                "bg-gray-900 text-[#e8e8e8] dark:bg-[#e8e8e8] dark:text-gray-900":
+                  true,
+                "hover:!bg-transparent hover:text-primary hover:border-primary hover:dark:text-[#e8e8e8]":
+                  true,
+              })}
+            >
+              {"Generate RoomId"}
+            </button>
             <button
               type="submit"
               disabled={isLoading}
