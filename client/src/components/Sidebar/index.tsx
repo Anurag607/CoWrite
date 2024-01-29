@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import classNames from "classnames";
+import { usePathname } from "next/navigation";
 import { useOnClickOutside } from "usehooks-ts";
 import { closeSidebar, openSidebar } from "@/redux/reducers/sidebarSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -12,25 +13,37 @@ import { switchEditor } from "@/redux/reducers/toggleEditor";
 import { useRouter } from "next-nprogress-bar";
 
 const Sidebar = () => {
-  const dispatch = useAppDispatch();
   const router = useRouter();
+  const pathname = usePathname();
+  const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const { toggleEditor } = useAppSelector((state: any) => state.toggleEditor);
   const { isSidebarOpen } = useAppSelector((state: any) => state.sidebar);
+  const { authInstance } = useAppSelector((state: any) => state.auth);
 
   useOnClickOutside(ref, () => {
     dispatch(closeSidebar());
   });
 
+  const shouldNotExtend = () => {
+    return (
+      (toggleEditor === "text" && pathname.includes("dashboard")) ||
+      (toggleEditor === "code" && pathname.includes("codeForge"))
+    );
+  };
+
   React.useEffect(() => {
-    if (toggleEditor === "text") return;
+    if (shouldNotExtend()) return;
     const loading = setTimeout(() => {
       setIsLoading(true);
     }, 1000);
     const loaded = setTimeout(() => {
       setIsLoading(false);
-      router.push("/codeForge");
+      if (toggleEditor === "code" && pathname.includes("dashboard"))
+        router.push("/codeForge");
+      else if (toggleEditor === "text" && pathname.includes("codeForge"))
+        router.push(`/dashboard/${authInstance._id}`);
     }, 3000);
     return () => {
       clearTimeout(loading);
@@ -44,15 +57,14 @@ const Sidebar = () => {
         "flex items-center justify-center z-[100001]": true,
         "bg-[#37352F] text-zinc-50": true,
         "fixed left-0 top-0": true,
-        [`h-screen mobile:w-0 ${
-          toggleEditor === "text" ? "w-[5rem]" : "w-screen"
-        }`]: true,
+        [`h-screen mobile:w-0 ${shouldNotExtend() ? "w-[5rem]" : "w-screen"}`]:
+          true,
         "transition-all ease-in-out": true,
         "bg-center bg-cover bg-no-repeat": true,
         [`${
           isSidebarOpen
             ? "translate-x-0"
-            : toggleEditor === "text"
+            : shouldNotExtend()
             ? "-translate-x-full"
             : "translate-x-0"
         }`]: true,
@@ -63,13 +75,12 @@ const Sidebar = () => {
       <div
         onClick={() => dispatch(isSidebarOpen ? closeSidebar() : openSidebar())}
         className={classNames({
-          "w-[42px] h-[42px] mobile:!hidden flex items-center justify-center":
-            true,
+          "w-[42px] h-[42px] mobile:!hidden items-center justify-center": true,
           "bg-[#e8e8e8] text-neutral-700 rounded-lg left-3": isSidebarOpen,
           "bg-[#37352F] text-[#F7F6F3] rounded-r-lg left-0": !isSidebarOpen,
           "text-3xl rounded-r-lg cursor-pointer": true,
           "fixed top-3 z-[100001] transition-all": true,
-          [`${toggleEditor === "code" && "hidden"}`]: true,
+          [`${shouldNotExtend() ? "flex" : "hidden"}`]: true,
         })}
       >
         {isSidebarOpen ? <CaretLeftOutlined /> : <CaretRightOutlined />}
@@ -80,8 +91,8 @@ const Sidebar = () => {
           "flex items-center justify-center gap-x-4 flex-row-reverse": true,
           "-rotate-90 translate-y-[-50%] absolute top-1/2 left-0": true,
           [`${
-            toggleEditor === "text"
-              ? "translate-x-[-41%]"
+            pathname.includes("dashboard") && shouldNotExtend()
+              ? "translate-x-[-40%]"
               : "translate-x-[-37.5%]"
           }`]: true,
           "transition-all ease-in-out": true,
@@ -93,12 +104,12 @@ const Sidebar = () => {
           }}
           className={classNames({
             [`w-[42px] h-[42px] mobile:!hidden flex items-center justify-center ${
-              toggleEditor === "text" && "mt-2.5"
+              pathname.includes("dashboard") && shouldNotExtend() && "mt-2.5"
             }`]: true,
             "bg-transparent border font-bold border-[#F7F6F3] text-[#F7F6F3] rounded-lg left-3":
               true,
             [`text-3xl rounded-r-lg cursor-pointer ${
-              toggleEditor === "text" ? "rotate-90" : "-rotate-90"
+              shouldNotExtend() ? "rotate-90" : "-rotate-90"
             }`]: true,
             "transition-all ease-in-out hover:scale-105": true,
           })}
@@ -110,13 +121,19 @@ const Sidebar = () => {
             "bound text-[3rem] tracking-tighter font-bold text-[#F7F6F3]": true,
           })}
         >
-          {toggleEditor === "text" ? "CodeForge" : "CoWrite"}
+          {pathname.includes("dashboard")
+            ? !shouldNotExtend()
+              ? "CoWrite"
+              : "CodeForge"
+            : shouldNotExtend()
+            ? "CoWrite"
+            : "CodeForge"}
         </h1>
       </div>
       {/* Loader */}
       <div
         className={classNames({
-          [`${toggleEditor === "code" ? "flex" : "hidden"}`]: true,
+          [`${!shouldNotExtend() ? "flex" : "hidden"}`]: true,
           [`loadingContainer opacity-0 cursor-default transition-all ease-in-out pointer-event-none`]:
             true,
           [`${isLoading ? "opacity-100" : "opacity-0"}`]: true,

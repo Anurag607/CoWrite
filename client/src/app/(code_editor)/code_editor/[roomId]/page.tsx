@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 import { languageOptions } from "@/utils/CodeEditor/languageOptions";
@@ -19,6 +19,8 @@ import {
   ThemeDropdown,
 } from "@/components";
 import { ToastConfig } from "@/utils/config";
+import { useRouter } from "next-nprogress-bar";
+import { useAppSelector } from "@/redux/hooks";
 
 const javascriptDefault = `/**
 * Problem: Binary Search: Search a sorted array for a target value.
@@ -60,6 +62,8 @@ int main() {
 `;
 
 const Page = () => {
+  const router = useRouter();
+  const { authInstance } = useAppSelector((state: any) => state.auth);
   const [code, setCode] = useState(localStorage.getItem("code"));
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState(null);
@@ -69,6 +73,12 @@ const Page = () => {
 
   const enterPress = useKeyPress("Enter");
   const ctrlPress = useKeyPress("Control");
+
+  useEffect(() => {
+    if (!authInstance) {
+      router.push(`/`);
+    }
+  }, [authInstance]);
 
   const onSelectChange = (sl: any) => {
     console.log("selected Option...", sl);

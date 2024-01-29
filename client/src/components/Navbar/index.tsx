@@ -11,10 +11,12 @@ import { openSidebar } from "@/redux/reducers/sidebarSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next-nprogress-bar";
 import { destroyAuthInstance } from "@/redux/reducers/authSlice";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
-  const dispatch = useAppDispatch();
   const router = useRouter();
+  const pathname = usePathname();
+  const dispatch = useAppDispatch();
   const { isSidebarOpen } = useAppSelector((state: any) => state.sidebar);
   const { authInstance } = useAppSelector((state: any) => state.auth);
 
@@ -23,6 +25,10 @@ const Navbar = () => {
       router.push(`/`);
     }
   }, [authInstance]);
+
+  const isCodeForge = () => {
+    return pathname === "/codeForge";
+  };
 
   return (
     <nav
@@ -67,7 +73,7 @@ const Navbar = () => {
               "flex justify-center items-center gap-4 cursor-pointer": true,
             })}
           >
-            {"CoWrite"}
+            {isCodeForge() ? "CodeForge" : "CoWrite"}
           </h3>
         </div>
       </div>

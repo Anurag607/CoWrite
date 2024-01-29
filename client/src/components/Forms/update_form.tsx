@@ -144,8 +144,8 @@ const UpdateFormPopup = () => {
     },
     focusedDoc.owner === authInstance.email
       ? {
-          name: "Give Access",
-          placeholder: "Update Access",
+          name: "Give Access (EmailId)",
+          placeholder: "Give Access (EmailId)",
           type: "email",
           isRequired: false,
           function: (e: React.ChangeEvent<HTMLInputElement>) => {

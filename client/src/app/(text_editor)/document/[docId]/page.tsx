@@ -36,10 +36,10 @@ const Page = () => {
   const { isImgUploading, progress } = useAppSelector(
     (state: any) => state.image
   );
-  const { editorImages } = useAppSelector((state: any) => state.editorImage);
 
   React.useEffect(() => {
     if (!authInstance) {
+      router.push(`/`);
       return;
     }
     searchParams.forEach((key, value) => {

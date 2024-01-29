@@ -67,7 +67,11 @@ export default function RootLayout({ children }: { children: any }) {
   };
 
   const isCodeEditor = () => {
-    return pathname.includes("/code_editor") || pathname === "/codeForge";
+    return pathname.includes("/code_editor");
+  };
+
+  const isCodeForge = () => {
+    return pathname === "/codeForge";
   };
 
   return (
@@ -120,7 +124,7 @@ export default function RootLayout({ children }: { children: any }) {
                       [`relative h-screen ${
                         isAuthPage() || isHomePage() || isCodeEditor()
                           ? "w-screen"
-                          : "w-[calc(100vw_-_5.5rem)]"
+                          : "w-[calc(100vw_-_6rem)]"
                       } flex flex-col items-start justify-between`]: true,
                       "mobile:w-screen": true,
                     })}

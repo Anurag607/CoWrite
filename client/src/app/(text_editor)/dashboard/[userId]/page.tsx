@@ -36,6 +36,7 @@ import { destroyEditorInstance } from "@/redux/reducers/editorSlice";
 import { clearClients } from "@/redux/reducers/clientSlice";
 import { CaretLeftOutlined, CaretUpOutlined } from "@ant-design/icons";
 import useSwipe from "@/custom-hooks/useSwipe";
+import { switchEditor } from "@/redux/reducers/toggleEditor";
 
 export default function Page() {
   const docProgress = useRef(0);
@@ -60,6 +61,10 @@ export default function Page() {
       dispatch(openSidebar());
     },
   });
+
+  React.useEffect(() => {
+    dispatch(switchEditor("text"));
+  }, []);
 
   const cleanup = () => {
     localStorage.removeItem(dataKey);
