@@ -1,7 +1,5 @@
 import { useCallback, useState, useEffect } from "react";
 import EditorData from "@/utils/Editor/data.json";
-import { useAppDispatch } from "@/redux/hooks";
-import { updateEditorImages } from "@/redux/reducers/editorImgSlice";
 
 export const dataKey = "editorData";
 

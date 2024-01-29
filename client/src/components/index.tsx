@@ -18,6 +18,12 @@ import ColorPopup from "./ColorPopup";
 import Alert from "./Alert";
 import LoadingSpinner from "./LoadingSpinner";
 import OffCanvasPopup from "./OffCanvasPopup";
+import CodeEditorWindow from "./CodeEditorWindow";
+import CustomInput from "./CustomInput";
+import LanguagesDropdown from "./LanguagesDropdown";
+import OutputWindow from "./OutputWindow";
+import OutputDetails from "./OutputDetails";
+import ThemeDropdown from "./ThemeDropdown";
 
 const Editor = dynamic<{
   editorRef: any;
@@ -47,4 +53,10 @@ export {
   LoadingSpinner,
   OffCanvasPopup,
   Editor,
+  CodeEditorWindow,
+  CustomInput,
+  LanguagesDropdown,
+  OutputWindow,
+  OutputDetails,
+  ThemeDropdown,
 };
