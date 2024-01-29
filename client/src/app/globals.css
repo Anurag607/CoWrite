@@ -308,3 +308,7 @@ select {
   -webkit-mask: url('../../public/left_arrow.svg') no-repeat center;
   mask: url('../../public/left_arrow.svg') no-repeat center;
 }
+
+.metrics-container {
+  display: none !important;
+}

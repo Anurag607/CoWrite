@@ -27,9 +27,10 @@ const OutputWindow = ({ outputDetails }) => {
         </pre>
       );
     } else {
+      console.log(outputDetails?.stderr);
       return (
         <pre className="px-2 py-1 font-normal text-xs text-red-500">
-          {atob(outputDetails?.stderr)}
+          {/* {atob(outputDetails?.stderr)} */}
         </pre>
       );
     }

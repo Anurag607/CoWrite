@@ -1,5 +1,11 @@
 export const languageOptions = [
   {
+    id: 54,
+    name: "C++ (GCC 9.2.0)",
+    label: "C++ (GCC 9.2.0)",
+    value: "cpp",
+  },
+  {
     id: 63,
     name: "JavaScript (Node.js 12.14.0)",
     label: "JavaScript (Node.js 12.14.0)",
@@ -64,12 +70,6 @@ export const languageOptions = [
     name: "C (GCC 9.2.0)",
     label: "C (GCC 9.2.0)",
     value: "c",
-  },
-  {
-    id: 54,
-    name: "C++ (GCC 9.2.0)",
-    label: "C++ (GCC 9.2.0)",
-    value: "cpp",
   },
   {
     id: 86,

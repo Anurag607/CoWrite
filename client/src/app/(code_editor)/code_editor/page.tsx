@@ -50,8 +50,17 @@ const target = 5;
 console.log(binarySearch(arr, target));
 `;
 
+const cppDefault = `
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    cout << "Welcome To CodeForge!" << endl;
+}
+`;
+
 const Page = () => {
-  const [code, setCode] = useState(javascriptDefault);
+  const [code, setCode] = useState(localStorage.getItem("code"));
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState(null);
@@ -67,6 +76,13 @@ const Page = () => {
   };
 
   useEffect(() => {
+    if (code === null || code === undefined) {
+      localStorage.setItem("code", cppDefault);
+      setCode(cppDefault);
+    }
+  }, [code]);
+
+  useEffect(() => {
     if (enterPress && ctrlPress) {
       console.log("enterPress", enterPress);
       console.log("ctrlPress", ctrlPress);
@@ -78,6 +94,7 @@ const Page = () => {
     switch (action) {
       case "code": {
         setCode(data);
+        localStorage.setItem("code", data);
         break;
       }
       default: {
@@ -97,8 +114,13 @@ const Page = () => {
     axios
       .post("/api/compiler", formData)
       .then(function (response) {
-        console.log("res.data", response.data);
-        const token = response.data.token;
+        if (response.data.status === 400) {
+          showErrorToast("Failed to compile! Please try again.");
+          setProcessing(false);
+          return;
+        }
+        const token = response.data.msg.token;
+        // console.log("token", token);
         checkStatus(token);
       })
       .catch((err) => {
@@ -106,21 +128,22 @@ const Page = () => {
         let status = err.response.status;
         console.log("status", status);
         if (status === 429) {
-          console.log("too many requests", status);
+          // console.log("too many requests", status);
 
           showErrorToast(
             `Quota of 100 requests exceeded for the Day! Please read the blog on freeCodeCamp to learn how to setup your own RAPID API Judge0!`
           );
         }
         setProcessing(false);
-        console.log("catch block...", error);
+        // console.log("catch block...", error);
       });
   };
 
   const checkStatus = async (token: any) => {
     try {
       let response = await axios.get(`/api/compiler/${token}`);
-      let statusId = response.data.status?.id;
+      let statusId = response.data.msg.status?.id;
+      console.log("statusId", statusId);
 
       // Processed - we have a result
       if (statusId === 1 || statusId === 2) {
@@ -131,13 +154,13 @@ const Page = () => {
         return;
       } else {
         setProcessing(false);
-        setOutputDetails(response.data);
+        setOutputDetails(response.data.msg);
         showSuccessToast(`Compiled Successfully!`);
-        console.log("response.data", response.data);
+        // console.log("checkStatus Data: ", response.data);
         return;
       }
     } catch (err) {
-      console.log("err", err);
+      // console.log("err", err);
       setProcessing(false);
       showErrorToast();
     }
@@ -170,7 +193,7 @@ const Page = () => {
   return (
     <div
       className={classNames({
-        "bg-[#37352F] kanit w-screen h-fit p-4 relative": true,
+        "bg-[#37352F] kanit w-screen h-fit md:h-screen p-4 relative": true,
         "flex flex-col items-start justify-start gap-y-4": true,
       })}
     >
@@ -181,7 +204,7 @@ const Page = () => {
       </div>
       {/* Layout... */}
       <div className="flex flex-col md:flex-row items-start justify-start gap-4 w-full h-fit relative">
-        <div className="relative h-fit w-full md:w-2/3">
+        <div className="relative h-fit w-full md:w-2/3 text-white">
           <CodeEditorWindow
             code={code}
             onChange={onChange}
@@ -200,15 +223,14 @@ const Page = () => {
               onClick={handleCompile}
               disabled={!code}
               className={classNames({
-                "block rounded-xl w-full hover:bg-[#000000]": true,
-                "mt-4 py-2 mb-2": true,
-                "font-semibold mento text-[#F7F6F3] tracking-wider text-2xl":
-                  true,
+                "block rounded-full w-fit hover:bg-[#000000]": true,
+                "mt-4 py-2 px-8": true,
+                "font-medium bound text-[#F7F6F3] tracking-wider text-lg": true,
                 "border-2 border-[#F7F6F3]": true,
                 "hover:scale-[1.05] transition-all ease-in-out": true,
               })}
             >
-              {processing ? "Processing..." : "Compile and Execute"}
+              {processing ? "Processing..." : "Run"}
             </button>
           </div>
           {outputDetails && <OutputDetails outputDetails={outputDetails} />}
