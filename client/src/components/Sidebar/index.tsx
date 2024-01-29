@@ -54,7 +54,7 @@ const Sidebar = () => {
   return (
     <div
       className={classNames({
-        "flex items-center justify-center z-[100001]": true,
+        "mobile:hidden flex items-center justify-center z-[100001]": true,
         "bg-[#37352F] text-zinc-50": true,
         "fixed left-0 top-0": true,
         [`h-screen mobile:w-0 ${shouldNotExtend() ? "w-[5rem]" : "w-screen"}`]:
