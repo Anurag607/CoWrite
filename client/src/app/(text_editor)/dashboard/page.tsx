@@ -1,8 +1,15 @@
 "use client";
 
+import { useRouter } from "next-nprogress-bar";
 import React from "react";
 
 const Page = () => {
+  const router = useRouter();
+
+  React.useEffect(() => {
+    router.back();
+  }, []);
+
   return (
     <main
       className={

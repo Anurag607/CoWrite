@@ -30,7 +30,7 @@ const Sidebar = () => {
     }, 1000);
     const loaded = setTimeout(() => {
       setIsLoading(false);
-      router.push("/code_editor");
+      router.push("/codeForge");
     }, 3000);
     return () => {
       clearTimeout(loading);
@@ -41,7 +41,7 @@ const Sidebar = () => {
   return (
     <div
       className={classNames({
-        "mobile:hidden flex items-center justify-center z-[100001]": true,
+        "flex items-center justify-center z-[100001]": true,
         "bg-[#37352F] text-zinc-50": true,
         "fixed left-0 top-0": true,
         [`h-screen mobile:w-0 ${

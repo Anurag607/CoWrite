@@ -22,8 +22,7 @@ import {
 import axios from "axios";
 import { resetDocColor } from "@/redux/reducers/colorSlice";
 import { setShowBottomBar, setShowSidebar } from "@/redux/reducers/drawerSlice";
-import { closeSidebar } from "@/redux/reducers/sidebarSlice";
-import { clearSearchParams } from "@/redux/reducers/searchSlice";
+import { closeSidebar, openSidebar } from "@/redux/reducers/sidebarSlice";
 import { closeMenu } from "@/redux/reducers/menuSlice";
 import { closeFilter } from "@/redux/reducers/filterSlice";
 import { closeForm, closeUpdateForm } from "@/redux/reducers/formSlice";
@@ -34,27 +33,33 @@ import {
 } from "@/redux/reducers/imgUploadSlice";
 import { dataKey } from "@/custom-hooks/editorHooks";
 import { destroyEditorInstance } from "@/redux/reducers/editorSlice";
-import { useRouter } from "next-nprogress-bar";
 import { clearClients } from "@/redux/reducers/clientSlice";
 import { CaretLeftOutlined, CaretUpOutlined } from "@ant-design/icons";
+import useSwipe from "@/custom-hooks/useSwipe";
 
 export default function Page() {
-  const router = useRouter();
-  const { isFormOpen, isUpdateFormOpen } = useAppSelector(
-    (state: any) => state.form
-  );
-  const { toggleEditor } = useAppSelector((state: any) => state.toggleEditor);
+  const docProgress = useRef(0);
+  const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const { docData } = useAppSelector((state: any) => state.docs);
   const { authInstance } = useAppSelector((state: any) => state.auth);
   const { isColorFormOpen } = useAppSelector((state: any) => state.color);
   const { isDeleteFormOpen } = useAppSelector((state: any) => state.alert);
+  const { isFormOpen, isUpdateFormOpen } = useAppSelector(
+    (state: any) => state.form
+  );
   const { isImgUploading, progress } = useAppSelector(
     (state: any) => state.image
   );
-  const { docData } = useAppSelector((state: any) => state.docs);
-  const [isLoading, setIsLoading] = useState(false);
-  const docProgress = useRef(0);
 
-  const dispatch = useAppDispatch();
+  const swipeHandlers = useSwipe({
+    onSwipedLeft: () => {
+      // ...
+    },
+    onSwipedRight: () => {
+      dispatch(openSidebar());
+    },
+  });
 
   const cleanup = () => {
     localStorage.removeItem(dataKey);
@@ -160,7 +165,7 @@ export default function Page() {
   };
 
   return (
-    <>
+    <main {...swipeHandlers}>
       {docData === undefined ? (
         <NotFound />
       ) : (
@@ -211,6 +216,6 @@ export default function Page() {
       >
         <CaretUpOutlined />
       </div>
-    </>
+    </main>
   );
 }

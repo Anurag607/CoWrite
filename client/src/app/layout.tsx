@@ -1,13 +1,12 @@
 "use client";
 
-import { Rubik } from "next/font/google";
 import "./globals.css";
+import { Rubik } from "next/font/google";
 import { ReduxProviders } from "@/redux/provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   ErrorBoundaryWrapper,
-  LoaderSkeleton,
   Navbar,
   ScrollToTop,
   Sidebar,
@@ -68,7 +67,7 @@ export default function RootLayout({ children }: { children: any }) {
   };
 
   const isCodeEditor = () => {
-    return pathname === "/code_editor";
+    return pathname.includes("/code_editor") || pathname === "/codeForge";
   };
 
   return (
@@ -108,8 +107,8 @@ export default function RootLayout({ children }: { children: any }) {
           />
           <ReduxProviders>
             <QueryClientProvider client={queryClient}>
+              <ScrollToTop _children={null} />
               <ErrorBoundaryWrapper>
-                <ScrollToTop _children={null} />
                 <div
                   className={classNames({
                     "relative max-w-screen max-h-screen gap-x-0": true,
