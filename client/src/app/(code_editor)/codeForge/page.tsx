@@ -18,12 +18,18 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     roomId: "",
-    email: authInstance.email,
+    email: "",
     username: "",
   });
 
   React.useEffect(() => {
     dispatch(switchEditor("code"));
+    if (authInstance) {
+      setFormData({
+        ...formData,
+        email: authInstance.email,
+      });
+    }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
