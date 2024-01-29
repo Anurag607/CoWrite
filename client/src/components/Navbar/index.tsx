@@ -61,7 +61,7 @@ const Navbar = () => {
           className="w-fit h-fit flex justify-center items-center gap-2 relative cursor-pointer"
         >
           <Image
-            src="/logo.png"
+            src={`${isCodeForge() ? "/cf_logo.svg" : "/logo.png"}`}
             width={42}
             height={42}
             alt="logo"
