@@ -30,9 +30,14 @@ const Navbar = () => {
     return pathname === "/codeForge";
   };
 
+  const isTextEditor = () => {
+    return pathname.includes("/document");
+  };
+
   return (
     <nav
       className={classNames({
+        "pl-10": isTextEditor(),
         "bg-transparent z-[1000]": true, // colors
         "flex items-center justify-between mobile:px-0 pr-10": true, // layout
         [`mobile:pl-[2.35rem] w-full relative py-3 h-fit`]: true, //positioning & styling
@@ -43,7 +48,8 @@ const Navbar = () => {
         <div
           onClick={() => dispatch(openSidebar())}
           className={classNames({
-            "mobile:w-[32px] mobile:h-[32px] w-[42px] h-[42px] flex items-center justify-center":
+            [`${isTextEditor() ? "hidden" : "flex"}`]: true,
+            "mobile:w-[32px] mobile:h-[32px] w-[42px] h-[42px] items-center justify-center":
               true,
             [`${
               !isSidebarOpen

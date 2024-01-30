@@ -2,7 +2,7 @@
 
 import React from "react";
 import { toast } from "react-toastify";
-import { Editor, LoadingSpinner } from "@/components";
+import { AccessDropdown, Editor, LoadingSpinner } from "@/components";
 import { useLoadData, useSetData, dataKey } from "@/custom-hooks/editorHooks";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearCurrentDoc } from "@/redux/reducers/docSlice";
@@ -132,8 +132,17 @@ const Page = () => {
         <LoadingSpinner />
       ) : (
         <main
-          className={`flex flex-col items-start gap-y-3 justify-start w-[96.5%] h-full overflow-hidden flex-[1]`}
+          className={`flex flex-col items-start gap-y-3 justify-start w-[96.5%] h-fit overflow-x-hidden overflow-y-auto flex-[1]`}
         >
+          {focusedDoc && (
+            <div
+              className={
+                "w-full h-fit flex items-center justify-end pr-20 mobile:mx-auto gap-x-2"
+              }
+            >
+              <AccessDropdown />
+            </div>
+          )}
           <div className={"w-full h-fit flex items-center justify-end gap-x-2"}>
             {clients.map((el: string, index: number) => {
               return (
@@ -154,6 +163,14 @@ const Page = () => {
                 </div>
               );
             })}
+          </div>
+          <div className="w-full h-[15rem] flex items-center justify-center relative">
+            <img
+              loading="lazy"
+              src={currentDoc.descImg}
+              alt="desc-img"
+              className="object-cover w-full h-full rounded-md"
+            />
           </div>
           <Editor
             editorRef={editor.current}

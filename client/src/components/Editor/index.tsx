@@ -199,7 +199,7 @@ const EditorContainer = ({ editorRef, children, docId, data }: any) => {
     <>
       {!children && (
         <div
-          className={`flex-[1] w-full h-fit relative mx-auto overflow-x-hidden overflow-y-scroll !text-primary !p-6 rounded-lg overflow-clip`}
+          className={`flex-[1] w-full h-fit relative mx-auto !text-primary !p-6 rounded-lg`}
           id={EditorData.EDITTOR_HOLDER_ID}
         />
       )}

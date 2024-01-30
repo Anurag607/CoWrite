@@ -24,6 +24,7 @@ import LanguagesDropdown from "./LanguagesDropdown";
 import OutputWindow from "./OutputWindow";
 import OutputDetails from "./OutputDetails";
 import ThemeDropdown from "./ThemeDropdown";
+import AccessDropdown from "./AccessDropdown";
 
 const Editor = dynamic<{
   editorRef: any;
@@ -59,4 +60,5 @@ export {
   OutputWindow,
   OutputDetails,
   ThemeDropdown,
+  AccessDropdown,
 };

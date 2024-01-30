@@ -70,6 +70,10 @@ export default function RootLayout({ children }: { children: any }) {
     return pathname.includes("/codeForge/editor");
   };
 
+  const isTextEditor = () => {
+    return pathname.includes("/document");
+  };
+
   return (
     <html lang="en">
       <head>
@@ -118,7 +122,10 @@ export default function RootLayout({ children }: { children: any }) {
                   <div
                     className={classNames({
                       [`relative h-screen ${
-                        isAuthPage() || isHomePage() || isCodeEditor()
+                        isAuthPage() ||
+                        isHomePage() ||
+                        isCodeEditor() ||
+                        isTextEditor()
                           ? "w-screen"
                           : "w-[calc(100vw_-_6rem)]"
                       } flex flex-col items-start justify-between`]: true,
@@ -141,7 +148,10 @@ export default function RootLayout({ children }: { children: any }) {
                 </div>
               </ScrollTop>
               {!isAuthPage() && !isHomePage() && <OffCanvasPopup />}
-              {!isAuthPage() && !isHomePage() && !isCodeEditor() && <Sidebar />}
+              {!isAuthPage() &&
+                !isHomePage() &&
+                !isCodeEditor() &&
+                !isTextEditor() && <Sidebar />}
               <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
             <ToastContainer autoClose={1000} hideProgressBar />
