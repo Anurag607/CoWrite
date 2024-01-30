@@ -21,6 +21,9 @@ import {
 import { ToastConfig } from "@/utils/config";
 import { useRouter } from "next-nprogress-bar";
 import { useAppSelector } from "@/redux/hooks";
+import { CaretLeftOutlined, CaretUpOutlined } from "@ant-design/icons";
+import { setShowBottomBar, setShowSidebar } from "@/redux/reducers/drawerSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 const cppDefault = `
 #include <bits/stdc++.h>
@@ -34,6 +37,7 @@ int main() {
 const Page = () => {
   const router = useRouter();
   const params = useParams();
+  const dispatch = useAppDispatch();
   const { authInstance } = useAppSelector((state: any) => state.auth);
   const [code, setCode] = useState(localStorage.getItem("code"));
   const [customInput, setCustomInput] = useState("");
@@ -172,52 +176,87 @@ const Page = () => {
   };
 
   return (
-    <div
-      className={classNames({
-        "bg-[#37352F] kanit w-screen h-fit md:h-screen p-4 relative": true,
-        "flex flex-col items-start justify-start gap-y-4": true,
-      })}
-    >
-      {/* Header... */}
-      <div className="flex flex-wrap items-start justify-start gap-4 w-full h-fit relative">
-        <LanguagesDropdown onSelectChange={onSelectChange} />
-        <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
-      </div>
-      {/* Layout... */}
-      <div className="flex flex-col md:flex-row items-start justify-start gap-4 w-full h-fit relative">
-        <div className="relative h-fit w-full md:w-2/3 text-white">
-          <CodeEditorWindow
-            code={code}
-            onChange={onChange}
-            language={language?.value}
-            theme={theme.value}
-          />
+    <>
+      <div
+        className={classNames({
+          "bg-[#37352F] kanit w-screen h-fit md:h-screen p-4 relative": true,
+          "flex flex-col items-start justify-start gap-y-4": true,
+        })}
+      >
+        {/* Header... */}
+        <div className="flex flex-wrap items-start justify-start gap-4 w-full h-fit relative">
+          <LanguagesDropdown onSelectChange={onSelectChange} />
+          <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
         </div>
-        <div className="flex flex-col items-start justify-center gap-y-4  w-full md:w-auto flex-[1] h-fit relative">
-          <OutputWindow outputDetails={outputDetails} />
-          <div className="flex flex-col items-end w-full h-full relative">
-            <CustomInput
-              customInput={customInput}
-              setCustomInput={setCustomInput}
+        {/* Layout... */}
+        <div className="flex flex-col md:flex-row items-start justify-start gap-4 w-full h-fit relative">
+          <div className="relative h-fit w-full md:w-2/3 text-white">
+            <CodeEditorWindow
+              code={code}
+              onChange={onChange}
+              language={language?.value}
+              theme={theme.value}
             />
-            <button
-              onClick={handleCompile}
-              disabled={!code}
-              className={classNames({
-                "block rounded-full w-fit hover:bg-[#000000]": true,
-                "mt-4 py-2 px-8": true,
-                "font-medium bound text-[#F7F6F3] tracking-wider text-lg": true,
-                "border-2 border-[#F7F6F3]": true,
-                "hover:scale-[1.05] transition-all ease-in-out": true,
-              })}
-            >
-              {processing ? "Processing..." : "Run"}
-            </button>
           </div>
-          {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+          <div className="flex flex-col items-start justify-center gap-y-4  w-full md:w-auto flex-[1] h-fit relative">
+            <OutputWindow outputDetails={outputDetails} />
+            <div className="flex flex-col items-end w-full h-full relative">
+              <CustomInput
+                customInput={customInput}
+                setCustomInput={setCustomInput}
+              />
+              <button
+                onClick={handleCompile}
+                disabled={!code}
+                className={classNames({
+                  "block rounded-full w-fit hover:bg-[#000000]": true,
+                  "mt-4 py-2 px-8": true,
+                  "font-medium bound text-[#F7F6F3] tracking-wider text-lg":
+                    true,
+                  "border-2 border-[#F7F6F3]": true,
+                  "hover:scale-[1.05] transition-all ease-in-out": true,
+                })}
+              >
+                {processing ? "Processing..." : "Run"}
+              </button>
+            </div>
+            {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+          </div>
         </div>
       </div>
-    </div>
+      <div
+        onClick={() => {
+          dispatch(setShowBottomBar([true, ""]));
+          dispatch(setShowSidebar([true, ""]));
+        }}
+        className={classNames({
+          "mobile:w-[32px] mobile:h-[32px] w-[42px] h-[42px] mobile:hidden flex items-center justify-center":
+            true,
+          [`bg-[#F7F6F3] text-neutral-700 mobile:text-[0.95rem] text-3xl rounded-l-lg`]:
+            true,
+          "z-[100001] transition-all": true,
+          "fixed right-0 top-[5%]": true,
+        })}
+      >
+        <CaretLeftOutlined />
+      </div>
+      <div
+        onClick={() => {
+          dispatch(setShowBottomBar([true, ""]));
+          dispatch(setShowSidebar([true, ""]));
+        }}
+        className={classNames({
+          "mobile:w-[32px] mobile:h-[32px] w-[42px] h-[42px] hidden mobile:flex items-center justify-center":
+            true,
+          [`bg-[#F7F6F3] text-neutral-700 mobile:text-[0.95rem] text-xl rounded-t-lg`]:
+            true,
+          "z-[100001] transition-all": true,
+          "fixed bottom-0 right-[30%]": true,
+        })}
+      >
+        <CaretUpOutlined />
+      </div>
+    </>
   );
 };
 export default Page;
