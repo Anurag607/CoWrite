@@ -137,18 +137,22 @@ const Page = () => {
           {focusedDoc && (
             <div
               className={
-                "w-full h-fit flex items-center justify-end pr-20 mobile:mx-auto gap-x-2"
+                "w-full h-fit flex items-center justify-end mobile:pr-0 pr-20 gap-x-2"
               }
             >
               <AccessDropdown />
             </div>
           )}
-          <div className={"w-full h-fit flex items-center justify-end gap-x-2"}>
+          <div
+            className={
+              "w-full h-fit mobile:flex hidden items-center justify-end gap-x-2 pr-3"
+            }
+          >
             {clients.map((el: string, index: number) => {
               return (
                 <div
                   key={index}
-                  className={`bg-primary rounded-full p-2 px-4 border-4 border-sidebar shadow-lg group relative`}
+                  className={`bg-primary rounded-full py-1 px-3 border-2 border-sidebar shadow-lg group relative`}
                 >
                   <h4 className={`text-main text-lg font-bold`}>
                     {el[0].toUpperCase()}
@@ -164,12 +168,12 @@ const Page = () => {
               );
             })}
           </div>
-          <div className="w-full h-[15rem] flex items-center justify-center relative">
+          <div className="w-full mobile:h-[10rem] h-[15rem] flex items-center justify-center relative">
             <img
               loading="lazy"
               src={currentDoc.descImg}
               alt="desc-img"
-              className="object-cover w-full h-full rounded-md"
+              className="object-cover w-[90%] h-full rounded-xl shadow-md"
             />
           </div>
           <Editor

@@ -19,6 +19,7 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const { isSidebarOpen } = useAppSelector((state: any) => state.sidebar);
   const { authInstance } = useAppSelector((state: any) => state.auth);
+  const { clients } = useAppSelector((state: any) => state.client);
 
   React.useEffect(() => {
     if (!authInstance) {
@@ -40,7 +41,9 @@ const Navbar = () => {
         "pl-10": isTextEditor(),
         "bg-transparent z-[1000]": true, // colors
         "flex items-center justify-between mobile:px-0 pr-10": true, // layout
-        [`mobile:pl-[2.35rem] w-full relative py-3 h-fit`]: true, //positioning & styling
+        "w-full relative py-3 h-fit": true, //positioning & styling
+        "mobile:pl-[2.35rem]": !isTextEditor(),
+        "mobile:pl-[0.75rem]": isTextEditor(),
         "dark:shadow-[0px_1px_2px_0_rgba(255,255,255,0.1)] shadow": false, //dark-mode and shadow
       })}
     >
@@ -85,6 +88,31 @@ const Navbar = () => {
         </div>
       </div>
       <div className={`flex gap-x-2 items-center justify-center`}>
+        <div
+          className={
+            "w-fit h-fit mobile:hidden flex items-center justify-end gap-x-2 mr-4"
+          }
+        >
+          {clients.map((el: string, index: number) => {
+            return (
+              <div
+                key={index}
+                className={`bg-primary rounded-full p-2 px-4 border-4 border-sidebar shadow-lg group relative`}
+              >
+                <h4 className={`text-main text-lg font-bold`}>
+                  {el[0].toUpperCase()}
+                </h4>
+                <span
+                  className={
+                    "absolute break-before-avoid bottom-[-60%] right-0 opacity-75 w-fit h-fit px-2 py-1 text-xs rounded-md bg-primary text-main scale-0 group-hover:scale-100"
+                  }
+                >
+                  {el}
+                </span>
+              </div>
+            );
+          })}
+        </div>
         <DarkMode />
         {authInstance && (
           <button

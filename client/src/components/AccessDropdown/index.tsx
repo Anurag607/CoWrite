@@ -6,17 +6,23 @@ import classNames from "classnames";
 import { ToastConfig } from "@/utils/config";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { setFocusedDoc } from "@/redux/reducers/docSlice";
+import { useOnClickOutside } from "usehooks-ts";
 
 const showError = (msg: string) => toast.error(msg, ToastConfig);
 
 const AccessDropdown = () => {
   const dispatch = useAppDispatch();
+  const ref = React.useRef<HTMLDivElement>(null);
   const { focusedDoc } = useAppSelector((state: any) => state.docs);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [revokeAccess, setRevokeAccess] = React.useState([]);
   const { authInstance } = useAppSelector((state: any) => state.auth);
+
+  useOnClickOutside(ref, () => {
+    setIsMenuOpen(false);
+  });
 
   const handleAccessChange = async (e: any) => {
     e.preventDefault();
@@ -61,8 +67,7 @@ const AccessDropdown = () => {
         onClick={() => setIsMenuOpen((prev) => !prev)}
         className={classNames({
           "text-primary font-normal bound text-sm": true,
-          "mobile-sm:hidden flex justify-center items-center gap-2 cursor-pointer":
-            true,
+          "flex justify-center items-center gap-2 cursor-pointer": true,
           "bg-transparent hover:bg-neutral-200 dark:hover:bg-neutral-700": true,
           "px-2 py-1 mt-2 rounded-md": true,
         })}
@@ -85,10 +90,11 @@ const AccessDropdown = () => {
       </div>
       {/* Manage Access Menu */}
       <div
+        ref={ref}
         className={classNames({
-          "absolute top-full -left-full mobile:right-0": true,
+          "absolute top-full -left-1/2": true,
           "flex flex-col items-start justify-start": true,
-          "w-[17.5rem] h-fit p-3": true,
+          "w-[17.5rem] mobile-sm:w-[13rem] h-fit p-3": true,
           [`scale-0 ${isMenuOpen && "scale-100"}`]: true,
           "transition-all duration-150 ease-in-out origin-top-right": true,
           "bg-main rounded-lg border dark:border-neutral-900 shadow-lg translate-y-1":
@@ -151,7 +157,8 @@ const AccessDropdown = () => {
               onClick={handleAccessChange}
               className={classNames({
                 "cursor-default pointer-events-none": isLoading,
-                "px-4 py-2 rounded-md focus:outline-none border": true,
+                "mobile-sm:text-sm mobile-sm:px-2 mobile-sm:py-1 px-4 py-2 rounded-md focus:outline-none border":
+                  true,
                 "bg-gray-900 text-[#e8e8e8] dark:bg-[#e8e8e8] dark:text-gray-900":
                   true,
                 "hover:!bg-transparent hover:text-primary hover:border-primary hover:dark:text-[#e8e8e8]":
@@ -196,7 +203,7 @@ const RevokeAccess = ({ data, revokeAccess, setRevokeAccess }) => {
         })}
         onClick={() => setIsRevoke((prev) => !prev)}
       >
-        <span className="text-md">Revoke Access</span>
+        <span className="mobile-sm:text-sm text-md">Revoke Access</span>
         <svg
           className={classNames({
             [`fill-current h-4 w-4 ${isRevoke && "-rotate-180"}`]: true,
@@ -260,9 +267,9 @@ const RevokeAccess = ({ data, revokeAccess, setRevokeAccess }) => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                 />
               </svg>
@@ -302,7 +309,7 @@ const RevokeAccess = ({ data, revokeAccess, setRevokeAccess }) => {
               />
               <label
                 htmlFor="checkbox-item-11"
-                className="w-full ms-2 font-medium text-prmary truncate"
+                className="w-full ms-2 font-medium mobile-sm:text-sm text-prmary truncate"
               >
                 {email.split("@")[0]}
               </label>
