@@ -34,8 +34,8 @@ const Navbar = () => {
     <nav
       className={classNames({
         "bg-transparent z-[1000]": true, // colors
-        "flex items-center justify-between mobile:px-4 pr-10": true, // layout
-        "w-full relative py-3 h-fit": true, //positioning & styling
+        "flex items-center justify-between mobile:px-0 pr-10": true, // layout
+        [`mobile:pl-[2.35rem] w-full relative py-3 h-fit`]: true, //positioning & styling
         "dark:shadow-[0px_1px_2px_0_rgba(255,255,255,0.1)] shadow": false, //dark-mode and shadow
       })}
     >
@@ -43,13 +43,13 @@ const Navbar = () => {
         <div
           onClick={() => dispatch(openSidebar())}
           className={classNames({
-            "w-[42px] h-[42px] mobile:!hidden flex items-center justify-center":
+            "mobile:w-[32px] mobile:h-[32px] w-[42px] h-[42px] flex items-center justify-center":
               true,
             [`${
               !isSidebarOpen
                 ? "bg-primary text-main"
                 : "bg-[#e8e8e8] text-[#37474f]"
-            } text-3xl rounded-r-lg`]: true,
+            } mobile:text-[0.95rem] text-3xl rounded-r-lg`]: true,
             "z-[100001] transition-all": true,
             "fixed left-0": true,
           })}
@@ -58,18 +58,19 @@ const Navbar = () => {
         </div>
         <div
           onClick={() => router.push("/")}
-          className="w-fit h-fit flex justify-center items-center gap-2 relative cursor-pointer"
+          className="w-fit h-fit flex justify-center items-center mobile:gap-1 gap-2 relative cursor-pointer"
         >
           <Image
             src={`${isCodeForge() ? "/cf_logo.svg" : "/logo.png"}`}
             width={42}
             height={42}
             alt="logo"
-            className="dark:invert sm:w-[42px] sm:h-[42px] w-[32px] h-[32px] cursor-pointer"
+            className={`dark:invert sm:w-[42px] sm:h-[42px] w-[32px] h-[32px] cursor-pointer`}
           />
           <h3
             className={classNames({
-              "bound font-bold text-xl sm:text-2xl text-primary": true,
+              "mobile:text-lg bound font-bold text-xl sm:text-2xl text-primary":
+                true,
               "flex justify-center items-center gap-4 cursor-pointer": true,
             })}
           >

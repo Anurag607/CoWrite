@@ -197,9 +197,10 @@ export default function Page() {
           dispatch(setShowSidebar([true, ""]));
         }}
         className={classNames({
-          "w-[42px] h-[42px] mobile:hidden flex items-center justify-center":
+          "mobile:w-[32px] mobile:h-[32px] w-[42px] h-[42px] mobile:hidden flex items-center justify-center":
             true,
-          [`bg-primary text-main text-3xl rounded-l-lg`]: true,
+          [`bg-primary text-main mobile:text-[0.95rem] text-3xl rounded-l-lg`]:
+            true,
           "z-[100001] transition-all": true,
           "fixed right-0 top-[20%]": true,
         })}
@@ -212,9 +213,10 @@ export default function Page() {
           dispatch(setShowSidebar([true, ""]));
         }}
         className={classNames({
-          "w-[36px] h-[36px] hidden mobile:flex items-center justify-center":
+          "mobile:w-[32px] mobile:h-[32px] w-[42px] h-[42px] hidden mobile:flex items-center justify-center":
             true,
-          [`bg-primary text-main text-xl rounded-t-lg`]: true,
+          [`bg-primary text-main mobile:text-[0.95rem] text-xl rounded-t-lg`]:
+            true,
           "z-[100001] transition-all": true,
           "fixed bottom-0 right-[30%]": true,
         })}

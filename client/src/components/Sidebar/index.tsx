@@ -39,11 +39,11 @@ const Sidebar = () => {
       setIsLoading(true);
     }, 1000);
     const loaded = setTimeout(() => {
-      setIsLoading(false);
       if (toggleEditor === "code" && pathname.includes("dashboard"))
         router.push("/codeForge");
       else if (toggleEditor === "text" && pathname.includes("codeForge"))
         router.push(`/dashboard/${authInstance._id}`);
+      setIsLoading(false);
     }, 3000);
     return () => {
       clearTimeout(loading);
@@ -54,11 +54,12 @@ const Sidebar = () => {
   return (
     <div
       className={classNames({
-        "mobile:hidden flex items-center justify-center z-[100001]": true,
+        "flex items-center justify-center z-[100001]": true,
         "bg-[#37352F] text-zinc-50": true,
         "fixed left-0 top-0": true,
-        [`h-screen mobile:w-0 ${shouldNotExtend() ? "w-[5rem]" : "w-screen"}`]:
-          true,
+        [`h-screen ${
+          shouldNotExtend() ? "mobile:w-[3rem] w-[5rem]" : "w-screen"
+        }`]: true,
         "transition-all ease-in-out": true,
         "bg-center bg-cover bg-no-repeat": true,
         [`${
@@ -75,10 +76,11 @@ const Sidebar = () => {
       <div
         onClick={() => dispatch(isSidebarOpen ? closeSidebar() : openSidebar())}
         className={classNames({
-          "w-[42px] h-[42px] mobile:!hidden items-center justify-center": true,
+          "mobile:w-[30px] mobile:h-[30px] w-[42px] h-[42px] items-center justify-center":
+            true,
           "bg-[#e8e8e8] text-neutral-700 rounded-lg left-3": isSidebarOpen,
           "bg-[#37352F] text-[#F7F6F3] rounded-r-lg left-0": !isSidebarOpen,
-          "text-3xl rounded-r-lg cursor-pointer": true,
+          "mobile:text-[0.95rem] text-3xl rounded-r-lg cursor-pointer": true,
           "fixed top-3 z-[100001] transition-all": true,
           [`${shouldNotExtend() ? "flex" : "hidden"}`]: true,
         })}
@@ -103,12 +105,14 @@ const Sidebar = () => {
             dispatch(switchEditor(toggleEditor === "code" ? "text" : "code"));
           }}
           className={classNames({
-            [`w-[42px] h-[42px] mobile:!hidden flex items-center justify-center ${
-              pathname.includes("dashboard") && shouldNotExtend() && "mt-2.5"
+            [`mobile:w-[30px] mobile:h-[30px] w-[42px] h-[42px] flex items-center justify-center ${
+              pathname.includes("dashboard") &&
+              shouldNotExtend() &&
+              "mobile:mt-1 mt-2.5"
             }`]: true,
             "bg-transparent border font-bold border-[#F7F6F3] text-[#F7F6F3] rounded-lg left-3":
               true,
-            [`text-3xl rounded-r-lg cursor-pointer ${
+            [`mobile:text-[0.95rem] text-3xl rounded-r-lg cursor-pointer ${
               shouldNotExtend() ? "rotate-90" : "-rotate-90"
             }`]: true,
             "transition-all ease-in-out hover:scale-105": true,
@@ -118,7 +122,8 @@ const Sidebar = () => {
         </div>
         <h1
           className={classNames({
-            "bound text-[3rem] tracking-tighter font-bold text-[#F7F6F3]": true,
+            "bound mobile:text-[2rem] text-[3rem] tracking-tighter font-bold text-[#F7F6F3]":
+              true,
           })}
         >
           {pathname.includes("dashboard")
@@ -133,7 +138,8 @@ const Sidebar = () => {
       {/* Loader */}
       <div
         className={classNames({
-          [`${!shouldNotExtend() ? "flex" : "hidden"}`]: true,
+          [`${!shouldNotExtend() ? "flex mobile:scale-[0.6]" : "hidden"}`]:
+            true,
           [`loadingContainer opacity-0 cursor-default transition-all ease-in-out pointer-event-none`]:
             true,
           [`${isLoading ? "opacity-100" : "opacity-0"}`]: true,

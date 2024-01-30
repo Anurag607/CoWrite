@@ -55,7 +55,8 @@ const DarkMode = () => {
         src={`${theme === "light" ? "/dark-mode.png" : "/moon.png"}`}
         alt={"switch"}
         className={classNames({
-          "w-7 h-7 brightness-0 invert dark:invert-0": true,
+          "mobile:w-6 mobile:h-6 w-7 h-7 brightness-0 invert dark:invert-0":
+            true,
           "!cursor-pointer": true,
         })}
       />

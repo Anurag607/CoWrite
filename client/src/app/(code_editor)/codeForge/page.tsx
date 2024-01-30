@@ -64,13 +64,13 @@ const Page = () => {
   return (
     <div
       className={classNames({
-        "w-full h-full flex flex-col items-center justify-center flex-wrap gap-8 xp":
+        "w-full h-full flex flex-col items-center justify-center flex-wrap mobile:gap-0 gap-8":
           true,
       })}
     >
       <div
         className={classNames({
-          "mobile-sm:text-2xl text-3xl sm:text-4xl md:text-5xl font-bold text-primary text-center bound tracking-wide":
+          "text-3xl sm:text-4xl md:text-5xl font-bold text-primary text-center bound tracking-wide":
             true,
           "mobile-sm:w-[95vw] w-[25rem] h-fit break-before-avoid mr-24 mobile:mr-0":
             true,
@@ -79,7 +79,7 @@ const Page = () => {
         {"Welcome to CodeForge."}
       </div>
       {/* Form... */}
-      <div className="relative bg-white mobile:w-[95vw] rounded-lg px-4 py-8 w-[19rem] dark:bg-neutral-800 mr-24 mobile:mr-0 mb-12">
+      <div className="relative bg-white mobile:w-[95vw] rounded-lg px-4 py-8 w-[19rem] dark:bg-neutral-800 mr-24 mobile:mr-0 mobile:mb-0 mb-12">
         <form
           onSubmit={handleSubmit}
           className="relative flex flex-col items-center justify-center"

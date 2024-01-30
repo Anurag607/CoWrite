@@ -12,7 +12,7 @@ const Bottombar = () => {
   return (
     <>
       <div
-        className={`z-[100000001] bottom-0 left-0 right-0 w-screen bg-transparent rounded-t-2xl overflow-clip fixed h-[75vh] ease-in-out duration-300 ${
+        className={`z-[100000001] bottom-0 left-0 right-0 w-screen bg-transparent rounded-t-2xl overflow-clip fixed h-fit ease-in-out duration-300 ${
           showBottomSidebar[0] ? "translate-y-0" : "translate-y-full"
         } shadow-[0px_0px_8px_0px_#e8e8e8] dark:shadow-[0px_0px_8px_0px_#37474f]`}
       >
