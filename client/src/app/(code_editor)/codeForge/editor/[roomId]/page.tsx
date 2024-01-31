@@ -258,21 +258,21 @@ const Page = () => {
           </div>
           <div
             className={
-              "w-fit h-fit flex items-center justify-end gap-x-2 mobile:mr-0 mr-10 overflow-x-auto"
+              "w-fit h-fit flex items-center justify-end gap-x-2 mobile:mr-0 mr-[10rem] relative"
             }
           >
             {clients.map((el: string, index: number) => {
               return (
                 <div
                   key={index}
-                  className={`bg-[#37352F] rounded-md mobile:p-0 mobile:px-2 p-2 px-4 mobile:border-2 border-4 border-[#F7F6F3] shadow-lg group relative`}
+                  className={`flex flex-col justify-start items-start bg-[#37352F] rounded-md mobile:p-0 mobile:px-2 p-2 px-4 mobile:border-2 border-4 border-[#F7F6F3] shadow-lg group relative`}
                 >
                   <h4 className={`text-main mobile:text-md text-lg font-bold`}>
                     {el[0].toUpperCase()}
                   </h4>
                   <span
                     className={
-                      "absolute break-before-avoid bottom-[-60%] right-0 opacity-75 w-fit h-fit px-2 py-1 text-xs rounded-md bg-[#37352F] text-white scale-0 group-hover:scale-100"
+                      "absolute break-before-avoid bottom-[-60%] left-0 opacity-75 w-fit h-fit px-2 py-1 text-xs rounded-md bg-[#37352F] text-white scale-0 group-hover:scale-100"
                     }
                   >
                     {el}

@@ -90,7 +90,7 @@ const Navbar = () => {
       <div className={`flex gap-x-2 items-center justify-center`}>
         <div
           className={
-            "w-fit h-fit mobile:hidden flex items-center justify-end gap-x-2 mr-4 overflow-x-auto"
+            "w-fit h-fit mobile:hidden flex items-center justify-end gap-x-2 mr-4"
           }
         >
           {clients.map((el: string, index: number) => {
