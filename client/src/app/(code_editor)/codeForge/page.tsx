@@ -10,6 +10,7 @@ import { switchEditor } from "@/redux/reducers/toggleEditor";
 import { useRouter } from "next-nprogress-bar";
 import { uuidv7 } from "uuidv7";
 import { clearClients } from "@/redux/reducers/clientSlice";
+import { clearCodeUserData, setCodeUserData } from "@/redux/reducers/codeSlice";
 
 const showError = (msg: string) => toast.error(msg, ToastConfig);
 
@@ -27,6 +28,7 @@ const Page = () => {
   React.useEffect(() => {
     dispatch(switchEditor("code"));
     dispatch(clearClients());
+    dispatch(clearCodeUserData());
     if (authInstance) {
       setFormData({
         ...formData,
@@ -38,6 +40,7 @@ const Page = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    dispatch(setCodeUserData(formData));
     router.push(`/codeForge/editor/${formData.roomId}`);
     setIsLoading(false);
   };

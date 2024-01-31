@@ -41,6 +41,7 @@ const Page = () => {
   const roomId = params.roomId;
   const dispatch = useAppDispatch();
   const { authInstance } = useAppSelector((state: any) => state.auth);
+  const { userData } = useAppSelector((state: any) => state.code);
   const { clients } = useAppSelector((state: any) => state.client);
   const [code, setCode] = useState(localStorage.getItem("code"));
   const [customInput, setCustomInput] = useState("");
@@ -54,20 +55,26 @@ const Page = () => {
 
   const handler = (delta: any) => {
     if (delta.room !== roomId) return;
+    if (
+      delta.data === null ||
+      delta.data === undefined ||
+      delta.data.length === 0
+    )
+      return;
     setCode(delta.data);
     localStorage.setItem("code", delta.data);
   };
 
   // Initializing Socket and Cleanup...
   useEffect(() => {
-    dispatch(setClient(authInstance.email));
+    dispatch(setClient(userData.username));
     if (!socket) {
       let socket = io(process.env.NEXT_PUBLIC_RENDER_SERVER);
       setSocket(socket);
     }
 
     return () => {
-      socket.disconnect();
+      if (socket) socket.disconnect();
       setSocket(null);
     };
   }, []);
@@ -79,7 +86,8 @@ const Page = () => {
     socket.emit("updating-document", {
       id: socket.id,
       documentId: roomId,
-      user: authInstance.email,
+      user: userData.username,
+      email: authInstance.email,
     });
     socket.on("update-clients", (newUser: any) => {
       if (newUser.currentDocument === roomId) dispatch(setClient(newUser.name));
@@ -90,7 +98,8 @@ const Page = () => {
       socket.emit("disconnecting-document", {
         id: socket.id,
         currentDocument: roomId,
-        name: authInstance.email,
+        user: userData.username,
+        email: authInstance.email,
       });
     });
     socket.on("remove-clients", (newUser: any) => {
@@ -238,7 +247,7 @@ const Page = () => {
         })}
       >
         {/* Header... */}
-        <div className="flex flex-wrap items-start justify-betwen ps-10 gap-4 w-full h-fit relative">
+        <div className="flex flex-wrap items-start justify-between mobile:ps-0 ps-10 gap-4 w-full h-fit relative">
           <div className="flex flex-wrap items-start justify-start gap-4 w-fit h-fit relative">
             <LanguagesDropdown onSelectChange={onSelectChange} />
             <ThemeDropdown
@@ -248,16 +257,16 @@ const Page = () => {
           </div>
           <div
             className={
-              "w-fit h-fit mobile:hidden flex items-center justify-end gap-x-2"
+              "w-fit h-fit flex items-center justify-end gap-x-2 mobile:mr-0 mr-10 overflow-x-auto"
             }
           >
             {clients.map((el: string, index: number) => {
               return (
                 <div
                   key={index}
-                  className={`bg-[#37352F] rounded-md p-2 px-4 border-4 border-[#F7F6F3] shadow-lg group relative`}
+                  className={`bg-[#37352F] rounded-md mobile:p-0 mobile:px-2 p-2 px-4 mobile:border-2 border-4 border-[#F7F6F3] shadow-lg group relative`}
                 >
-                  <h4 className={`text-main text-lg font-bold`}>
+                  <h4 className={`text-main mobile:text-md text-lg font-bold`}>
                     {el[0].toUpperCase()}
                   </h4>
                   <span

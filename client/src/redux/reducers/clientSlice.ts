@@ -15,7 +15,6 @@ const clientSlice = createSlice({
         }
       }
       if (!flag) state.clients = [...state.clients, action.payload];
-      console.log(state.clients);
     },
     removeClient: (state: any, action: PayloadAction<any>) => {
       state.clients = state.clients.filter(

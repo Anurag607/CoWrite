@@ -145,7 +145,7 @@ const Page = () => {
           )}
           <div
             className={
-              "w-full h-fit mobile:flex hidden items-center justify-end gap-x-2 pr-3"
+              "w-full h-fit mobile:flex hidden items-center justify-end gap-x-2 pr-3 overflow-x-auto"
             }
           >
             {clients.map((el: string, index: number) => {
