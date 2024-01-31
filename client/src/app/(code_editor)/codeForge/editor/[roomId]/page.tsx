@@ -272,7 +272,7 @@ const Page = () => {
                   </h4>
                   <span
                     className={
-                      "absolute break-before-avoid bottom-[-60%] left-0 opacity-75 w-fit h-fit px-2 py-1 text-xs rounded-md bg-[#37352F] text-white scale-0 group-hover:scale-100"
+                      "absolute break-before-avoid bottom-[-65%] right-0 opacity-75 w-fit h-fit px-2 py-1 text-xs rounded-md bg-[#F7F6F3] text-[#37352F] scale-0 group-hover:scale-100"
                     }
                   >
                     {el}
