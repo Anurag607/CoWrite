@@ -134,7 +134,7 @@ const Page = () => {
         <main
           className={`flex flex-col items-start gap-y-3 justify-start w-[96.5%] h-fit overflow-x-hidden overflow-y-auto flex-[1]`}
         >
-          {focusedDoc && (
+          {focusedDoc && docAPI !== "create" && (
             <div
               className={
                 "w-full h-fit flex items-center justify-end mobile:pr-0 pr-20 gap-x-2"
@@ -168,17 +168,19 @@ const Page = () => {
               );
             })}
           </div>
-          <div className="w-full mobile:h-[10rem] h-[15rem] flex items-center justify-center relative">
-            <img
-              loading="lazy"
-              src={currentDoc.descImg}
-              alt="desc-img"
-              className="object-cover w-[90%] h-full rounded-xl shadow-md"
-            />
-          </div>
+          {(docAPI === "create" ? currentDoc : focusedDoc).descImg && (
+            <div className="w-full mobile:h-[10rem] h-[15rem] flex items-center justify-center relative">
+              <img
+                loading="lazy"
+                src={(docAPI === "create" ? currentDoc : focusedDoc).descImg}
+                alt="desc-img"
+                className="object-cover w-[90%] h-full rounded-xl shadow-md"
+              />
+            </div>
+          )}
           <Editor
             editorRef={editor.current}
-            docId={currentDoc.id}
+            docId={docAPI === "create" ? currentDoc.id : focusedDoc._id}
             data={data}
           />
           <button

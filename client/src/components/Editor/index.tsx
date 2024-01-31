@@ -54,7 +54,7 @@ const useEditor = (
     const output = await editorInstance.current.save();
     const outputString = JSON.stringify(output);
     localStorage.setItem(dataKey, outputString);
-    socket.emit("send-changes", outputString);
+    if (socket) socket.emit("send-changes", outputString);
   };
 
   // Handler for changing editor content...
@@ -116,7 +116,7 @@ const useEditor = (
     }
 
     return () => {
-      socket.disconnect();
+      if (socket) socket.disconnect();
       setSocket(null);
     };
   }, []);
