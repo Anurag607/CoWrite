@@ -11,7 +11,7 @@
 - This app has another mode i.e. the code editor CODEFORGE for my programmer buddies built using Monaco.
 - Like the text editor, codeforge also has the real time and collaborative features.
 
-![1706671160146](image/README/1706671160146.png)
+![1706677543803](image/README/1706677543803.png)
 
 # Tech Stack
 
@@ -25,6 +25,8 @@
 
 ![1706676017141](image/README/1706676017141.png)
 
-![1706676038792](image/README/1706676038792.png)
+![1706677507652](https://file+.vscode-resource.vscode-cdn.net/c%3A/Users/anura_mj0qbp4/html/nextjs/cowrite/image/README/1706677507652.png)
 
-![1706676224316](image/README/1706676224316.png)
+![1706677525686](image/README/1706677525686.png)
+
+- [ ] ![1706677623103](image/README/1706677623103.png)
