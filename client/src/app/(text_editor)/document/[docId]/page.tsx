@@ -118,11 +118,11 @@ const Page = () => {
       toast.success("Document Saved", ToastConfig);
       setIsSubmitting(false);
       dispatch(clearCurrentDoc());
-      // router.push(`/dashboard/${authInstance._id}`);
+      router.push(`/dashboard/${authInstance._id}`);
     } else if (data.status === 404 || data.status === 401) {
       toast.error(data.message, ToastConfig);
       setIsSubmitting(false);
-      // router.push(`/dashboard/${authInstance._id}`);
+      router.push(`/dashboard/${authInstance._id}`);
     } else {
       toast.error("Failed to Save Document, Please try again!", ToastConfig);
       setIsSubmitting(false);
