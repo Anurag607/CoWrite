@@ -65,7 +65,11 @@ export const useLoadData = () => {
         let parsed = JSON.parse(saved);
         if (typeof parsed === "string") parsed = JSON.parse(parsed);
         console.log(typeof parsed, parsed);
-        if (parsed.hasOwnProperty("blocks") && parsed.blocks.length > 0)
+        if (
+          parsed &&
+          parsed.hasOwnProperty("blocks") &&
+          parsed.blocks.length > 0
+        )
           setData(parsed);
         else setData(EditorData[toggle ? "INITIAL_DATA" : "SAMPLE_DATA"]);
       } else {
