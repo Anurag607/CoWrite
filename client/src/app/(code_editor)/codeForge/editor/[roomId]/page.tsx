@@ -258,7 +258,7 @@ const Page = () => {
           </div>
           <div
             className={
-              "w-fit h-fit flex items-center justify-end gap-x-2 mobile:mr-0 mr-[10rem] relative"
+              "w-fit h-fit flex items-center justify-end gap-x-2 mobile:mr-0 mr-10 relative"
             }
           >
             {clients.map((el: string, index: number) => {
