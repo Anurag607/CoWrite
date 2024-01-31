@@ -125,6 +125,7 @@ const Page = () => {
     if (code === null || code === undefined) {
       localStorage.setItem("code", cppDefault);
       setCode(cppDefault);
+      location.reload();
     }
   }, [code]);
 
