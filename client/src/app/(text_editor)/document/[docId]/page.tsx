@@ -80,10 +80,10 @@ const Page = () => {
       dispatch(clearProgress());
     }
 
-    if (imageURL) {
+    if (typeof imageURL === "string") {
       body = {
         ...body,
-        descImg: imageURL,
+        descImg: imageURL.includes("blob:") ? null : imageURL,
       };
     }
 
@@ -92,12 +92,15 @@ const Page = () => {
       ...body,
       user: authInstance.email,
       access:
-        focusedDoc.access === undefined
+        docAPI === "create"
+          ? [authInstance.email]
+          : focusedDoc.access === undefined
           ? [focusedDoc.emailID]
           : focusedDoc.access,
       content: localStorage.getItem(dataKey),
       updatedAt: new Date().toISOString(),
     };
+    console.log(body);
     const res = await fetch(
       docAPI === "create"
         ? "/api/document/create"
@@ -115,11 +118,11 @@ const Page = () => {
       toast.success("Document Saved", ToastConfig);
       setIsSubmitting(false);
       dispatch(clearCurrentDoc());
-      router.push(`/dashboard/${authInstance._id}`);
+      // router.push(`/dashboard/${authInstance._id}`);
     } else if (data.status === 404 || data.status === 401) {
       toast.error(data.message, ToastConfig);
       setIsSubmitting(false);
-      router.push(`/dashboard/${authInstance._id}`);
+      // router.push(`/dashboard/${authInstance._id}`);
     } else {
       toast.error("Failed to Save Document, Please try again!", ToastConfig);
       setIsSubmitting(false);
@@ -134,15 +137,17 @@ const Page = () => {
         <main
           className={`flex flex-col items-start gap-y-3 justify-start w-[96.5%] h-fit overflow-x-hidden overflow-y-auto flex-[1]`}
         >
-          {focusedDoc && docAPI !== "create" && (
-            <div
-              className={
-                "w-full h-fit flex items-center justify-end mobile:pr-0 pr-20 gap-x-2"
-              }
-            >
-              <AccessDropdown />
-            </div>
-          )}
+          {focusedDoc &&
+            focusedDoc.owner === authInstance.email &&
+            docAPI !== "create" && (
+              <div
+                className={
+                  "w-full h-fit flex items-center justify-end mobile:pr-0 pr-20 gap-x-2"
+                }
+              >
+                <AccessDropdown />
+              </div>
+            )}
           <div
             className={
               "w-full h-fit mobile:flex hidden items-center justify-end gap-x-2 pr-3"
