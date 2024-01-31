@@ -100,7 +100,6 @@ const Page = () => {
       content: localStorage.getItem(dataKey),
       updatedAt: new Date().toISOString(),
     };
-    console.log(body);
     const res = await fetch(
       docAPI === "create"
         ? "/api/document/create"
