@@ -57,13 +57,13 @@ const useEditor = (
     socket.emit("send-changes", outputString);
   };
 
-  // Socket Event Handler...
+  // Handler for changing editor content...
   const handler = (delta: any) => {
-    if (editorInstance.current === null) return;
+    if (editorInstance.current === null || delta.room !== docId) return;
     editorInstance.current.isReady
       .then(() => {
         let data = null;
-        if (typeof delta === "string") data = JSON.parse(delta);
+        if (typeof delta.data === "string") data = JSON.parse(delta.data);
         if (!data.hasOwnProperty("blocks")) data = JSON.parse(data);
         editorInstance.current.render(data);
         localStorage.setItem(dataKey, delta);
@@ -111,7 +111,7 @@ const useEditor = (
   // Initializing Socket and Cleanup...
   useEffect(() => {
     if (!socket) {
-      socket = io(process.env.NEXT_PUBLIC_RENDER_SERVER);
+      let socket = io(process.env.NEXT_PUBLIC_RENDER_SERVER);
       setSocket(socket);
     }
 

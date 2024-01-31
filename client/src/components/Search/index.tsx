@@ -1,20 +1,15 @@
 import React from "react";
 import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setDocData } from "@/redux/reducers/docSlice";
-import { filterDatabySearchParams } from "@/scipts/filterScript";
+import { setSearchParams } from "@/redux/reducers/searchSlice";
 
 const Search = () => {
-  const { backupData } = useAppSelector((state: any) => state.docs);
-  const [searchParams, setSearchParams] = React.useState<string>("");
   const dispatch = useAppDispatch();
+  const { searchParams } = useAppSelector((state: any) => state.searchBar);
 
   const changleEventHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     let searchText = event.currentTarget.value;
-    setSearchParams(searchText);
-    searchText.length > 0
-      ? filterDatabySearchParams(backupData, searchText, dispatch)
-      : dispatch(setDocData(backupData));
+    dispatch(setSearchParams(searchText));
   };
 
   return (

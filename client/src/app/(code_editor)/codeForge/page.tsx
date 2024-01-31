@@ -9,6 +9,7 @@ import { ToastConfig } from "@/utils/config";
 import { switchEditor } from "@/redux/reducers/toggleEditor";
 import { useRouter } from "next-nprogress-bar";
 import { uuidv7 } from "uuidv7";
+import { clearClients } from "@/redux/reducers/clientSlice";
 
 const showError = (msg: string) => toast.error(msg, ToastConfig);
 
@@ -25,6 +26,7 @@ const Page = () => {
 
   React.useEffect(() => {
     dispatch(switchEditor("code"));
+    dispatch(clearClients());
     if (authInstance) {
       setFormData({
         ...formData,

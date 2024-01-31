@@ -1,8 +1,9 @@
 import { setDocData } from "../redux/reducers/docSlice";
 
-const filterDatabySearchParams = async (
+const filterData = async (
   data: any,
   searchParam: string,
+  category: any,
   reduxDispatch: React.Dispatch<any>
 ) => {
   let tokens = searchParam
@@ -13,45 +14,43 @@ const filterDatabySearchParams = async (
     });
   let searchTermRegex = new RegExp(tokens.join("|"), "gim");
   let filteredResults: any[] = [];
-  let DocString = "";
+  let parsedDocs: any[] = [];
 
-  if (tokens.length === 0) {
-    reduxDispatch(setDocData(data));
-    return data;
+  if (searchParam.length > 0) {
+    data.forEach((Doc: any) => {
+      const title = Doc.title.toLowerCase();
+      const email = Doc.owner.toLowerCase();
+      if (
+        title.match(searchTermRegex) &&
+        title.includes(searchParam) &&
+        !parsedDocs.includes(Doc._id)
+      ) {
+        filteredResults.push(Doc);
+        parsedDocs.push(Doc._id);
+      }
+      if (
+        email.match(searchTermRegex) &&
+        email.includes(searchParam) &&
+        !parsedDocs.includes(Doc._id)
+      ) {
+        filteredResults.push(Doc);
+        parsedDocs.push(Doc._id);
+      }
+    });
   }
-  data.forEach((Doc: any) => {
-    DocString += Doc.title.toLowerCase();
-    if (DocString.match(searchTermRegex) && DocString.includes(searchParam)) {
-      filteredResults.push(Doc);
-      DocString = "";
-    }
-  });
-  data.forEach((Doc: any) => {
-    DocString += Doc.owner.toLowerCase();
-    if (DocString.match(searchTermRegex) && DocString.includes(searchParam)) {
-      filteredResults.push(Doc);
-      DocString = "";
-    }
-  });
+
+  if (category.length > 0) {
+    data.forEach((Doc: any) => {
+      if (Doc.color === category && !parsedDocs.includes(Doc._id)) {
+        filteredResults.push(Doc);
+        parsedDocs.push(Doc._id);
+      }
+    });
+  }
+
   reduxDispatch(setDocData(filteredResults));
 
   return filteredResults;
 };
 
-const filterDatabyCategory = async (
-  data: any,
-  category: string,
-  reduxDispatch: React.Dispatch<any>
-) => {
-  let filteredResults: any[] = [];
-  data.forEach((Doc: any) => {
-    if (Doc.color === category) {
-      filteredResults.push(Doc);
-    }
-  });
-
-  reduxDispatch(setDocData(filteredResults));
-  return filteredResults;
-};
-
-export { filterDatabySearchParams, filterDatabyCategory };
+export { filterData };

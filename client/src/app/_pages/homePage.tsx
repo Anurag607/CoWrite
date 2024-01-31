@@ -8,7 +8,7 @@ const HomePage = ({ children }: { children: React.ReactNode }) => {
       className={classNames({
         "relative py-4": true,
         "flex flex-col items-start justify-start gap-8": true,
-        "h-screen w-full": true,
+        "h-full w-full": true,
         "overflow-x-hidden": true,
         "bg-primary": false,
       })}

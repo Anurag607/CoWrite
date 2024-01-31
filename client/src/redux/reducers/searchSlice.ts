@@ -3,14 +3,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const searchSlice = createSlice({
   name: "search",
   initialState: {
-    searchParam: "",
+    searchParams: "",
   },
   reducers: {
     setSearchParams: (state, action: PayloadAction<string>) => {
-      state.searchParam = action.payload;
+      state.searchParams = action.payload;
     },
     clearSearchParams: (state) => {
-      state.searchParam = "";
+      state.searchParams = "";
     },
   },
 });

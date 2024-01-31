@@ -48,7 +48,9 @@ io.on("connection", (socket: any) => {
       });
 
       socket.on("send-changes", (delta: any) => {
-        socket.broadcast.to(documentId).emit("receive-changes", delta);
+        socket.broadcast
+          .to(documentId)
+          .emit("receive-changes", { room: documentId, data: delta });
       });
     }
   );

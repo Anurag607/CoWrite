@@ -27,7 +27,7 @@ export default function RootLayout({
         />
         <title>{"CoWrite"}</title>
       </Head>
-      {children}
+      <main className={"w-full h-full relative"}>{children}</main>
     </>
   );
 }

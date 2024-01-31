@@ -1,10 +1,13 @@
 import React from "react";
 import classNames from "classnames";
-import { openFilter, closeFilter } from "@/redux/reducers/filterSlice";
+import {
+  openFilter,
+  closeFilter,
+  setFilterValue,
+} from "@/redux/reducers/filterSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useOnClickOutside } from "usehooks-ts";
 import { setDocData } from "@/redux/reducers/docSlice";
-import { filterDatabyCategory } from "@/scipts/filterScript";
 import { FilterOutlined } from "@ant-design/icons";
 
 const colors = [
@@ -17,10 +20,10 @@ const colors = [
 ];
 
 const Filter = () => {
-  const ref = React.useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
+  const ref = React.useRef<HTMLDivElement>(null);
   const { isFilterOpen } = useAppSelector((state: any) => state.filter);
-  const { backupData } = useAppSelector((state: any) => state.docs);
+  const { docData } = useAppSelector((state: any) => state.docs);
 
   useOnClickOutside(ref, () => {
     dispatch(closeFilter());
@@ -28,7 +31,7 @@ const Filter = () => {
 
   const ClickEventHandler = (event: React.MouseEvent<HTMLElement>) => {
     const target = event.currentTarget;
-    filterDatabyCategory(backupData, target.dataset.value!, dispatch);
+    dispatch(setFilterValue(target.dataset.value));
     dispatch(closeFilter());
   };
 
@@ -79,7 +82,8 @@ const Filter = () => {
             hidden: !isFilterOpen,
           })}
           onClick={() => {
-            dispatch(setDocData(backupData));
+            dispatch(setFilterValue(""));
+            dispatch(setDocData(docData));
             dispatch(closeFilter());
           }}
         >

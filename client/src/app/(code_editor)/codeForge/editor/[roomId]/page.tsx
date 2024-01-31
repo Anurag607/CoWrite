@@ -7,7 +7,7 @@ import { languageOptions } from "@/utils/CodeEditor/languageOptions";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import io from "socket.io-client";
 import { defineTheme } from "@/utils/CodeEditor/defineTheme";
 import useKeyPress from "@/custom-hooks/useKeyPress";
 import {
@@ -24,6 +24,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { CaretLeftOutlined, CaretUpOutlined } from "@ant-design/icons";
 import { setShowBottomBar, setShowSidebar } from "@/redux/reducers/drawerSlice";
 import { useAppDispatch } from "@/redux/hooks";
+import { removeClient, setClient } from "@/redux/reducers/clientSlice";
 
 const cppDefault = `
 #include <bits/stdc++.h>
@@ -37,17 +38,68 @@ int main() {
 const Page = () => {
   const router = useRouter();
   const params = useParams();
+  const roomId = params.roomId;
   const dispatch = useAppDispatch();
   const { authInstance } = useAppSelector((state: any) => state.auth);
+  const { clients } = useAppSelector((state: any) => state.client);
   const [code, setCode] = useState(localStorage.getItem("code"));
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState(null);
   const [theme, setTheme] = useState({ value: "cobalt", label: "Cobalt" });
   const [language, setLanguage] = useState(languageOptions[0]);
-
+  const [socket, setSocket] = useState(null);
   const enterPress = useKeyPress("Enter");
   const ctrlPress = useKeyPress("Control");
+
+  const handler = (delta: any) => {
+    if (delta.room !== roomId) return;
+    setCode(delta.data);
+    localStorage.setItem("code", delta.data);
+  };
+
+  // Initializing Socket and Cleanup...
+  useEffect(() => {
+    dispatch(setClient(authInstance.email));
+    if (!socket) {
+      let socket = io(process.env.NEXT_PUBLIC_RENDER_SERVER);
+      setSocket(socket);
+    }
+
+    return () => {
+      socket.disconnect();
+      setSocket(null);
+    };
+  }, []);
+
+  // Socket Connections...
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.emit("updating-document", {
+      id: socket.id,
+      documentId: roomId,
+      user: authInstance.email,
+    });
+    socket.on("update-clients", (newUser: any) => {
+      if (newUser.currentDocument === roomId) dispatch(setClient(newUser.name));
+    });
+    socket.on("disconnect", (newUser: any) => {
+      if (newUser.currentDocument === roomId)
+        dispatch(removeClient(newUser.name));
+      socket.emit("disconnecting-document", {
+        id: socket.id,
+        currentDocument: roomId,
+        name: authInstance.email,
+      });
+    });
+    socket.on("remove-clients", (newUser: any) => {
+      if (newUser.currentDocument === roomId)
+        dispatch(removeClient(newUser.name));
+    });
+    socket.on("receive-changes", handler);
+    return () => socket.off("receive-changes", handler);
+  }, [socket, roomId]);
 
   useEffect(() => {
     if (!authInstance) {
@@ -79,6 +131,7 @@ const Page = () => {
     switch (action) {
       case "code": {
         setCode(data);
+        socket.emit("send-changes", data);
         localStorage.setItem("code", data);
         break;
       }
@@ -161,6 +214,7 @@ const Page = () => {
       defineTheme(theme.value).then((_) => setTheme(theme));
     }
   }
+
   useEffect(() => {
     defineTheme("oceanic-next").then((_) =>
       setTheme({ value: "oceanic-next", label: "Oceanic Next" })
@@ -184,9 +238,39 @@ const Page = () => {
         })}
       >
         {/* Header... */}
-        <div className="flex flex-wrap items-start justify-start gap-4 w-full h-fit relative">
-          <LanguagesDropdown onSelectChange={onSelectChange} />
-          <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
+        <div className="flex flex-wrap items-start justify-betwen ps-10 gap-4 w-full h-fit relative">
+          <div className="flex flex-wrap items-start justify-start gap-4 w-fit h-fit relative">
+            <LanguagesDropdown onSelectChange={onSelectChange} />
+            <ThemeDropdown
+              handleThemeChange={handleThemeChange}
+              theme={theme}
+            />
+          </div>
+          <div
+            className={
+              "w-fit h-fit mobile:hidden flex items-center justify-end gap-x-2"
+            }
+          >
+            {clients.map((el: string, index: number) => {
+              return (
+                <div
+                  key={index}
+                  className={`bg-[#37352F] rounded-md p-2 px-4 border-4 border-[#F7F6F3] shadow-lg group relative`}
+                >
+                  <h4 className={`text-main text-lg font-bold`}>
+                    {el[0].toUpperCase()}
+                  </h4>
+                  <span
+                    className={
+                      "absolute break-before-avoid bottom-[-60%] right-0 opacity-75 w-fit h-fit px-2 py-1 text-xs rounded-md bg-[#37352F] text-white scale-0 group-hover:scale-100"
+                    }
+                  >
+                    {el}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         </div>
         {/* Layout... */}
         <div className="flex flex-col md:flex-row items-start justify-start gap-4 w-full h-fit relative">

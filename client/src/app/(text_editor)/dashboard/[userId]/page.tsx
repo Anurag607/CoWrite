@@ -24,7 +24,7 @@ import { resetDocColor } from "@/redux/reducers/colorSlice";
 import { setShowBottomBar, setShowSidebar } from "@/redux/reducers/drawerSlice";
 import { closeSidebar, openSidebar } from "@/redux/reducers/sidebarSlice";
 import { closeMenu } from "@/redux/reducers/menuSlice";
-import { closeFilter } from "@/redux/reducers/filterSlice";
+import { clearFilterValue, closeFilter } from "@/redux/reducers/filterSlice";
 import { closeForm, closeUpdateForm } from "@/redux/reducers/formSlice";
 import { closeDeleteForm } from "@/redux/reducers/alertSlice";
 import {
@@ -37,15 +37,19 @@ import { clearClients } from "@/redux/reducers/clientSlice";
 import { CaretLeftOutlined, CaretUpOutlined } from "@ant-design/icons";
 import useSwipe from "@/custom-hooks/useSwipe";
 import { switchEditor } from "@/redux/reducers/toggleEditor";
+import { clearSearchParams } from "@/redux/reducers/searchSlice";
+import { filterData } from "@/scipts/filterScript";
 
 export default function Page() {
   const docProgress = useRef(0);
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const { docData } = useAppSelector((state: any) => state.docs);
+  const { backupData, docData } = useAppSelector((state: any) => state.docs);
   const { authInstance } = useAppSelector((state: any) => state.auth);
   const { isColorFormOpen } = useAppSelector((state: any) => state.color);
   const { isDeleteFormOpen } = useAppSelector((state: any) => state.alert);
+  const { searchParams } = useAppSelector((state: any) => state.searchBar);
+  const { filterValue } = useAppSelector((state: any) => state.filter);
   const { isFormOpen, isUpdateFormOpen } = useAppSelector(
     (state: any) => state.form
   );
@@ -70,9 +74,8 @@ export default function Page() {
     localStorage.removeItem(dataKey);
     dispatch(closeMenu());
     dispatch(closeSidebar());
-    // dispatch(clearSearchParams());
-    // dispatch(clearDocData());
-    // dispatch(clearBackupData());
+    dispatch(clearDocData());
+    dispatch(clearBackupData());
     dispatch(clearFocusedDoc());
     dispatch(closeFilter());
     dispatch(closeForm());
@@ -85,8 +88,27 @@ export default function Page() {
     dispatch(setShowBottomBar([false, ""]));
     dispatch(destroyEditorInstance());
     dispatch(clearClients());
+    dispatch(clearSearchParams());
+    dispatch(clearFilterValue());
     console.clear();
   };
+
+  React.useEffect(() => {
+    const isSearchEmpty = () => searchParams.length === 0;
+    const isFilterEmpty = () => filterValue.length === 0;
+    const isClear = () => isSearchEmpty() && isFilterEmpty();
+
+    if (isClear()) {
+      dispatch(setDocData(backupData));
+      return;
+    }
+    filterData(
+      isFilterEmpty() ? backupData : docData,
+      searchParams,
+      filterValue,
+      dispatch
+    );
+  }, [filterValue, searchParams]);
 
   const getData = async () => {
     setIsLoading(true);
@@ -170,7 +192,7 @@ export default function Page() {
   };
 
   return (
-    <main {...swipeHandlers}>
+    <main className={"h-full w-full relative"} {...swipeHandlers}>
       {docData === undefined ? (
         <NotFound />
       ) : (
