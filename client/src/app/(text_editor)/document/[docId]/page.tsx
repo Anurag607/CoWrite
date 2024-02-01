@@ -237,7 +237,7 @@ const Page = () => {
             true,
           [`bg-primary text-main text-xl rounded-t-lg`]: true,
           "z-[100001] transition-all": true,
-          "fixed bottom-0 right-[30%]": true,
+          "fixed bottom-0 left-[15%]": true,
         })}
       >
         <CaretUpOutlined />

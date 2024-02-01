@@ -345,7 +345,7 @@ const Page = () => {
           [`bg-[#F7F6F3] text-neutral-700 mobile:text-[0.95rem] text-xl rounded-t-lg`]:
             true,
           "z-[100001] transition-all": true,
-          "fixed bottom-0 right-[30%]": true,
+          "fixed bottom-0 left-[15%]": true,
         })}
       >
         <CaretUpOutlined />
