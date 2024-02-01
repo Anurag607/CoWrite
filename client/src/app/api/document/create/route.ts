@@ -17,6 +17,7 @@ export async function POST(request: Request) {
     createdAt: body.createdAt,
     updatedAt: body.updatedAt,
   };
+  console.log(data);
   try {
     const document = await insertEntry("documents", data);
     // const document = await prisma.documents.create({

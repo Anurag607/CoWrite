@@ -39,9 +39,18 @@ export async function POST(request: Request, context: any) {
           message: "You are not allowed to access this document.",
         });
     }
+    // const doc = await prisma.documents.findOne({
+    //   where: {
+    //     id: params.docID,
+    //   },
+    // });
+    // if(!doc) return NextResponse.json({ status: 404, message: "Document not Found!" });
+    // if(doc.hasOwnProperty("access")) {
+    //   if(!doc.access.includes(body.user)) return NextResponse.json({ status: 401, message: "You are not allowed to access this document." });
+    // }
     // const document = await prisma.documents.update({
     //   where: {
-    //     id: params.id,
+    //     id: params.docID,
     //   },
     //   data: body,
     // });

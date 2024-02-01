@@ -8,7 +8,7 @@ export async function GET(request: Request, context: any) {
   const { params } = context;
   try {
     const documents = await getAllEntries("documents", params.emailId);
-    // const documents = await prisma.documents.findMany();
+    // const documents = await prisma.documents.findMany({});
     return NextResponse.json({ data: documents });
   } catch (err: any) {
     return NextResponse.json({ msg: err.message });

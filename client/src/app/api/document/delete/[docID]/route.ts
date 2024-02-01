@@ -10,7 +10,7 @@ export async function DELETE(request: Request, context: any) {
     const document = await deleteEntry("documents", params.docID);
     // const document = await prisma.documents.delete({
     //   where: {
-    //     id: params.id,
+    //     id: params.docID,
     //   },
     // });
     return NextResponse.json({ data: document });

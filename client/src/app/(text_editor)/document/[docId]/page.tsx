@@ -98,6 +98,7 @@ const Page = () => {
       content: localStorage.getItem(dataKey),
       updatedAt: new Date().toISOString(),
     };
+    console.log(docAPI, body);
     const res = await fetch(
       docAPI === "create"
         ? "/api/document/create"
@@ -124,6 +125,7 @@ const Page = () => {
       toast.error("Failed to Save Document, Please try again!", ToastConfig);
       setIsSubmitting(false);
     }
+    setIsSubmitting(false);
   };
 
   return (
