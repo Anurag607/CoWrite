@@ -80,6 +80,13 @@ const Page = () => {
       dispatch(clearProgress());
     }
 
+    console.log(
+      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME,
+      process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET,
+      process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
+      process.env.NEXT_PUBLIC_CLOUDINARY_URL
+    );
+
     body = {
       ...body,
       descImg: imageURL && imageURL.includes("blob:") ? null : imageURL,
