@@ -64,7 +64,6 @@ export const useLoadData = () => {
       if (saved) {
         let parsed = JSON.parse(saved);
         if (typeof parsed === "string") parsed = JSON.parse(parsed);
-        console.log(typeof parsed, parsed);
         if (
           parsed &&
           parsed.hasOwnProperty("blocks") &&
