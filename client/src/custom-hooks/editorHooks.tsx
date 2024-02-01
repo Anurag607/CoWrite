@@ -73,7 +73,6 @@ export const useLoadData = () => {
         else setData(EditorData[toggle ? "INITIAL_DATA" : "SAMPLE_DATA"]);
       } else {
         console.info("No saved data, using initial");
-        console.log(EditorData[toggle ? "INITIAL_DATA" : "SAMPLE_DATA"]);
         setData(EditorData[toggle ? "INITIAL_DATA" : "SAMPLE_DATA"]);
       }
       console.groupEnd();
