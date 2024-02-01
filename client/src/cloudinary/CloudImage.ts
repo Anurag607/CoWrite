@@ -18,6 +18,7 @@ export const CloudImage = async (
 
   try {
     const { data } = await axios.post(`${cloudinary_url}`, form_data, config);
+    console.log(cloudinary_url, data);
 
     const { public_url, secure_url } = data;
     return secure_url;
