@@ -35,7 +35,7 @@ const ColorPopup = () => {
         "bg-gray-800 bg-opacity-50": true,
       })}
     >
-      <div className="relative bg-white mobile:w-[95vw] rounded-lg p-4 shadow-lg w-fit dark:bg-neutral-800">
+      <div className="relative bg-white rounded-lg p-4 shadow-lg w-fit dark:bg-neutral-800">
         {/* Close Button... */}
         <button
           className={classNames({
