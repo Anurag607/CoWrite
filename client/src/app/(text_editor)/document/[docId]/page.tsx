@@ -172,7 +172,9 @@ const Page = () => {
           </div>
           {(docAPI === "create"
             ? currentDoc.descImg
-            : focusedDoc.descImg.includes("blob:")
+            : !focusedDoc ||
+              !focusedDoc.descImg ||
+              focusedDoc.descImg.includes("blob:")
             ? null
             : focusedDoc.descImg) && (
             <div className="w-full mobile:h-[10rem] h-[15rem] flex items-center justify-center relative">
