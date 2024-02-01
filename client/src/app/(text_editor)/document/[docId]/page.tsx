@@ -80,12 +80,10 @@ const Page = () => {
       dispatch(clearProgress());
     }
 
-    if (typeof imageURL === "string") {
-      body = {
-        ...body,
-        descImg: imageURL.includes("blob:") ? null : imageURL,
-      };
-    }
+    body = {
+      ...body,
+      descImg: imageURL && imageURL.includes("blob:") ? null : imageURL,
+    };
 
     // Updating the body and sending request...
     body = {
