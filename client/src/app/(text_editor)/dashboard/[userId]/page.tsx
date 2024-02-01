@@ -23,7 +23,6 @@ import axios from "axios";
 import { resetDocColor } from "@/redux/reducers/colorSlice";
 import { setShowBottomBar, setShowSidebar } from "@/redux/reducers/drawerSlice";
 import { closeSidebar, openSidebar } from "@/redux/reducers/sidebarSlice";
-import { closeMenu } from "@/redux/reducers/menuSlice";
 import { clearFilterValue, closeFilter } from "@/redux/reducers/filterSlice";
 import { closeForm, closeUpdateForm } from "@/redux/reducers/formSlice";
 import { closeDeleteForm } from "@/redux/reducers/alertSlice";
@@ -32,7 +31,6 @@ import {
   closeImageUploadIndicator,
 } from "@/redux/reducers/imgUploadSlice";
 import { dataKey } from "@/custom-hooks/editorHooks";
-import { destroyEditorInstance } from "@/redux/reducers/editorSlice";
 import { clearClients } from "@/redux/reducers/clientSlice";
 import { CaretLeftOutlined, CaretUpOutlined } from "@ant-design/icons";
 import useSwipe from "@/custom-hooks/useSwipe";
@@ -72,7 +70,6 @@ export default function Page() {
 
   const cleanup = () => {
     localStorage.removeItem(dataKey);
-    dispatch(closeMenu());
     dispatch(closeSidebar());
     dispatch(clearDocData());
     dispatch(clearBackupData());
@@ -86,7 +83,6 @@ export default function Page() {
     dispatch(clearProgress());
     dispatch(setShowSidebar([false, ""]));
     dispatch(setShowBottomBar([false, ""]));
-    dispatch(destroyEditorInstance());
     dispatch(clearClients());
     dispatch(clearSearchParams());
     dispatch(clearFilterValue());

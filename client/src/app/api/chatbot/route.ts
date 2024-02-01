@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
 
 const openai = new OpenAI({
-  apiKey: process.env.CHATGPT_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);

@@ -12,7 +12,6 @@ import EditorData from "@/utils/Editor/data.json";
 import { dataKey } from "@/custom-hooks/editorHooks";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ImageTool from "@editorjs/image";
-import { updateEditorImages } from "@/redux/reducers/editorImgSlice";
 import io from "socket.io-client";
 import React from "react";
 import { removeClient, setClient } from "@/redux/reducers/clientSlice";
@@ -170,7 +169,6 @@ const EditorContainer = ({ editorRef, children, docId, data }: any) => {
 
             return CloudImage(formData, dispatch, updateProgress).then(
               (imageURL) => {
-                dispatch(updateEditorImages(imageURL));
                 return {
                   success: 1,
                   file: {

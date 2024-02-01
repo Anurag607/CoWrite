@@ -16,7 +16,7 @@ const AddFormPopup = () => {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    id: "",
+    id: +new Date(),
     title: "",
     emailID: authInstance.email,
     color: docColor,
