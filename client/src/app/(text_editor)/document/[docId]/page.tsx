@@ -98,32 +98,33 @@ const Page = () => {
       content: localStorage.getItem(dataKey),
       updatedAt: new Date().toISOString(),
     };
-    const res = await fetch(
-      docAPI === "create"
-        ? "/api/document/create"
-        : `/api/document/update/${currentDoc.id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      }
-    );
-    const data = await res.json();
-    if (data.status === 202) {
-      toast.success("Document Saved", ToastConfig);
-      setIsSubmitting(false);
-      dispatch(clearCurrentDoc());
-      router.push(`/dashboard/${authInstance._id}`);
-    } else if (data.status === 404 || data.status === 401) {
-      toast.error(data.message, ToastConfig);
-      setIsSubmitting(false);
-      router.push(`/dashboard/${authInstance._id}`);
-    } else {
-      toast.error("Failed to Save Document, Please try again!", ToastConfig);
-      setIsSubmitting(false);
-    }
+    console.log(docAPI, body);
+    // const res = await fetch(
+    //   docAPI === "create"
+    //     ? "/api/document/create"
+    //     : `/api/document/update/${currentDoc.id}`,
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(body),
+    //   }
+    // );
+    // const data = await res.json();
+    // if (data.status === 202) {
+    //   toast.success("Document Saved", ToastConfig);
+    //   setIsSubmitting(false);
+    //   dispatch(clearCurrentDoc());
+    //   router.push(`/dashboard/${authInstance._id}`);
+    // } else if (data.status === 404 || data.status === 401) {
+    //   toast.error(data.message, ToastConfig);
+    //   setIsSubmitting(false);
+    //   router.push(`/dashboard/${authInstance._id}`);
+    // } else {
+    //   toast.error("Failed to Save Document, Please try again!", ToastConfig);
+    //   setIsSubmitting(false);
+    // }
     setIsSubmitting(false);
   };
 
