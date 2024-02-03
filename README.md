@@ -15,7 +15,7 @@
 
 # Tech Stack
 
-- **Frontend:** NextJS 14.1, Redux-Toolkit, Redux-persist, TailwindCSS, Prisma, Zod, Socket.io-Client, Typrscript, Prisma, Zod
+- **Frontend:** Next.JS 14.1, Redux-Toolkit, Redux-persist, TailwindCSS, Prisma, Zod, Socket.io-Client, Typrscript, Gemini
 - **Database:** MongoDB
 - **Cloud:** Cloudinary
 - **Text Editors:** EditorJS, Monaco
